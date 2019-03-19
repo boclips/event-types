@@ -1,0 +1,18 @@
+.gradle
+/build/
+/out/
+!gradle/wrapper/gradle-wrapper.jar
+spring-shell.log
+
+### IntelliJ IDEA ###
+!/.idea
+/.idea/*
+!/.idea/dictionaries # Allow dictionaries to be shared
+
+*.iws
+*.iml
+*.ipr
+
+.DS_Store
+.Rproj.user
+
