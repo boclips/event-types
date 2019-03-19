@@ -12,7 +12,6 @@ inputs:
 
 caches:
   - path: .gradle/
-  - path: source/dependency-check-cache
 
 run:
   path: source/video-service/pipeline/scripts/build.sh
