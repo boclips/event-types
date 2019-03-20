@@ -1,16 +1,16 @@
 package com.boclips.eventtypes;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NonNull;
+import lombok.*;
 
 @Data
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class VideoToAnalyse {
 
     @NonNull
-    private final String videoId;
+    private String videoId;
 
     @NonNull
-    private final String videoUrl;
+    private String videoUrl;
 }
