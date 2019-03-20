@@ -11,7 +11,17 @@ repositories {
     mavenCentral()
 }
 
+test {
+    useJUnitPlatform()
+}
+
+def junitVersion = "5.3.1"
+
 dependencies {
     compileOnly("org.projectlombok:lombok:1.18.6")
     annotationProcessor("org.projectlombok:lombok:1.18.6")
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:$junitVersion")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
+    testImplementation("org.assertj:assertj-core:3.12.2")
 }
