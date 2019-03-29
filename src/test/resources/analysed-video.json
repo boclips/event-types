@@ -1,0 +1,40 @@
+{
+  "videoId": "123",
+  "language": "en-US",
+  "transcript": "hello everybody",
+  "captions": "captions",
+  "topics": [
+    {
+      "value": {
+        "name": "child topic",
+        "language": "en-US",
+        "parent": {
+          "name": "parent topic",
+          "language": "en-US"
+        }
+      },
+      "confidence": 0.9,
+      "segments": [
+        {
+          "startSecond": 1,
+          "endSecond": 10
+        }
+      ]
+    }
+  ],
+  "keywords": [
+    {
+      "value": {
+        "name": "keyword",
+        "language": "en-US"
+      },
+      "confidence": 0.8,
+      "segments": [
+        {
+          "startSecond": 10,
+          "endSecond": 11
+        }
+      ]
+    }
+  ]
+}
