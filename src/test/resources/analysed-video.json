@@ -2,7 +2,10 @@
   "videoId": "123",
   "language": "en-US",
   "transcript": "hello everybody",
-  "captions": "captions",
+  "captions": {
+    "format": "VTT",
+    "content": "captions"
+  },
   "topics": [
     {
       "value": {
