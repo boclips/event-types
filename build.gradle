@@ -17,8 +17,10 @@ test {
 
 def junitVersion = "5.3.1"
 
+def springCloudStream = "org.springframework.cloud:spring-cloud-stream:2.1.2.RELEASE"
+
 dependencies {
-    compileOnly("org.springframework.cloud:spring-cloud-stream:2.1.2.RELEASE")
+    compileOnly(springCloudStream)
     compileOnly("org.projectlombok:lombok:1.18.6")
     annotationProcessor("org.projectlombok:lombok:1.18.6")
 
@@ -26,4 +28,5 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitVersion")
     testImplementation("org.assertj:assertj-core:3.12.2")
     testImplementation("com.fasterxml.jackson.core:jackson-databind:2.9.8")
+    testImplementation(springCloudStream)
 }
