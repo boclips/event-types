@@ -1,4 +1,4 @@
-package com.boclips.eventtypes;
+package com.boclips.events.types;
 
 import lombok.*;
 

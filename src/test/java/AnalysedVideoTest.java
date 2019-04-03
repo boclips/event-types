@@ -1,5 +1,4 @@
-import com.boclips.eventtypes.AnalysedVideo;
-import com.boclips.eventtypes.VideoToAnalyse;
+import com.boclips.events.types.AnalysedVideo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
