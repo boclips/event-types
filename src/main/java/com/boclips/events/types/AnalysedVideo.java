@@ -28,23 +28,6 @@ public class AnalysedVideo {
     @NonNull
     private List<Assigned<Keyword>> keywords;
 
-    public enum CaptionsFormat {
-        VTT
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class Captions {
-
-        @NonNull
-        private CaptionsFormat format;
-
-        @NonNull
-        private String content;
-    }
-
     @Data
     @Builder
     @NoArgsConstructor
