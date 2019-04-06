@@ -8,13 +8,18 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AssignedKeyword {
+public class AnalysedVideoTopic {
     @NonNull
-    Keyword value;
+    private String name;
+
+    @NonNull
+    private String language;
 
     @NonNull
     Double confidence;
 
     @NonNull
     List<TimeSegment> segments;
+
+    private AnalysedVideoTopic parent;
 }

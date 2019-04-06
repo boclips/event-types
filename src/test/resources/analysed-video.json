@@ -10,29 +10,27 @@
   },
   "topics": [
     {
-      "value": {
-        "name": "child topic",
-        "language": "en-US",
-        "parent": {
-          "name": "parent topic",
-          "language": "en-US"
-        }
-      },
+      "name": "child topic",
+      "language": "en-US",
       "confidence": 0.9,
       "segments": [
         {
           "startSecond": 1,
           "endSecond": 10
         }
-      ]
+      ],
+      "parent": {
+        "name": "parent topic",
+        "language": "en-US",
+        "confidence": 1.0,
+        "segments": []
+      }
     }
   ],
   "keywords": [
     {
-      "value": {
-        "name": "keyword",
-        "language": "en-US"
-      },
+      "name": "keyword",
+      "language": "en-US",
       "confidence": 0.8,
       "segments": [
         {

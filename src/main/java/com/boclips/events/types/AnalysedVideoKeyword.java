@@ -2,16 +2,22 @@ package com.boclips.events.types;
 
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class Topic {
+public class AnalysedVideoKeyword {
     @NonNull
     private String name;
 
     @NonNull
     private String language;
 
-    private Topic parent;
+    @NonNull
+    Double confidence;
+
+    @NonNull
+    List<TimeSegment> segments;
 }

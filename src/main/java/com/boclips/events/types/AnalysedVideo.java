@@ -23,8 +23,8 @@ public class AnalysedVideo {
     private Captions captions;
 
     @NonNull
-    private List<AssignedTopic> topics;
+    private List<AnalysedVideoTopic> topics;
 
     @NonNull
-    private List<AssignedKeyword> keywords;
+    private List<AnalysedVideoKeyword> keywords;
 }
