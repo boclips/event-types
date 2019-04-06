@@ -15,7 +15,6 @@ class AnalysedVideoTest {
 
     @Test
     public void objectMapperCanParseJsonIntoAnalysedVideo() throws IOException {
-
         String json = loadExample();
 
         AnalysedVideo analysedVideo = new ObjectMapper().readValue(json, AnalysedVideo.class);
