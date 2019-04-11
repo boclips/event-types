@@ -3,6 +3,7 @@ package com.boclips.events.types;
 import lombok.*;
 
 import java.util.List;
+import java.util.Locale;
 
 @Data
 @Builder
@@ -14,7 +15,7 @@ public class AnalysedVideo {
     private String videoId;
 
     @NonNull
-    private String language;
+    private Locale language;
 
     @NonNull
     private String transcript;
