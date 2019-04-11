@@ -1,4 +1,4 @@
-package com.boclips.events.types;
+package com.boclips.events.config;
 
 public abstract class Topics {
     private static final String TOPIC_SUFFIX = "-topic";
