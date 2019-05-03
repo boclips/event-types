@@ -11,17 +11,10 @@ import java.util.Map;
 
 public class BoclipsMessagingConfiguration {
 
-    private final String environment;
-
     private final String group;
 
-    public BoclipsMessagingConfiguration(String environment, String group) {
-        this.environment = environment;
+    public BoclipsMessagingConfiguration(String group) {
         this.group = group;
-
-        if (environment.isEmpty()) {
-            throw new IllegalArgumentException("Environment must be specified");
-        }
 
         if (group.isEmpty()) {
             throw new IllegalArgumentException("Consumer group must be specified");
@@ -33,7 +26,7 @@ public class BoclipsMessagingConfiguration {
 
         EnableBinding enableBindingAnnotation = contextClass.getAnnotation(EnableBinding.class);
 
-        if(enableBindingAnnotation == null) {
+        if (enableBindingAnnotation == null) {
             throw new IllegalArgumentException("Class " + contextClass.getName() + " must be annotated with " + EnableBinding.class.getName());
         }
 
@@ -58,7 +51,7 @@ public class BoclipsMessagingConfiguration {
 
     private BindingProperties bindingProperties(String topicName) {
         BindingProperties properties = new BindingProperties();
-        properties.setDestination(topicName + "-" + environment);
+        properties.setDestination(topicName);
         return properties;
     }
 

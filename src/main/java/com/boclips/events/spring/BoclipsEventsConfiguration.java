@@ -43,32 +43,7 @@ class BoclipsEventsConfiguration {
 
         EnableBoclipsEvents annotation = AnnotationUtils.findAnnotation(bean.getClass(), EnableBoclipsEvents.class);
 
-        return new BoclipsMessagingConfiguration(getTopicSuffix(), annotation.appName())
+        return new BoclipsMessagingConfiguration(annotation.appName())
                 .forContext(BoclipsEventsConfiguration.class);
-    }
-
-    private String getTopicSuffix() {
-        Environment environment = applicationContext.getEnvironment();
-
-        Set<String> legalEnvironments = new HashSet<>();
-        legalEnvironments.add("production");
-        legalEnvironments.add("staging");
-        legalEnvironments.add("testing");
-        legalEnvironments.add("test");
-
-        List<String> matchedEnvironments = Arrays.stream(environment.getActiveProfiles())
-                .map(String::toLowerCase)
-                .filter(legalEnvironments::contains)
-                .collect(Collectors.toList());
-
-        if (matchedEnvironments.isEmpty()) {
-            throw new IllegalStateException("Expected one of the following in Spring active profiles: " + String.join(",", legalEnvironments));
-        }
-
-        if (matchedEnvironments.size() > 1) {
-            throw new IllegalStateException("Expected only one environment in Spring active profiles: " + String.join(",", matchedEnvironments));
-        }
-
-        return matchedEnvironments.get(0);
     }
 }
