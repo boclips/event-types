@@ -8,7 +8,6 @@ import lombok.Data;
 public class TopicInfo {
 
     private final String topicName;
-
     private final String channelName;
 
     static TopicInfo fromChannelName(String channelName, String channelSuffix) {

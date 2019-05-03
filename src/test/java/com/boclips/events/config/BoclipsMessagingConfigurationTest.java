@@ -12,7 +12,7 @@ import org.springframework.messaging.SubscribableChannel;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
-class BoclipsMessagingConfigurationTest {
+public class BoclipsMessagingConfigurationTest {
 
     @Test
     void configuresTopicChannels() {
@@ -52,7 +52,7 @@ class BoclipsMessagingConfigurationTest {
     static class InvalidContext {}
 
     @EnableBinding({Topics.class, Subscriptions.class})
-    static class MessagingContext {
+    public static class MessagingContext {
 
     }
 
