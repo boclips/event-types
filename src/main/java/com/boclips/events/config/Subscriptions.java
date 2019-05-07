@@ -11,6 +11,7 @@ public interface Subscriptions {
     String VIDEOS_TO_ANALYSE = TopicNames.VIDEOS_TO_ANALYSE + SUFFIX;
     String ANALYSED_VIDEO_IDS = TopicNames.ANALYSED_VIDEO_IDS + SUFFIX;
     String ANALYSED_VIDEOS = TopicNames.ANALYSED_VIDEOS + SUFFIX;
+    String LEGACY_ORDER_SUBMISSIONS = TopicNames.LEGACY_ORDER_SUBMISSIONS + SUFFIX;
 
     @Input(VIDEOS_TO_ANALYSE)
     SubscribableChannel videosToAnalyse();
@@ -20,5 +21,8 @@ public interface Subscriptions {
 
     @Input(ANALYSED_VIDEOS)
     SubscribableChannel analysedVideos();
+
+    @Input(LEGACY_ORDER_SUBMISSIONS)
+    SubscribableChannel legacyOrderSubmissions();
 
 }
