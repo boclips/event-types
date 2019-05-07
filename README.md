@@ -51,7 +51,12 @@ because Spring instantiates all the necessary channels. A `MessageCollector` bea
 can be autowired in tests and used for checking what messages have been sent to topics:
 ```kotlin
 val message = messageCollector.forChannel(topics.analysedVideos()).poll()
-Assertions.assertThat(message.payload.toString()).contains("1234")
+assertThat(message.payload.toString()).contains("1234")
+```
+
+Testing event listeners is possible using channels available via the `Subscriptions` bean:
+```kotlin
+subscriptions.analysedVideos().send(MessageBuilder.withPayload(analysedVideo).build())
 ```
 
 In order to avoid test pollution, it's a good practice to clear all topic channels
