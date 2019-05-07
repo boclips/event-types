@@ -37,6 +37,29 @@ fun onVideoAnalysed(analysedVideo: AnalysedVideo) {
 }
 ```
 
+**Testing**:
+Add this to `application-test.yml` in order to run tests without access to PubSub:
+```yml
+spring:
+  cloud:
+    gcp:
+      pubsub:
+        enabled: false
+```
+With PubSub disabled, the app can still send and receive messages during test runs
+because Spring instantiates all the necessary channels. A `MessageCollector` bean
+can be autowired in tests and used for checking what messages have been sent to topics:
+```kotlin
+val message = messageCollector.forChannel(topics.analysedVideos()).poll()
+Assertions.assertThat(message.payload.toString()).contains("1234")
+```
+
+In order to avoid test pollution, it's a good practice to clear all topic channels
+before each test:
+```kotlin
+messageCollector.forChannel(topics.analysedVideos()).clear()
+```
+
 ## Note
 All Topics and Events ([see](src/main/java/com/boclips/events/types)) 
 are defined in this library, so that they can be shared among all services.
