@@ -10,6 +10,8 @@ Add the repository, as described [here](https://jitpack.io/#boclips/events)
 implementation("org.springframework.cloud:spring-cloud-gcp-starter-pubsub")
 implementation("org.springframework.cloud:spring-cloud-gcp-pubsub-stream-binder")
 implementation("com.github.boclips:events:<version>")
+
+testImplementation("org.springframework.cloud:spring-cloud-stream-test-support")
 ```
 
 **Add annotation**:
