@@ -2,9 +2,7 @@ package com.boclips.events.types;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import lombok.*;
-import lombok.experimental.NonFinal;
 
 import java.math.BigDecimal;
 import java.util.Date;
