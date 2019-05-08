@@ -14,13 +14,13 @@ public interface Subscriptions {
     String LEGACY_ORDER_SUBMITTED = TopicNames.LEGACY_ORDER_SUBMITTED + SUFFIX;
 
     @Input(VIDEO_ANALYSIS_REQUESTED)
-    SubscribableChannel videosToAnalyse();
+    SubscribableChannel videoAnalysisRequested();
 
     @Input(VIDEO_INDEXED)
-    SubscribableChannel analysedVideoIds();
+    SubscribableChannel videoIndexed();
 
     @Input(VIDEO_ANALYSED)
-    SubscribableChannel analysedVideos();
+    SubscribableChannel videoAnalysed();
 
     @Input(LEGACY_ORDER_SUBMITTED)
     SubscribableChannel legacyOrderSubmissions();

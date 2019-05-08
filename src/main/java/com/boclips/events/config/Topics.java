@@ -10,11 +10,11 @@ public interface Topics {
     String VIDEO_ANALYSED = TopicNames.VIDEO_ANALYSED + SUFFIX;
 
     @Output(VIDEO_ANALYSIS_REQUESTED)
-    MessageChannel videosToAnalyse();
+    MessageChannel videoAnalysisRequested();
 
     @Output(VIDEO_INDEXED)
-    MessageChannel analysedVideoIds();
+    MessageChannel videoIndexed();
 
     @Output(VIDEO_ANALYSED)
-    MessageChannel analysedVideos();
+    MessageChannel videoAnalysed();
 }

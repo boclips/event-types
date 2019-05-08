@@ -37,7 +37,7 @@ public class SpringAnnotationIntegrationTest {
     void publishMessagesToTopics() {
         pushMessageIntoTopic("hello");
 
-        Message<?> message = messageCollector.forChannel(topics.videosToAnalyse()).poll();
+        Message<?> message = messageCollector.forChannel(topics.videoAnalysisRequested()).poll();
 
         assertThat(message).isNotNull();
     }
@@ -52,10 +52,10 @@ public class SpringAnnotationIntegrationTest {
     }
 
     private void pushMessageIntoTopic(String message) {
-        topics.videosToAnalyse().send(MessageBuilder.withPayload(message).build());
+        topics.videoAnalysisRequested().send(MessageBuilder.withPayload(message).build());
     }
 
     private void pushMessageIntoSubscription(String message) {
-        subscriptions.videosToAnalyse().send(MessageBuilder.withPayload(message).build());
+        subscriptions.videoAnalysisRequested().send(MessageBuilder.withPayload(message).build());
     }
 }
