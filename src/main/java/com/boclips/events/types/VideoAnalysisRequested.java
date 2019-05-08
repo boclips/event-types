@@ -8,7 +8,7 @@ import java.util.Locale;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VideoToAnalyse {
+public class VideoAnalysisRequested {
 
     @NonNull
     private String videoId;
