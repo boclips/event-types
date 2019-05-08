@@ -12,6 +12,7 @@ public interface Subscriptions {
     String VIDEO_INDEXED = TopicNames.VIDEO_INDEXED + SUFFIX;
     String VIDEO_ANALYSED = TopicNames.VIDEO_ANALYSED + SUFFIX;
     String LEGACY_ORDER_SUBMITTED = TopicNames.LEGACY_ORDER_SUBMITTED + SUFFIX;
+    String USER_ACTIVATED = TopicNames.USER_ACTIVATED + SUFFIX;
 
     @Input(VIDEO_ANALYSIS_REQUESTED)
     SubscribableChannel videoAnalysisRequested();
@@ -24,5 +25,8 @@ public interface Subscriptions {
 
     @Input(LEGACY_ORDER_SUBMITTED)
     SubscribableChannel legacyOrderSubmissions();
+
+    @Input(USER_ACTIVATED)
+    SubscribableChannel userActivated();
 
 }

@@ -9,4 +9,6 @@ public abstract class TopicNames {
     public static final String VIDEO_ANALYSED = "video-analysed";
 
     public static final String LEGACY_ORDER_SUBMITTED = "legacy-order-submitted";
+
+    public static final String USER_ACTIVATED = "user-activated";
 }
