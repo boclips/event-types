@@ -5,16 +5,16 @@ import org.springframework.messaging.MessageChannel;
 
 public interface Topics {
     String SUFFIX = "-topic";
-    String VIDEOS_TO_ANALYSE = TopicNames.VIDEOS_TO_ANALYSE + SUFFIX;
-    String ANALYSED_VIDEO_IDS = TopicNames.ANALYSED_VIDEO_IDS + SUFFIX;
-    String ANALYSED_VIDEOS = TopicNames.ANALYSED_VIDEOS + SUFFIX;
+    String VIDEO_ANALYSIS_REQUESTED = TopicNames.VIDEO_ANALYSIS_REQUESTED + SUFFIX;
+    String VIDEO_INDEXED = TopicNames.VIDEO_INDEXED + SUFFIX;
+    String VIDEO_ANALYSED = TopicNames.VIDEO_ANALYSED + SUFFIX;
 
-    @Output(VIDEOS_TO_ANALYSE)
+    @Output(VIDEO_ANALYSIS_REQUESTED)
     MessageChannel videosToAnalyse();
 
-    @Output(ANALYSED_VIDEO_IDS)
+    @Output(VIDEO_INDEXED)
     MessageChannel analysedVideoIds();
 
-    @Output(ANALYSED_VIDEOS)
+    @Output(VIDEO_ANALYSED)
     MessageChannel analysedVideos();
 }

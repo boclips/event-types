@@ -8,12 +8,12 @@ import java.util.Locale;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AnalysedVideoTest extends TestWithJsonFixture {
+class VideoAnalysedTest extends TestWithJsonFixture {
     @Test
     void objectMapperCanParseJsonIntoAnalysedVideo() throws IOException {
         String json = loadExample("analysed-video.json");
 
-        AnalysedVideo analysedVideo = new ObjectMapper().readValue(json, AnalysedVideo.class);
+        VideoAnalysed analysedVideo = new ObjectMapper().readValue(json, VideoAnalysed.class);
 
         assertThat(analysedVideo.getLanguage()).isEqualTo(Locale.US);
         assertThat(analysedVideo.getTopics().get(0).getName()).isEqualTo("child topic");

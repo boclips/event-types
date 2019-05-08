@@ -9,7 +9,7 @@ import java.util.Locale;
 @Builder(toBuilder = true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnalysedVideoKeyword {
+public class VideoAnalysedTopic {
     @NonNull
     private String name;
 
@@ -21,4 +21,6 @@ public class AnalysedVideoKeyword {
 
     @NonNull
     List<TimeSegment> segments;
+
+    private VideoAnalysedTopic parent;
 }

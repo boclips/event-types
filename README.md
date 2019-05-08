@@ -21,7 +21,6 @@ class MySpringBootApp
 ```
 `your-app-name` will be used as a subscription suffix.
 
-
 **Publishing events**:
 ```kotlin
 @Autowired lateinit var topics: Topics
@@ -68,4 +67,10 @@ messageCollector.forChannel(topics.analysedVideos()).clear()
 ## Note
 All Topics and Events ([see](src/main/java/com/boclips/events/types)) 
 are defined in this library, so that they can be shared among all services.
+
+When adding a new topic, the name should:
+
+- represent an event that has happened, e.g. video-indexed, rather than an intention, e.g. analyse-video
+- conform to the noun-verbed convention, e.g. video-indexed, rather than indexed-video
+- be the same name as the type of payload passing through it
 

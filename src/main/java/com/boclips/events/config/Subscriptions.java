@@ -8,21 +8,21 @@ public interface Subscriptions {
 
     String SUFFIX = "-subscription";
 
-    String VIDEOS_TO_ANALYSE = TopicNames.VIDEOS_TO_ANALYSE + SUFFIX;
-    String ANALYSED_VIDEO_IDS = TopicNames.ANALYSED_VIDEO_IDS + SUFFIX;
-    String ANALYSED_VIDEOS = TopicNames.ANALYSED_VIDEOS + SUFFIX;
-    String LEGACY_ORDER_SUBMISSIONS = TopicNames.LEGACY_ORDER_SUBMISSIONS + SUFFIX;
+    String VIDEO_ANALYSIS_REQUESTED = TopicNames.VIDEO_ANALYSIS_REQUESTED + SUFFIX;
+    String VIDEO_INDEXED = TopicNames.VIDEO_INDEXED + SUFFIX;
+    String VIDEO_ANALYSED = TopicNames.VIDEO_ANALYSED + SUFFIX;
+    String LEGACY_ORDER_SUBMITTED = TopicNames.LEGACY_ORDER_SUBMITTED + SUFFIX;
 
-    @Input(VIDEOS_TO_ANALYSE)
+    @Input(VIDEO_ANALYSIS_REQUESTED)
     SubscribableChannel videosToAnalyse();
 
-    @Input(ANALYSED_VIDEO_IDS)
+    @Input(VIDEO_INDEXED)
     SubscribableChannel analysedVideoIds();
 
-    @Input(ANALYSED_VIDEOS)
+    @Input(VIDEO_ANALYSED)
     SubscribableChannel analysedVideos();
 
-    @Input(LEGACY_ORDER_SUBMISSIONS)
+    @Input(LEGACY_ORDER_SUBMITTED)
     SubscribableChannel legacyOrderSubmissions();
 
 }

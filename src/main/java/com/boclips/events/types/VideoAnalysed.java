@@ -9,7 +9,7 @@ import java.util.Locale;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class AnalysedVideo {
+public class VideoAnalysed {
 
     @NonNull
     private String videoId;
@@ -24,8 +24,8 @@ public class AnalysedVideo {
     private Captions captions;
 
     @NonNull
-    private List<AnalysedVideoTopic> topics;
+    private List<VideoAnalysedTopic> topics;
 
     @NonNull
-    private List<AnalysedVideoKeyword> keywords;
+    private List<VideoAnalysedKeyword> keywords;
 }
