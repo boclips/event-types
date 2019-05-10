@@ -1,23 +1,15 @@
 package com.boclips.events.types;
 
+import com.boclips.events.types.base.UserEvent;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-import java.time.ZoneOffset;
-import java.time.ZonedDateTime;
-import java.util.Date;
-
-@Data
-@Builder
+@Getter
+@Setter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserActivated {
-
-    @NonNull
-    private User user;
-
-    @NonNull
-    @Builder.Default
-    private Date timestamp = Date.from(ZonedDateTime.now(ZoneOffset.UTC).toInstant());
+public class UserActivated extends UserEvent {
 
     @NonNull
     private Long totalUsers;
