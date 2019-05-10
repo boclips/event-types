@@ -11,10 +11,7 @@ import java.util.Date;
 public class UserActivated {
 
     @NonNull
-    private String userId;
-
-    @NonNull
-    private String userIsBoclips;
+    private User user;
 
     @NonNull
     private Date timestamp;
