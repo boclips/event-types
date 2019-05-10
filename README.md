@@ -7,11 +7,17 @@ Add the repository, as described [here](https://jitpack.io/#boclips/events)
 
 **In build.gradle**:
 ```
-implementation("org.springframework.cloud:spring-cloud-gcp-starter-pubsub")
-implementation("org.springframework.cloud:spring-cloud-gcp-pubsub-stream-binder")
-implementation("com.github.boclips:events:<version>")
+ext {
+	set('springCloudVersion', 'Greenwich.SR1')
+}
 
-testImplementation("org.springframework.cloud:spring-cloud-stream-test-support")
+dependencies {
+  implementation("org.springframework.cloud:spring-cloud-gcp-starter-pubsub")
+  implementation("org.springframework.cloud:spring-cloud-gcp-pubsub-stream-binder")
+  implementation("com.github.boclips:events:<version>")
+
+  testImplementation("org.springframework.cloud:spring-cloud-stream-test-support")
+}
 ```
 
 **Add annotation**:
