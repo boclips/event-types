@@ -18,6 +18,12 @@ dependencies {
 
   testImplementation("org.springframework.cloud:spring-cloud-stream-test-support")
 }
+
+dependencyManagement {
+  imports {
+    mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+  }
+}
 ```
 
 **Add annotation**:
