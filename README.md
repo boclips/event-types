@@ -8,7 +8,7 @@ Add the repository, as described [here](https://jitpack.io/#boclips/events)
 **In build.gradle**:
 ```
 ext {
-	set('springCloudVersion', 'Greenwich.SR1')
+  set('springCloudVersion', 'Greenwich.SR1')
 }
 
 dependencies {
