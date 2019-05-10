@@ -11,10 +11,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.AnnotationUtils;
-import org.springframework.core.env.Environment;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.Map;
 
 @Configuration
 @EnableBinding(value = {Topics.class, Subscriptions.class})

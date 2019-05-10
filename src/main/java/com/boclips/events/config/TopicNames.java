@@ -3,6 +3,7 @@ package com.boclips.events.config;
 public abstract class TopicNames {
 
     public static final String VIDEO_ANALYSIS_REQUESTED = "video-analysis-requested";
+    public static final String VIDEO_PLAYBACK_SYNC_REQUESTED = "video-playback-sync-requested";
 
     public static final String VIDEO_INDEXED = "video-indexed";
 
