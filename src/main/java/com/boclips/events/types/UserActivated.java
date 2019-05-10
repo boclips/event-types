@@ -2,6 +2,8 @@ package com.boclips.events.types;
 
 import lombok.*;
 
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.util.Date;
 
 @Data
@@ -14,7 +16,8 @@ public class UserActivated {
     private User user;
 
     @NonNull
-    private Date timestamp;
+    @Builder.Default
+    private Date timestamp = Date.from(ZonedDateTime.now(ZoneOffset.UTC).toInstant());
 
     @NonNull
     private Long totalUsers;
