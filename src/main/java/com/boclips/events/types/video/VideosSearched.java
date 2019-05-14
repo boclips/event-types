@@ -4,12 +4,13 @@ import com.boclips.events.types.User;
 import com.boclips.events.types.base.Event;
 import com.boclips.events.types.base.UserEvent;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Data
-@Builder
+@Getter
+@Setter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(callSuper=true)
 public class VideosSearched extends Event implements UserEvent {
 
     @NonNull
