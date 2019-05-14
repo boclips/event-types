@@ -26,5 +26,5 @@ public class VideosSearched extends Event implements UserEvent {
     private Integer pageSize;
 
     @NonNull
-    private Integer totalResults;
+    private Long totalResults;
 }
