@@ -10,6 +10,7 @@ public interface Topics {
     String VIDEO_INDEXED = TopicNames.VIDEO_INDEXED + SUFFIX;
     String VIDEO_ANALYSED = TopicNames.VIDEO_ANALYSED + SUFFIX;
     String USER_ACTIVATED = TopicNames.USER_ACTIVATED + SUFFIX;
+    String VIDEOS_SEARCHED = TopicNames.VIDEOS_SEARCH + SUFFIX;
 
     @Output(VIDEO_PLAYBACK_SYNC_REQUESTED)
     MessageChannel videoPlaybackSyncRequested();
@@ -25,4 +26,7 @@ public interface Topics {
 
     @Output(USER_ACTIVATED)
     MessageChannel userActivated();
+
+    @Output(VIDEOS_SEARCHED)
+    MessageChannel videosSearched();
 }

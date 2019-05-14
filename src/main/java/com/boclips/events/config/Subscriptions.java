@@ -14,6 +14,7 @@ public interface Subscriptions {
     String VIDEO_ANALYSED = TopicNames.VIDEO_ANALYSED + SUFFIX;
     String LEGACY_ORDER_SUBMITTED = TopicNames.LEGACY_ORDER_SUBMITTED + SUFFIX;
     String USER_ACTIVATED = TopicNames.USER_ACTIVATED + SUFFIX;
+    String VIDEOS_SEARCHED = TopicNames.VIDEOS_SEARCH + SUFFIX;
 
     @Input(VIDEO_PLAYBACK_SYNC_REQUESTED)
     SubscribableChannel videoPlaybackSyncRequested();
@@ -33,4 +34,6 @@ public interface Subscriptions {
     @Input(USER_ACTIVATED)
     SubscribableChannel userActivated();
 
+    @Input(VIDEOS_SEARCHED)
+    SubscribableChannel videosSearched();
 }
