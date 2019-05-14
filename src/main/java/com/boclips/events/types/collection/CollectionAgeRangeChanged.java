@@ -1,5 +1,6 @@
-package com.boclips.events.types;
+package com.boclips.events.types.collection;
 
+import com.boclips.events.types.base.CollectionEvent;
 import com.boclips.events.types.base.Event;
 import com.boclips.events.types.base.UserEvent;
 import lombok.*;
@@ -10,14 +11,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserActivated extends Event implements UserEvent {
+public class CollectionAgeRangeChanged extends CollectionEvent {
 
     @NonNull
-    private User user;
+    private Integer minAgeRange;
 
-    @NonNull
-    private Long totalUsers;
-
-    @NonNull
-    private Long activatedUsers;
+    private Integer maxAgeRange;
 }

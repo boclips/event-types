@@ -1,5 +1,6 @@
-package com.boclips.events.types;
+package com.boclips.events.types.video;
 
+import com.boclips.events.types.Captions;
 import lombok.*;
 
 import java.util.List;

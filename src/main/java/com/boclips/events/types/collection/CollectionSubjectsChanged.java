@@ -1,23 +1,20 @@
-package com.boclips.events.types;
+package com.boclips.events.types.collection;
 
+import com.boclips.events.types.base.CollectionEvent;
 import com.boclips.events.types.base.Event;
 import com.boclips.events.types.base.UserEvent;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.Set;
 
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserActivated extends Event implements UserEvent {
+public class CollectionSubjectsChanged extends CollectionEvent {
 
     @NonNull
-    private User user;
-
-    @NonNull
-    private Long totalUsers;
-
-    @NonNull
-    private Long activatedUsers;
+    private Set<String> subjects;
 }

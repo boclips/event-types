@@ -1,5 +1,6 @@
 package com.boclips.events.types;
 
+import com.boclips.events.types.video.VideoPlaybackSyncRequested;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 

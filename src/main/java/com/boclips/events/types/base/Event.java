@@ -16,4 +16,6 @@ public abstract class Event {
     @NonNull
     @Builder.Default
     private Date timestamp = Date.from(ZonedDateTime.now(ZoneOffset.UTC).toInstant());
+
+    private String url;
 }
