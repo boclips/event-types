@@ -4,9 +4,11 @@ import com.boclips.events.types.base.CollectionEvent;
 import com.boclips.events.types.base.Event;
 import com.boclips.events.types.base.UserEvent;
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
-@Data
-@Builder
+@Getter
+@Setter
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
 public class VideoRemovedFromCollection extends CollectionEvent {

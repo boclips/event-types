@@ -9,6 +9,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper=true)
 public class VideosSearched extends Event implements UserEvent {
 
     @NonNull
