@@ -1,8 +1,6 @@
 package com.boclips.events.types.collection;
 
 import com.boclips.events.types.base.CollectionEvent;
-import com.boclips.events.types.base.Event;
-import com.boclips.events.types.base.UserEvent;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -14,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 public class CollectionAgeRangeChanged extends CollectionEvent {
 
     @NonNull
-    private Integer minAgeRange;
+    private Integer rangeMin;
 
-    private Integer maxAgeRange;
+    private Integer rangeMax;
 }
