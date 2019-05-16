@@ -3,6 +3,10 @@ package com.boclips.events.config;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.messaging.MessageChannel;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public interface Topics {
     String SUFFIX = "-topic";
     String VIDEO_ANALYSIS_REQUESTED = TopicNames.VIDEO_ANALYSIS_REQUESTED + SUFFIX;
@@ -70,4 +74,17 @@ public interface Topics {
 
     @Output(VIDEO_ADDED_TO_COLLECTION)
     MessageChannel videoAddedToCollection();
+
+    default List<MessageChannel> allTopics() {
+        return Arrays.stream(getClass().getMethods())
+                .filter(method -> method.isAnnotationPresent(Output.class))
+                .map(method -> {
+                    try {
+                        return (MessageChannel) method.invoke(this);
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .collect(Collectors.toList());
+    }
 }
