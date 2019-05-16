@@ -12,5 +12,5 @@ public class User {
     private String id;
 
     @NonNull
-    private String email;
+    private Boolean isBoclipsEmployee;
 }
