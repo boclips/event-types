@@ -1,6 +1,5 @@
 package com.boclips.events.types;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +15,7 @@ class UserActivatedTest {
     @Test
     void timestampIsSetAutomatically() {
         UserActivated userActivated = UserActivated.builder()
-                .user(User.builder().id("id").email("email").build())
+                .user(User.builder().id("id").isBoclipsEmployee(true).build())
                 .totalUsers(10L)
                 .activatedUsers(3L)
                 .build();
@@ -29,7 +28,7 @@ class UserActivatedTest {
         Date timestamp = Date.from(ZonedDateTime.now(ZoneOffset.UTC).plusDays(1).toInstant());
 
         UserActivated userActivated = UserActivated.builder()
-                .user(User.builder().id("id").email("email").build())
+                .user(User.builder().id("id").isBoclipsEmployee(true).build())
                 .totalUsers(10L)
                 .activatedUsers(3L)
                 .timestamp(timestamp)
