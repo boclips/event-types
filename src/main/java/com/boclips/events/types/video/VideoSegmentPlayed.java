@@ -14,7 +14,6 @@ public class VideoSegmentPlayed extends UserEvent {
     @NonNull
     private String videoId;
 
-    @NonNull
     private Integer videoIndex;
 
     @NonNull
