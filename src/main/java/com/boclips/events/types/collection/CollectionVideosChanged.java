@@ -4,13 +4,18 @@ import com.boclips.events.types.base.CollectionEvent;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VideoRemovedFromCollection extends CollectionEvent {
+public class CollectionVideosChanged extends CollectionEvent {
 
     @NonNull
-    private String videoId;
+    private List<String> addedVideos;
+
+    @NonNull
+    private List<String> removedVideos;
 }

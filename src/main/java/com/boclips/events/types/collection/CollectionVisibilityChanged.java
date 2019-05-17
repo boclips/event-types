@@ -3,6 +3,7 @@ package com.boclips.events.types.collection;
 import com.boclips.events.types.base.CollectionEvent;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
@@ -10,5 +11,8 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @SuperBuilder
 @NoArgsConstructor
-public class CollectionMadePublic extends CollectionEvent {
+public class CollectionVisibilityChanged extends CollectionEvent {
+
+    @NonNull
+    private Boolean isPublic;
 }
