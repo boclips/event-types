@@ -1,7 +1,6 @@
 package com.boclips.events.types.video;
 
-import com.boclips.events.types.User;
-import com.boclips.events.types.base.Event;
+import com.boclips.events.types.base.UserEvent;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -10,10 +9,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VideosSearched extends Event {
-
-    @NonNull
-    private User user;
+public class VideosSearched extends UserEvent {
 
     @NonNull
     private String query;
