@@ -17,12 +17,10 @@ public interface Subscriptions {
     String VIDEOS_SEARCHED = TopicNames.VIDEOS_SEARCH + SUFFIX;
     String VIDEO_SEGMENT_PLAYED = TopicNames.VIDEO_SEGMENT_PLAYED + SUFFIX;
     String COLLECTION_AGE_RANGE_CHANGED = TopicNames.COLLECTION_AGE_RANGE_CHANGED + SUFFIX;
-    String COLLECTION_BOOKMARKED = TopicNames.COLLECTION_BOOKMARKED + SUFFIX;
-    String COLLECTION_MADE_PRIVATE = TopicNames.COLLECTION_MADE_PRIVATE + SUFFIX;
-    String COLLECTION_MADE_PUBLIC = TopicNames.COLLECTION_MADE_PUBLIC + SUFFIX;
+    String COLLECTION_BOOKMARK_CHANGED = TopicNames.COLLECTION_BOOKMARK_CHANGED + SUFFIX;
+    String COLLECTION_VISIBILITY_CHANGED = TopicNames.COLLECTION_VISIBILITY_CHANGED + SUFFIX;
     String COLLECTION_RENAMED = TopicNames.COLLECTION_RENAMED + SUFFIX;
     String COLLECTION_SUBJECTS_CHANGED = TopicNames.COLLECTION_SUBJECTS_CHANGED + SUFFIX;
-    String COLLECTION_UNBOOKARMED = TopicNames.COLLECTION_UNBOOKARMED + SUFFIX;
     String VIDEO_REMOVED_FROM_COLLECTION = TopicNames.VIDEO_REMOVED_FROM_COLLECTION + SUFFIX;
     String VIDEO_ADDED_TO_COLLECTION = TopicNames.VIDEO_ADDED_TO_COLLECTION + SUFFIX;
 
@@ -53,23 +51,17 @@ public interface Subscriptions {
     @Input(COLLECTION_AGE_RANGE_CHANGED)
     SubscribableChannel collectionAgeRangeChanged();
 
-    @Input(COLLECTION_BOOKMARKED)
-    SubscribableChannel collectionBookmarked();
+    @Input(COLLECTION_BOOKMARK_CHANGED)
+    SubscribableChannel collectionBookmarkChanged();
 
-    @Input(COLLECTION_MADE_PRIVATE)
-    SubscribableChannel collectionMadePrivate();
-
-    @Input(COLLECTION_MADE_PUBLIC)
-    SubscribableChannel collectionMadePublic();
+    @Input(COLLECTION_VISIBILITY_CHANGED)
+    SubscribableChannel collectionVisibilityChanged();
 
     @Input(COLLECTION_RENAMED)
     SubscribableChannel collectionRenamed();
 
     @Input(COLLECTION_SUBJECTS_CHANGED)
     SubscribableChannel collectionSubjectsChanged();
-
-    @Input(COLLECTION_UNBOOKARMED)
-    SubscribableChannel collectionUnbookmarked();
 
     @Input(VIDEO_REMOVED_FROM_COLLECTION)
     SubscribableChannel videoRemovedFromCollection();

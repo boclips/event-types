@@ -19,20 +19,15 @@ public abstract class TopicNames {
 
     public static final String COLLECTION_AGE_RANGE_CHANGED = "collection-age-range-changed";
 
-    public static final String COLLECTION_BOOKMARKED = "collection-bookmarked";
+    public static final String COLLECTION_BOOKMARK_CHANGED = "collection-bookmark-changed";
 
-    public static final String COLLECTION_MADE_PRIVATE = "collection-made-private";
-
-    public static final String COLLECTION_MADE_PUBLIC = "collection-made-public";
+    public static final String COLLECTION_VISIBILITY_CHANGED = "collection-visibility-changed";
 
     public static final String COLLECTION_RENAMED = "collection-renamed";
 
     public static final String COLLECTION_SUBJECTS_CHANGED = "collection-subjects-changed";
 
-    public static final String COLLECTION_UNBOOKARMED = "collection-unbookared";
-
     public static final String VIDEO_ADDED_TO_COLLECTION = "video-added-to-collection";
 
     public static final String VIDEO_REMOVED_FROM_COLLECTION = "video-removed-from-collection";
-
 }

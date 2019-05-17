@@ -17,15 +17,12 @@ public interface Topics {
     String VIDEOS_SEARCHED = TopicNames.VIDEOS_SEARCH + SUFFIX;
     String VIDEO_SEGMENT_PLAYED = TopicNames.VIDEO_SEGMENT_PLAYED + SUFFIX;
     String COLLECTION_AGE_RANGE_CHANGED = TopicNames.COLLECTION_AGE_RANGE_CHANGED + SUFFIX;
-    String COLLECTION_BOOKMARKED = TopicNames.COLLECTION_BOOKMARKED + SUFFIX;
-    String COLLECTION_MADE_PRIVATE = TopicNames.COLLECTION_MADE_PRIVATE + SUFFIX;
-    String COLLECTION_MADE_PUBLIC = TopicNames.COLLECTION_MADE_PUBLIC + SUFFIX;
+    String COLLECTION_BOOKMARK_CHANGED = TopicNames.COLLECTION_BOOKMARK_CHANGED + SUFFIX;
+    String COLLECTION_VISIBILITY_CHANGED = TopicNames.COLLECTION_VISIBILITY_CHANGED + SUFFIX;
     String COLLECTION_RENAMED = TopicNames.COLLECTION_RENAMED + SUFFIX;
     String COLLECTION_SUBJECTS_CHANGED = TopicNames.COLLECTION_SUBJECTS_CHANGED + SUFFIX;
-    String COLLECTION_UNBOOKARMED = TopicNames.COLLECTION_UNBOOKARMED + SUFFIX;
     String VIDEO_ADDED_TO_COLLECTION = TopicNames.VIDEO_ADDED_TO_COLLECTION + SUFFIX;
     String VIDEO_REMOVED_FROM_COLLECTION = TopicNames.VIDEO_REMOVED_FROM_COLLECTION + SUFFIX;
-
 
     @Output(VIDEO_PLAYBACK_SYNC_REQUESTED)
     MessageChannel videoPlaybackSyncRequested();
@@ -51,23 +48,17 @@ public interface Topics {
     @Output(COLLECTION_AGE_RANGE_CHANGED)
     MessageChannel collectionAgeRangeChanged();
 
-    @Output(COLLECTION_BOOKMARKED)
-    MessageChannel collectionBookmarked();
+    @Output(COLLECTION_BOOKMARK_CHANGED)
+    MessageChannel collectionBookmarkChanged();
 
-    @Output(COLLECTION_MADE_PRIVATE)
-    MessageChannel collectionMadePrivate();
-
-    @Output(COLLECTION_MADE_PUBLIC)
-    MessageChannel collectionMadePublic();
+    @Output(COLLECTION_VISIBILITY_CHANGED)
+    MessageChannel collectionVisibilityChanged();
 
     @Output(COLLECTION_RENAMED)
     MessageChannel collectionRenamed();
 
     @Output(COLLECTION_SUBJECTS_CHANGED)
     MessageChannel collectionSubjectsChanged();
-
-    @Output(COLLECTION_UNBOOKARMED)
-    MessageChannel collectionUnbookmarked();
 
     @Output(VIDEO_REMOVED_FROM_COLLECTION)
     MessageChannel videoRemovedFromCollection();
