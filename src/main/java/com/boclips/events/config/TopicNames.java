@@ -30,4 +30,8 @@ public abstract class TopicNames {
     public static final String VIDEO_ADDED_TO_COLLECTION = "video-added-to-collection";
 
     public static final String VIDEO_REMOVED_FROM_COLLECTION = "video-removed-from-collection";
+
+    public static final String VIDEO_SUBJECT_CLASSIFICATION_REQUESTED = "video-subject-classification-requested";
+
+    public static final String VIDEO_SUBJECT_CLASSIFIED = "video-subject-classified";
 }

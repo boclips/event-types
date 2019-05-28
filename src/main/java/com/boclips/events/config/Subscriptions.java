@@ -23,6 +23,8 @@ public interface Subscriptions {
     String COLLECTION_SUBJECTS_CHANGED = TopicNames.COLLECTION_SUBJECTS_CHANGED + SUFFIX;
     String VIDEO_REMOVED_FROM_COLLECTION = TopicNames.VIDEO_REMOVED_FROM_COLLECTION + SUFFIX;
     String VIDEO_ADDED_TO_COLLECTION = TopicNames.VIDEO_ADDED_TO_COLLECTION + SUFFIX;
+    String VIDEO_SUBJECT_CLASSIFICATION_REQUESTED = TopicNames.VIDEO_SUBJECT_CLASSIFICATION_REQUESTED + SUFFIX;
+    String VIDEO_SUBJECT_CLASSIFIED = TopicNames.VIDEO_SUBJECT_CLASSIFIED + SUFFIX;
 
     @Input(VIDEO_PLAYBACK_SYNC_REQUESTED)
     SubscribableChannel videoPlaybackSyncRequested();
@@ -68,4 +70,10 @@ public interface Subscriptions {
 
     @Input(VIDEO_ADDED_TO_COLLECTION)
     SubscribableChannel videoAddedToCollection();
+
+    @Input(VIDEO_SUBJECT_CLASSIFICATION_REQUESTED)
+    SubscribableChannel videoSubjectClassificationRequested();
+
+    @Input(VIDEO_SUBJECT_CLASSIFIED)
+    SubscribableChannel videoSubjectClassified();
 }
