@@ -14,4 +14,10 @@ public class LegacyOrderSubmitted {
 
     @NonNull
     private List<LegacyOrderItem> orderItems;
+
+    @NonNull
+    private String creator;
+
+    @NonNull
+    private String vendor;
 }

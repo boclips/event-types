@@ -82,5 +82,7 @@
       "_refModel": "Orderline",
       "id": "5cd158dcc5380897ad1aa329"
     }
-  ]
+  ],
+  "creator": "somecreator@boclips.com",
+  "vendor": "somevendor@boclips.com"
 }

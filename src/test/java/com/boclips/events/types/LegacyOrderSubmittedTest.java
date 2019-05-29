@@ -21,6 +21,8 @@ class LegacyOrderSubmittedTest extends TestWithJsonFixture {
 
         LegacyOrderSubmitted event = new ObjectMapper().readValue(json, LegacyOrderSubmitted.class);
 
+        assertThat(event.getCreator()).isEqualTo("somecreator@boclips.com");
+        assertThat(event.getVendor()).isEqualTo("somevendor@boclips.com");
         assertThat(event.getOrder()).isEqualTo(
                 LegacyOrder.builder()
                         .status("CONFIRMED")
@@ -40,11 +42,7 @@ class LegacyOrderSubmittedTest extends TestWithJsonFixture {
                                 .build())
                         .build()
         );
-
-        List<LegacyOrderItem> items = event.getOrderItems();
-
-        assertThat(items.size()).isEqualTo(2);
-        assertThat(items.get(0)).isEqualTo(
+        assertThat(event.getOrderItems()).isEqualTo(Arrays.asList(
                 LegacyOrderItem.builder()
                         .id("5cd158e96385cd18c208119e")
                         .uuid("4b0cdd04-ba2f-450e-bfbd-8d27d708d9e3")
@@ -64,9 +62,7 @@ class LegacyOrderSubmittedTest extends TestWithJsonFixture {
                         .price(new BigDecimal("1000.00"))
                         .transcriptsRequired(true)
                         .status("OPEN")
-                        .build()
-        );
-        assertThat(items.get(1)).isEqualTo(
+                        .build(),
                 LegacyOrderItem.builder()
                         .id("5cd158dcc5380897ad1aa329")
                         .uuid("714c50b4-fa58-463e-a374-81ac39996cf4")
@@ -87,6 +83,6 @@ class LegacyOrderSubmittedTest extends TestWithJsonFixture {
                         .transcriptsRequired(true)
                         .status("OPEN")
                         .build()
-        );
+        ));
     }
 }
