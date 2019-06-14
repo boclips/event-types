@@ -36,4 +36,6 @@ public abstract class TopicNames {
     public static final String VIDEO_SUBJECT_CLASSIFIED = "video-subject-classified";
 
     public static final String VIDEO_CAPTIONS_CREATED = "video-captions-created";
+
+    public static final String VIDEO_TRANSCRIPT_CREATED = "video-transcript-created";
 }
