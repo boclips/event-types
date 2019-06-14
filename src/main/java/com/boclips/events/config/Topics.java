@@ -25,6 +25,7 @@ public interface Topics {
     String VIDEO_REMOVED_FROM_COLLECTION = TopicNames.VIDEO_REMOVED_FROM_COLLECTION + SUFFIX;
     String VIDEO_SUBJECT_CLASSIFICATION_REQUESTED = TopicNames.VIDEO_SUBJECT_CLASSIFICATION_REQUESTED + SUFFIX;
     String VIDEO_SUBJECT_CLASSIFIED = TopicNames.VIDEO_SUBJECT_CLASSIFIED + SUFFIX;
+    String VIDEO_CAPTIONS_CREATED = TopicNames.VIDEO_CAPTIONS_CREATED + SUFFIX;
 
     @Output(VIDEO_PLAYBACK_SYNC_REQUESTED)
     MessageChannel videoPlaybackSyncRequested();
@@ -73,6 +74,9 @@ public interface Topics {
 
     @Output(VIDEO_SUBJECT_CLASSIFIED)
     MessageChannel videoSubjectClassified();
+
+    @Output(VIDEO_CAPTIONS_CREATED)
+    MessageChannel videoCaptionsCreated();
 
     default List<MessageChannel> allTopics() {
         return Arrays.stream(getClass().getMethods())

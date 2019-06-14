@@ -25,6 +25,7 @@ public interface Subscriptions {
     String VIDEO_ADDED_TO_COLLECTION = TopicNames.VIDEO_ADDED_TO_COLLECTION + SUFFIX;
     String VIDEO_SUBJECT_CLASSIFICATION_REQUESTED = TopicNames.VIDEO_SUBJECT_CLASSIFICATION_REQUESTED + SUFFIX;
     String VIDEO_SUBJECT_CLASSIFIED = TopicNames.VIDEO_SUBJECT_CLASSIFIED + SUFFIX;
+    String VIDEO_CAPTIONS_CREATED = TopicNames.VIDEO_CAPTIONS_CREATED + SUFFIX;
 
     @Input(VIDEO_PLAYBACK_SYNC_REQUESTED)
     SubscribableChannel videoPlaybackSyncRequested();
@@ -76,4 +77,7 @@ public interface Subscriptions {
 
     @Input(VIDEO_SUBJECT_CLASSIFIED)
     SubscribableChannel videoSubjectClassified();
+
+    @Input(VIDEO_CAPTIONS_CREATED)
+    SubscribableChannel videoCaptionsCreated();
 }
