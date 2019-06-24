@@ -27,6 +27,10 @@ public abstract class TopicNames {
 
     public static final String COLLECTION_SUBJECTS_CHANGED = "collection-subjects-changed";
 
+    public static final String CONTENT_PARTNER_INCLUSION_IN_SEARCH_REQUESTED = "content-partner-inclusion-in-search-requested";
+
+    public static final String CONTENT_PARTNER_EXCLUSION_FROM_SEARCH_REQUESTED = "content-partner-exclusion-from-search-requested";
+
     public static final String VIDEO_ADDED_TO_COLLECTION = "video-added-to-collection";
 
     public static final String VIDEO_REMOVED_FROM_COLLECTION = "video-removed-from-collection";
