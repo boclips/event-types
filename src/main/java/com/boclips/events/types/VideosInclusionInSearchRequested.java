@@ -2,12 +2,14 @@ package com.boclips.events.types;
 
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContentPartnerInclusionInSearchRequested {
+public class VideosInclusionInSearchRequested {
 
     @NonNull
-    private String contentPartnerId;
+    private List<String> videoIds;
 }

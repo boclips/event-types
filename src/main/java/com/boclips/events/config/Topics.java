@@ -1,7 +1,6 @@
 package com.boclips.events.config;
 
 import org.springframework.cloud.stream.annotation.Output;
-import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 
 import java.util.Arrays;
@@ -22,8 +21,8 @@ public interface Topics {
     String COLLECTION_VISIBILITY_CHANGED = TopicNames.COLLECTION_VISIBILITY_CHANGED + SUFFIX;
     String COLLECTION_RENAMED = TopicNames.COLLECTION_RENAMED + SUFFIX;
     String COLLECTION_SUBJECTS_CHANGED = TopicNames.COLLECTION_SUBJECTS_CHANGED + SUFFIX;
-    String CONTENT_PARTNER_INCLUSION_IN_SEARCH_REQUESTED = TopicNames.CONTENT_PARTNER_INCLUSION_IN_SEARCH_REQUESTED + SUFFIX;
-    String CONTENT_PARTNER_EXCLUSION_FROM_SEARCH_REQUESTED = TopicNames.CONTENT_PARTNER_EXCLUSION_FROM_SEARCH_REQUESTED + SUFFIX;
+    String VIDEOS_INCLUSION_IN_SEARCH_REQUESTED = TopicNames.VIDEOS_INCLUSION_IN_SEARCH_REQUESTED + SUFFIX;
+    String VIDEOS_EXCLUSION_FROM_SEARCH_REQUESTED = TopicNames.VIDEOS_EXCLUSION_FROM_SEARCH_REQUESTED + SUFFIX;
     String VIDEO_ADDED_TO_COLLECTION = TopicNames.VIDEO_ADDED_TO_COLLECTION + SUFFIX;
     String VIDEO_REMOVED_FROM_COLLECTION = TopicNames.VIDEO_REMOVED_FROM_COLLECTION + SUFFIX;
     String VIDEO_SUBJECT_CLASSIFICATION_REQUESTED = TopicNames.VIDEO_SUBJECT_CLASSIFICATION_REQUESTED + SUFFIX;
@@ -67,11 +66,11 @@ public interface Topics {
     @Output(COLLECTION_SUBJECTS_CHANGED)
     MessageChannel collectionSubjectsChanged();
 
-    @Output(CONTENT_PARTNER_INCLUSION_IN_SEARCH_REQUESTED)
-    MessageChannel contentPartnerInclusionInSearchRequested();
+    @Output(VIDEOS_INCLUSION_IN_SEARCH_REQUESTED)
+    MessageChannel videosInclusionInSearchRequested();
 
-    @Output(CONTENT_PARTNER_EXCLUSION_FROM_SEARCH_REQUESTED)
-    MessageChannel contentPartnerExclusionFromSearchRequested();
+    @Output(VIDEOS_EXCLUSION_FROM_SEARCH_REQUESTED)
+    MessageChannel videosExclusionFromSearchRequested();
 
     @Output(VIDEO_REMOVED_FROM_COLLECTION)
     MessageChannel videoRemovedFromCollection();
