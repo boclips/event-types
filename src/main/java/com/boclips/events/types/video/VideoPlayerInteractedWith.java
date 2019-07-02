@@ -12,7 +12,7 @@ import java.util.Map;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VideoPlayerInteraction extends VideoPlayerEvent {
+public class VideoPlayerInteractedWith extends VideoPlayerEvent {
 
     @NonNull
     private Number currentTime;

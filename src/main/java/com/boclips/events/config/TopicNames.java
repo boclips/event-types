@@ -17,7 +17,7 @@ public abstract class TopicNames {
 
     public static final String VIDEO_SEGMENT_PLAYED = "video-segment-played";
 
-    public static final String VIDEO_PLAYER_INTERACTION = "video-player-interaction";
+    public static final String VIDEO_PLAYER_INTERACTED_WITH = "video-player-interacted-with";
 
     public static final String COLLECTION_AGE_RANGE_CHANGED = "collection-age-range-changed";
 

@@ -8,7 +8,7 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class VideoPlayerInteractionTest extends TestWithJsonFixture {
+class VideoPlayerInteractedWithTest extends TestWithJsonFixture {
 
     @Test
     void fullscreenOn() throws IOException {
@@ -19,7 +19,7 @@ class VideoPlayerInteractionTest extends TestWithJsonFixture {
                 "\"videoDurationSeconds\":120" +
                 "}";
 
-        VideoPlayerInteraction event = new ObjectMapper().readValue(json, VideoPlayerInteraction.class);
+        VideoPlayerInteractedWith event = new ObjectMapper().readValue(json, VideoPlayerInteractedWith.class);
 
         assertThat(event.getType()).isEqualTo("fullscreen-on");
         assertThat(event.getPayload()).isNotNull();
@@ -41,7 +41,7 @@ class VideoPlayerInteractionTest extends TestWithJsonFixture {
                 "}" +
             "}";
 
-        VideoPlayerInteraction event = new ObjectMapper().readValue(json, VideoPlayerInteraction.class);
+        VideoPlayerInteractedWith event = new ObjectMapper().readValue(json, VideoPlayerInteractedWith.class);
 
         assertThat(event.getType()).isEqualTo("captions-on");
         assertThat(event.getPayload()).isNotNull();
