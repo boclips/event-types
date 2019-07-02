@@ -18,7 +18,7 @@ public class VideoPlayerInteractedWith extends VideoPlayerEvent {
     private Number currentTime;
 
     @NonNull
-    private String type;
+    private String subtype;
 
     private Map<String, Object> payload = new HashMap<>();
 
