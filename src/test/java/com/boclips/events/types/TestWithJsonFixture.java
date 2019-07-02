@@ -6,8 +6,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
 
-class TestWithJsonFixture {
-    String loadExample(String filename) throws IOException {
+public class TestWithJsonFixture {
+    protected String loadExample(String filename) throws IOException {
         try (InputStream stream = getClass().getClassLoader().getResourceAsStream(filename)) {
             try (InputStreamReader reader = new InputStreamReader(stream)) {
                 try (BufferedReader bufferedReader = new BufferedReader(reader)) {

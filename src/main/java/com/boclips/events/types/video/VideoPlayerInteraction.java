@@ -4,19 +4,22 @@ import com.boclips.events.types.base.VideoPlayerEvent;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Getter
 @Setter
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VideoSegmentPlayed extends VideoPlayerEvent {
-
-    private Integer videoIndex;
+public class VideoPlayerInteraction extends VideoPlayerEvent {
 
     @NonNull
-    private Long segmentStartSeconds;
+    private Number currentTime;
 
     @NonNull
-    private Long segmentEndSeconds;
+    private String type;
+
+    private Map<String, Object> payload = new HashMap<>();
 
 }

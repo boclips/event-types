@@ -1,6 +1,5 @@
 package com.boclips.events.types.base;
 
-import com.boclips.events.types.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -9,9 +8,15 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEvent extends Event {
+public class VideoPlayerEvent extends UserEvent {
 
     @NonNull
-    private User user;
+    private String playerId;
+
+    @NonNull
+    private String videoId;
+
+    @NonNull
+    private Long videoDurationSeconds;
 
 }

@@ -16,6 +16,7 @@ public interface Topics {
     String USER_ACTIVATED = TopicNames.USER_ACTIVATED + SUFFIX;
     String VIDEOS_SEARCHED = TopicNames.VIDEOS_SEARCH + SUFFIX;
     String VIDEO_SEGMENT_PLAYED = TopicNames.VIDEO_SEGMENT_PLAYED + SUFFIX;
+    String VIDEO_PLAYER_INTERACTION = TopicNames.VIDEO_PLAYER_INTERACTION + SUFFIX;
     String COLLECTION_AGE_RANGE_CHANGED = TopicNames.COLLECTION_AGE_RANGE_CHANGED + SUFFIX;
     String COLLECTION_BOOKMARK_CHANGED = TopicNames.COLLECTION_BOOKMARK_CHANGED + SUFFIX;
     String COLLECTION_VISIBILITY_CHANGED = TopicNames.COLLECTION_VISIBILITY_CHANGED + SUFFIX;
@@ -50,6 +51,9 @@ public interface Topics {
 
     @Output(VIDEO_SEGMENT_PLAYED)
     MessageChannel videoSegmentPlayed();
+
+    @Output(VIDEO_PLAYER_INTERACTION)
+    MessageChannel videoPlayerInteraction();
 
     @Output(COLLECTION_AGE_RANGE_CHANGED)
     MessageChannel collectionAgeRangeChanged();
