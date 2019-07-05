@@ -5,6 +5,8 @@ public abstract class TopicNames {
     public static final String VIDEO_ANALYSIS_REQUESTED = "video-analysis-requested";
     public static final String VIDEO_PLAYBACK_SYNC_REQUESTED = "video-playback-sync-requested";
 
+    public static final String VIDEO_UPDATED = "video-updated";
+
     public static final String VIDEO_INDEXED = "video-indexed";
 
     public static final String VIDEO_ANALYSED = "video-analysed";

@@ -8,6 +8,7 @@ public interface Subscriptions {
 
     String SUFFIX = "-subscription";
 
+    String VIDEO_UPDATED = TopicNames.VIDEO_UPDATED + SUFFIX;
     String VIDEO_PLAYBACK_SYNC_REQUESTED = TopicNames.VIDEO_PLAYBACK_SYNC_REQUESTED + SUFFIX;
     String VIDEO_ANALYSIS_REQUESTED = TopicNames.VIDEO_ANALYSIS_REQUESTED + SUFFIX;
     String VIDEO_INDEXED = TopicNames.VIDEO_INDEXED + SUFFIX;
@@ -30,6 +31,9 @@ public interface Subscriptions {
     String VIDEO_SUBJECT_CLASSIFIED = TopicNames.VIDEO_SUBJECT_CLASSIFIED + SUFFIX;
     String VIDEO_CAPTIONS_CREATED = TopicNames.VIDEO_CAPTIONS_CREATED + SUFFIX;
     String VIDEO_TRANSCRIPT_CREATED = TopicNames.VIDEO_TRANSCRIPT_CREATED + SUFFIX;
+
+    @Input(VIDEO_UPDATED)
+    SubscribableChannel videoUpdated();
 
     @Input(VIDEO_PLAYBACK_SYNC_REQUESTED)
     SubscribableChannel videoPlaybackSyncRequested();
