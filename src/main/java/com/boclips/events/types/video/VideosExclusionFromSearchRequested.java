@@ -1,4 +1,4 @@
-package com.boclips.events.types;
+package com.boclips.events.types.video;
 
 import lombok.*;
 
@@ -8,7 +8,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VideosInclusionInStreamRequested {
+public class VideosExclusionFromSearchRequested {
 
     @NonNull
     private List<String> videoIds;
