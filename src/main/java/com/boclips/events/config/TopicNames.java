@@ -35,6 +35,14 @@ public abstract class TopicNames {
 
     public static final String VIDEOS_EXCLUSION_FROM_SEARCH_REQUESTED = "videos-exclusion-from-search-requested";
 
+    public static final String VIDEOS_EXCLUSION_FROM_STREAM_REQUESTED = "videos-exclusion-from-stream-requested";
+
+    public static final String VIDEOS_INCLUSION_IN_STREAM_REQUESTED = "videos-inclusion-from-stream-requested";
+
+    public static final String VIDEOS_EXCLUSION_FROM_DOWNLOAD_REQUESTED = "videos-exclusion-from-download-requested";
+
+    public static final String VIDEOS_INCLUSION_IN_DOWNLOAD_REQUESTED = "videos-inclusion-from-download-requested";
+
     public static final String VIDEO_ADDED_TO_COLLECTION = "video-added-to-collection";
 
     public static final String VIDEO_REMOVED_FROM_COLLECTION = "video-removed-from-collection";
