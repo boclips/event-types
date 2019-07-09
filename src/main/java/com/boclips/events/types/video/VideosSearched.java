@@ -4,6 +4,8 @@ import com.boclips.events.types.base.UserEvent;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+import java.util.List;
+
 @Getter
 @Setter
 @SuperBuilder
@@ -22,4 +24,7 @@ public class VideosSearched extends UserEvent {
 
     @NonNull
     private Long totalResults;
+
+    @NonNull
+    private List<String> pageVideoIds;
 }
