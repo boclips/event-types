@@ -1,7 +1,6 @@
 package com.boclips.events.spring;
 
 import com.boclips.events.config.BoclipsMessagingConfiguration;
-import com.boclips.events.config.Subscriptions;
 import com.boclips.events.config.Topics;
 import lombok.NonNull;
 import org.springframework.cloud.stream.annotation.EnableBinding;
@@ -9,13 +8,15 @@ import org.springframework.cloud.stream.config.BindingServiceProperties;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.Primary;
 import org.springframework.core.annotation.AnnotationUtils;
 
 import java.util.Map;
 
 @Configuration
-@EnableBinding(value = {Topics.class, Subscriptions.class})
+@EnableBinding(Topics.class)
+@Import(BoclipsSubscriptionRegistrationPostProcessor.class)
 class BoclipsEventsConfiguration {
 
     private final ApplicationContext applicationContext;
@@ -44,4 +45,5 @@ class BoclipsEventsConfiguration {
         return new BoclipsMessagingConfiguration(annotation.appName())
                 .forContext(BoclipsEventsConfiguration.class);
     }
+
 }

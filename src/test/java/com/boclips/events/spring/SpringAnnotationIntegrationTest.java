@@ -2,6 +2,7 @@ package com.boclips.events.spring;
 
 import com.boclips.events.config.Subscriptions;
 import com.boclips.events.config.Topics;
+import com.boclips.events.config.Subscriptions.VideoAnalysisRequestedSubscription;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class SpringAnnotationIntegrationTest {
     Topics topics;
 
     @Autowired
-    Subscriptions subscriptions;
+    VideoAnalysisRequestedSubscription videoAnalysisRequestedSubscription;
 
     @Autowired
     DemoSubscriptionListener demoSubscriptionListener;
@@ -56,6 +57,6 @@ public class SpringAnnotationIntegrationTest {
     }
 
     private void pushMessageIntoSubscription(String message) {
-        subscriptions.videoAnalysisRequested().send(MessageBuilder.withPayload(message).build());
+        videoAnalysisRequestedSubscription.channel().send(MessageBuilder.withPayload(message).build());
     }
 }
