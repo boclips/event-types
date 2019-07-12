@@ -1,8 +1,7 @@
 package com.boclips.events.spring;
 
-import com.boclips.events.config.Subscriptions;
 import com.boclips.events.config.Topics;
-import com.boclips.events.config.Subscriptions.VideoAnalysisRequestedSubscription;
+import com.boclips.events.config.subscriptions.VideoAnalysisRequestedSubscription;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

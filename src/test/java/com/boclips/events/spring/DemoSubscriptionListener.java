@@ -1,13 +1,13 @@
 package com.boclips.events.spring;
 
-import com.boclips.events.config.Subscriptions;
+import com.boclips.events.config.subscriptions.VideoAnalysisRequestedSubscription;
 import org.springframework.cloud.stream.annotation.StreamListener;
 
 public class DemoSubscriptionListener {
 
     private String message;
 
-    @StreamListener(Subscriptions.VIDEO_ANALYSIS_REQUESTED)
+    @StreamListener(VideoAnalysisRequestedSubscription.CHANNEL)
     public void receiveMessage(String message) {
         this.message = message;
     }

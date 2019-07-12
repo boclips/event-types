@@ -12,7 +12,7 @@ public class TopicInfo {
 
     static TopicInfo fromChannelName(String channelName, String channelSuffix) {
         if (!channelName.endsWith(channelSuffix)) {
-            throw new RuntimeException("Expected suffix $channelSuffix for channel $channelName");
+            throw new RuntimeException(String.format("Expected suffix %s for channel %s", channelSuffix, channelName));
         }
 
         String topicName = channelName.replaceFirst(channelSuffix + "$", "");
