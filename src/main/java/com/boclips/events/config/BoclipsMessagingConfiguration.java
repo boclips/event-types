@@ -5,9 +5,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.config.BindingProperties;
 import org.springframework.cloud.stream.config.BindingServiceProperties;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class BoclipsMessagingConfiguration {
 
@@ -30,11 +28,13 @@ public class BoclipsMessagingConfiguration {
             throw new IllegalArgumentException("Class " + contextClass.getName() + " must be annotated with " + EnableBinding.class.getName());
         }
 
-        Class<?>[] channelInterfaces = enableBindingAnnotation.value();
+        List<Class<?>> channelInterfaces = new ArrayList<>();
+        channelInterfaces.addAll(Arrays.asList(enableBindingAnnotation.value()));
+        channelInterfaces.addAll(SubscriptionInterfaceDetector.subscriptionInterfaceClasses());
 
         Map<String, BindingProperties> bindings = new HashMap<>();
 
-        Arrays.stream(channelInterfaces).forEach(channelInterface -> {
+        channelInterfaces.forEach(channelInterface -> {
             TopicDetector.scanTopicChannels(channelInterface).forEach(topic ->
                     bindings.put(topic.getChannelName(), topicBindingProperties(topic.getTopicName()))
             );

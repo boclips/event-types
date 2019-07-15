@@ -1,5 +1,6 @@
 package com.boclips.events.config;
 
+import com.boclips.events.config.subscriptions.VideoAnalysisRequestedSubscription;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Input;
@@ -28,9 +29,9 @@ public class BoclipsMessagingConfigurationTest {
     void configuresSubscriptionChannels() {
         BindingServiceProperties properties = new BoclipsMessagingConfiguration("some-service").forContext(MessagingContext.class);
 
-        BindingProperties topicProperties = properties.getBindings().get("videos-to-analyse-subscription");
+        BindingProperties topicProperties = properties.getBindings().get(VideoAnalysisRequestedSubscription.CHANNEL);
 
-        assertThat(topicProperties.getDestination()).isEqualTo("videos-to-analyse");
+        assertThat(topicProperties.getDestination()).isEqualTo(TopicConstants.VIDEO_ANALYSIS_REQUESTED);
         assertThat(topicProperties.getGroup()).isEqualTo("some-service");
     }
 
@@ -47,7 +48,7 @@ public class BoclipsMessagingConfigurationTest {
     static class InvalidContext {
     }
 
-    @EnableBinding({Topics.class, Subscriptions.class})
+    @EnableBinding({Topics.class})
     public static class MessagingContext {
 
     }
@@ -55,10 +56,5 @@ public class BoclipsMessagingConfigurationTest {
     interface Topics {
         @Output("analysed-videos-topic")
         MessageChannel analysedVideos();
-    }
-
-    interface Subscriptions {
-        @Input("videos-to-analyse-subscription")
-        SubscribableChannel videosToAnalyse();
     }
 }

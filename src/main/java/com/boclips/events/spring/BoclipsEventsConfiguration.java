@@ -2,6 +2,7 @@ package com.boclips.events.spring;
 
 import com.boclips.events.config.BoclipsMessagingConfiguration;
 import com.boclips.events.config.Topics;
+import com.boclips.events.config.subscriptions.VideoAnalysisRequestedSubscription;
 import lombok.NonNull;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.config.BindingServiceProperties;

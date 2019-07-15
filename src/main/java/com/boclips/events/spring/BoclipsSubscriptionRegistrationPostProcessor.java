@@ -1,16 +1,14 @@
 package com.boclips.events.spring;
 
+import com.boclips.events.config.SubscriptionInterfaceDetector;
 import org.springframework.aop.support.AopUtils;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.AnnotatedBeanDefinition;
-import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.beans.factory.config.ConfigurableBeanFactory;
 import org.springframework.beans.factory.support.BeanDefinitionRegistry;
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.binding.BindingBeanDefinitionRegistryUtils;
-import org.springframework.context.annotation.ClassPathScanningCandidateComponentProvider;
 import org.springframework.core.annotation.AnnotatedElementUtils;
 import org.springframework.core.annotation.AnnotationUtils;
 import org.springframework.core.type.AnnotationMetadata;
@@ -20,7 +18,6 @@ import org.springframework.util.ReflectionUtils;
 
 import java.lang.reflect.Method;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * Subscription channels configuration.
@@ -42,7 +39,7 @@ public class BoclipsSubscriptionRegistrationPostProcessor implements BeanPostPro
         this.registry = (BeanDefinitionRegistry) configurableBeanFactory;
         this.subscriptionInterfaceByChannelName = new HashMap<>();
 
-        for (Class<?> subscriptionInterface : subscriptionInterfaceclasses()) {
+        for (Class<?> subscriptionInterface : SubscriptionInterfaceDetector.subscriptionInterfaceClasses()) {
             for (Method method : subscriptionInterface.getDeclaredMethods()) {
                 Input input = AnnotationUtils.findAnnotation(method, Input.class);
                 if (input == null) {
@@ -50,23 +47,6 @@ public class BoclipsSubscriptionRegistrationPostProcessor implements BeanPostPro
                 }
                 subscriptionInterfaceByChannelName.put(input.value(), subscriptionInterface);
             }
-        }
-    }
-
-    private Iterable<Class<?>> subscriptionInterfaceclasses() {
-        Set<BeanDefinition> definitions = new PackageScanner().findCandidateComponents("com/boclips/events/config/subscriptions");
-        return definitions
-                .stream()
-                .map(this::classFrom)
-                .collect(Collectors.toList());
-    }
-
-    private Class<?> classFrom(BeanDefinition beanDefinition) {
-        String beanClassName = beanDefinition.getBeanClassName();
-        try {
-            return Class.forName(beanClassName);
-        } catch (ClassNotFoundException e) {
-            throw new UnsupportedOperationException("Could not load subscription interface candidate: " + beanClassName, e);
         }
     }
 
@@ -107,16 +87,4 @@ public class BoclipsSubscriptionRegistrationPostProcessor implements BeanPostPro
                         registry);
     }
 
-    static class PackageScanner extends ClassPathScanningCandidateComponentProvider {
-
-        PackageScanner() {
-            super(false);
-            addIncludeFilter((metadataReader, metadataReaderFactory) -> true);
-        }
-
-        @Override
-        protected boolean isCandidateComponent(AnnotatedBeanDefinition beanDefinition) {
-            return true;
-        }
-    }
 }
