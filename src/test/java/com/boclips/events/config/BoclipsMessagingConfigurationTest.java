@@ -1,14 +1,13 @@
 package com.boclips.events.config;
 
-import com.boclips.events.config.subscriptions.VideoAnalysisRequestedSubscription;
+import com.boclips.events.config.legacy.BoclipsMessagingConfiguration;
+import com.boclips.events.config.legacy.TopicConstants;
 import org.junit.jupiter.api.Test;
 import org.springframework.cloud.stream.annotation.EnableBinding;
-import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
 import org.springframework.cloud.stream.config.BindingProperties;
 import org.springframework.cloud.stream.config.BindingServiceProperties;
 import org.springframework.messaging.MessageChannel;
-import org.springframework.messaging.SubscribableChannel;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -17,7 +16,7 @@ public class BoclipsMessagingConfigurationTest {
 
     @Test
     void configuresTopicChannels() {
-        BindingServiceProperties properties = new BoclipsMessagingConfiguration("some-service").forContext(MessagingContext.class);
+        BindingServiceProperties properties = new BoclipsMessagingConfiguration().forContext(MessagingContext.class);
 
         BindingProperties topicProperties = properties.getBindings().get("analysed-videos-topic");
 
@@ -26,23 +25,8 @@ public class BoclipsMessagingConfigurationTest {
     }
 
     @Test
-    void configuresSubscriptionChannels() {
-        BindingServiceProperties properties = new BoclipsMessagingConfiguration("some-service").forContext(MessagingContext.class);
-
-        BindingProperties topicProperties = properties.getBindings().get(VideoAnalysisRequestedSubscription.CHANNEL);
-
-        assertThat(topicProperties.getDestination()).isEqualTo(TopicConstants.VIDEO_ANALYSIS_REQUESTED);
-        assertThat(topicProperties.getGroup()).isEqualTo("some-service");
-    }
-
-    @Test
     void throwsIfContextClassNotAnnotatedWithEnableBinding() {
-        assertThrows(Exception.class, () -> new BoclipsMessagingConfiguration("some-service").forContext(InvalidContext.class));
-    }
-
-    @Test
-    void throwsIfGroupIsEmpty() {
-        assertThrows(Exception.class, () -> new BoclipsMessagingConfiguration("").forContext(MessagingContext.class));
+        assertThrows(Exception.class, () -> new BoclipsMessagingConfiguration().forContext(InvalidContext.class));
     }
 
     static class InvalidContext {

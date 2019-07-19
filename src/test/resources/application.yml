@@ -1,0 +1,3 @@
+pubsub:
+  consumerGroup: demo-application
+  project: pubsub-test-246814

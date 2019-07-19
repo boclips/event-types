@@ -21,6 +21,7 @@ def springVersion = "2.1.2.RELEASE"
 def springCloudStream = "org.springframework.cloud:spring-cloud-stream:$springVersion"
 
 dependencies {
+    compile('com.google.cloud:google-cloud-pubsub:1.82.0')
     compileOnly(springCloudStream)
     compileOnly("org.projectlombok:lombok:1.18.6")
 

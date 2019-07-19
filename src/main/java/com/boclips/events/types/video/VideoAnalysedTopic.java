@@ -12,16 +12,12 @@ import java.util.Locale;
 @AllArgsConstructor
 public class VideoAnalysedTopic {
     @NonNull
-    private String name;
-
-    @NonNull
-    private Locale language;
-
-    @NonNull
     Double confidence;
-
     @NonNull
     List<TimeSegment> segments;
-
+    @NonNull
+    private String name;
+    @NonNull
+    private Locale language;
     private VideoAnalysedTopic parent;
 }
