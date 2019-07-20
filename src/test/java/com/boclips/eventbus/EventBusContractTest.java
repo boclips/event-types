@@ -1,50 +1,55 @@
 package com.boclips.eventbus;
 
-import com.boclips.eventbus.events.video.VideoUpdated;
+import com.boclips.eventbus.events.video.VideoAnalysisRequested;
 import com.boclips.eventbus.infrastructure.PubSubEventBus;
 import com.boclips.eventbus.infrastructure.SynchronousEventBus;
-import com.boclips.eventbus.testsupport.DemoApplication;
-import org.junit.jupiter.api.extension.ExtendWith;
+import com.boclips.eventbus.testsupport.AbstractSpringIntegrationTest;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.UUID;
-import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Stream;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.awaitility.Awaitility.await;
 
-@ActiveProfiles("test")
-@SpringBootTest(classes = DemoApplication.class)
-@ExtendWith(SpringExtension.class)
-public class EventBusContractTest {
+public class EventBusContractTest extends AbstractSpringIntegrationTest {
 
     @ParameterizedTest
     @ArgumentsSource(EventBusArgumentProvider.class)
     void pubSubTest(EventBus eventBus) {
-        AtomicReference<VideoUpdated> receivedEvent = new AtomicReference<>(null);
+        TestEventHandler<VideoAnalysisRequested> handler = new TestEventHandler<>();
+        eventBus.subscribe(VideoAnalysisRequested.class, handler);
 
-        eventBus.subscribe(VideoUpdated.class, receivedEvent::set);
-
-        VideoUpdated event = VideoUpdated.builder()
-                .videoId(UUID.randomUUID().toString())
-                .title("the title")
-                .contentPartnerName("the content partner")
+        VideoAnalysisRequested event = VideoAnalysisRequested.builder()
+                .videoId("1")
+                .videoUrl("url")
                 .build();
 
         eventBus.publish(event);
 
         await().atMost(5, SECONDS).untilAsserted(() ->
-                assertThat(receivedEvent.get()).isEqualTo(event)
+                assertThat(handler.getEvents()).containsExactly(event)
         );
+
+        eventBus.unsubscribe(VideoAnalysisRequested.class);
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(EventBusArgumentProvider.class)
+    void subscribing_whenTopicAlreadySubscribedTo_throws(EventBus eventBus) {
+        eventBus.subscribe(VideoAnalysisRequested.class, new TestEventHandler<>());
+
+        assertThatThrownBy(() -> eventBus.subscribe(VideoAnalysisRequested.class, new TestEventHandler<>()))
+                .isInstanceOf(ConflictingSubscriberException.class)
+                .hasMessageContaining(VideoAnalysisRequested.class.getSimpleName());
+
+        eventBus.unsubscribe(VideoAnalysisRequested.class);
     }
 }
 

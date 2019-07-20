@@ -1,10 +1,10 @@
 package com.boclips.eventbus.infrastructure;
 
+import com.boclips.eventbus.ConflictingSubscriberException;
 import com.boclips.eventbus.EventHandler;
 import com.boclips.eventbus.config.BoclipsEventsProperties;
 import com.boclips.eventbus.EventBus;
 import com.boclips.eventbus.config.EventConfigurationExtractor;
-import com.boclips.eventbus.config.EventListener;
 import com.boclips.eventbus.config.InvalidMessagingConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.gax.core.CredentialsProvider;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.Component;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Base64;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 @Component
@@ -35,6 +35,7 @@ public class PubSubEventBus implements EventBus {
     private final String consumerGroup;
     private final ObjectMapper objectMapper;
     private final CredentialsProvider credentialsProvider;
+    private final Map<Class<?>, Subscriber> subscriberByEventType = new HashMap<>();
 
     public PubSubEventBus(BoclipsEventsProperties properties, ObjectMapper objectMapper) {
         validateConfig(properties);
@@ -54,6 +55,9 @@ public class PubSubEventBus implements EventBus {
 
     @Override
     public <T> void subscribe(Class<T> eventType, EventHandler<T> eventHandler) {
+        subscriberByEventType.computeIfPresent(eventType, (cls, subscriber) -> {
+            throw new ConflictingSubscriberException("There already is a subscription for " + eventType.getSimpleName());
+        });
 
         String topicName = new EventConfigurationExtractor().getEventName(eventType);
 
@@ -83,7 +87,29 @@ public class PubSubEventBus implements EventBus {
                 .setCredentialsProvider(credentialsProvider)
                 .build();
 
+        subscriberByEventType.put(eventType, subscriber);
+
         subscriber.startAsync();
+    }
+
+    @Override
+    public void publish(Object event) {
+        String topicName = new EventConfigurationExtractor().getEventName(event.getClass());
+        ProjectTopicName topic = ProjectTopicName.of(projectId, topicName);
+        try {
+            Publisher publisher = Publisher.newBuilder(topic).setCredentialsProvider(credentialsProvider).build();
+            byte[] eventBytes = objectMapper.writeValueAsBytes(event);
+            ByteString eventByteString = ByteString.copyFrom(eventBytes);
+            PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(eventByteString).build();
+            publisher.publish(pubsubMessage).get();
+        } catch (IOException | InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Failed to publish a " + topic + " event", e);
+        }
+    }
+
+    @Override
+    public void unsubscribe(Class<?> eventType) {
+        subscriberByEventType.remove(eventType);
     }
 
     private void createSubscription(ProjectSubscriptionName subscriptionName, String topicId) throws IOException {
@@ -103,21 +129,6 @@ public class PubSubEventBus implements EventBus {
             return false;
         } catch (NotFoundException e) {
             return true;
-        }
-    }
-
-    @Override
-    public void publish(Object event) {
-        String topicName = new EventConfigurationExtractor().getEventName(event.getClass());
-        ProjectTopicName topic = ProjectTopicName.of(projectId, topicName);
-        try {
-            Publisher publisher = Publisher.newBuilder(topic).setCredentialsProvider(credentialsProvider).build();
-            byte[] eventBytes = objectMapper.writeValueAsBytes(event);
-            ByteString eventByteString = ByteString.copyFrom(eventBytes);
-            PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(eventByteString).build();
-            publisher.publish(pubsubMessage).get();
-        } catch (IOException | InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Failed to publish a " + topic + " event", e);
         }
     }
 
