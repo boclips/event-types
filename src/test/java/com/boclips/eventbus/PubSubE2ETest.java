@@ -1,6 +1,8 @@
 package com.boclips.eventbus;
 
 import com.boclips.eventbus.events.video.VideoUpdated;
+import com.boclips.eventbus.testsupport.DemoApplication;
+import com.boclips.eventbus.testsupport.DemoSubscriptionListener;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

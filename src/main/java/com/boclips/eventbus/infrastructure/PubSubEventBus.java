@@ -17,6 +17,7 @@ import com.google.pubsub.v1.ProjectSubscriptionName;
 import com.google.pubsub.v1.ProjectTopicName;
 import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.PushConfig;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 
 import java.io.ByteArrayInputStream;
@@ -26,6 +27,7 @@ import java.util.Base64;
 import java.util.concurrent.ExecutionException;
 
 @Component
+@ConditionalOnMissingBean(EventBus.class)
 public class PubSubEventBus implements EventBus {
 
     private final String projectId;

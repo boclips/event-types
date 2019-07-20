@@ -2,6 +2,7 @@ package com.boclips.eventbus;
 
 import com.boclips.eventbus.config.BoclipsEventsProperties;
 import com.boclips.eventbus.config.BoclipsSubscriptionRegistrationPostProcessor;
+import com.boclips.eventbus.infrastructure.PubSubEventBus;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -13,6 +14,10 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 @Configuration
-@Import({BoclipsSubscriptionRegistrationPostProcessor.class, BoclipsEventsProperties.class})
+@Import({
+        BoclipsSubscriptionRegistrationPostProcessor.class,
+        BoclipsEventsProperties.class,
+        PubSubEventBus.class
+})
 public @interface EnableBoclipsEvents {
 }
