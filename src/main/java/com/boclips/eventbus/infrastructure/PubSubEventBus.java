@@ -1,9 +1,9 @@
 package com.boclips.eventbus.infrastructure;
 
 import com.boclips.eventbus.ConflictingSubscriberException;
+import com.boclips.eventbus.EventBus;
 import com.boclips.eventbus.EventHandler;
 import com.boclips.eventbus.config.BoclipsEventsProperties;
-import com.boclips.eventbus.EventBus;
 import com.boclips.eventbus.config.EventConfigurationExtractor;
 import com.boclips.eventbus.config.InvalidMessagingConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,16 +21,19 @@ import com.google.pubsub.v1.PushConfig;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.PreDestroy;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.Base64;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.logging.Logger;
 
 @Component
 @ConditionalOnMissingBean(EventBus.class)
 public class PubSubEventBus implements EventBus {
-
     private final String projectId;
     private final String consumerGroup;
     private final ObjectMapper objectMapper;
@@ -90,6 +93,8 @@ public class PubSubEventBus implements EventBus {
         subscriberByEventType.put(eventType, subscriber);
 
         subscriber.startAsync();
+        Logger.getLogger(PubSubEventBus.class.getName())
+                .info(String.format("Started listening on %s", eventType));
     }
 
     @Override
@@ -153,5 +158,15 @@ public class PubSubEventBus implements EventBus {
         } catch (IllegalArgumentException e) {
             throw new InvalidMessagingConfiguration("PUBSUB_SECRET is not a base64-encoded string");
         }
+    }
+
+    @PreDestroy
+    public void closeSubscriptions() {
+        subscriberByEventType.forEach((key, subscriber) -> {
+            subscriber.stopAsync().awaitTerminated();
+
+            Logger.getLogger(PubSubEventBus.class.getName())
+                    .info(String.format("Closed subscription for %s [%s]", key, subscriber.state()));
+        });
     }
 }
