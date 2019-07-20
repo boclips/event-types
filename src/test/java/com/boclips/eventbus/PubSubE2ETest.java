@@ -37,7 +37,7 @@ public class PubSubE2ETest {
 
         eventBus.publish(event);
 
-        await().atMost(20, SECONDS).untilAsserted(() ->
+        await().atMost(5, SECONDS).untilAsserted(() ->
                 assertThat(demoSubscriptionListener.getMessage()).isEqualTo(event)
         );
     }

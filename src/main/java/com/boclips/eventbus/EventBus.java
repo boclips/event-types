@@ -1,10 +1,8 @@
 package com.boclips.eventbus;
 
-import com.boclips.eventbus.config.EventListener;
-
 public interface EventBus {
 
-    void subscribe(EventListener eventListener);
+    <T> void subscribe(Class<T> eventType, EventHandler<T> eventHandler);
 
     void publish(Object event);
 }

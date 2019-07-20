@@ -1,5 +1,6 @@
 package com.boclips.eventbus.infrastructure;
 
+import com.boclips.eventbus.EventHandler;
 import com.boclips.eventbus.config.BoclipsEventsProperties;
 import com.boclips.eventbus.EventBus;
 import com.boclips.eventbus.config.EventConfigurationExtractor;
@@ -52,12 +53,14 @@ public class PubSubEventBus implements EventBus {
     }
 
     @Override
-    public void subscribe(EventListener eventListener) {
+    public <T> void subscribe(Class<T> eventType, EventHandler<T> eventHandler) {
 
-        ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(projectId, eventListener.getTopic() + "." + consumerGroup);
+        String topicName = new EventConfigurationExtractor().getEventName(eventType);
+
+        ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(projectId, topicName + "." + consumerGroup);
 
         try {
-            createSubscription(subscriptionName, eventListener.getTopic());
+            createSubscription(subscriptionName, topicName);
         } catch (IOException e) {
             throw new RuntimeException("Could not create subscription", e);
         }
@@ -65,9 +68,8 @@ public class PubSubEventBus implements EventBus {
         MessageReceiver receiver =
                 (message, consumer) -> {
                     try {
-                        Object payload = objectMapper.readValue(message.getData().toStringUtf8(), eventListener.getEventType());
-                        eventListener.receive(payload);
-
+                        T payload = objectMapper.readValue(message.getData().toStringUtf8(), eventType);
+                        eventHandler.handle(payload);
                     } catch (Exception e) {
                         e.printStackTrace();
 

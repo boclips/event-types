@@ -22,10 +22,6 @@ public class EventListener {
         }
     }
 
-    public String getTopic() {
-        return method.getEventName();
-    }
-
     public Class<?> getEventType() {
         return method.getEventType();
     }
