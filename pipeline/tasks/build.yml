@@ -14,8 +14,7 @@ caches:
   - path: .gradle/
 
 params:
-  SPRING_CLOUD_GCP_PUBSUB_PROJECT_ID:
-  SPRING_CLOUD_GCP_PUBSUB_CREDENTIALS_ENCODED_KEY:
+  PUBSUB_SECRET:
 
 run:
   path: source/pipeline/scripts/build.sh
