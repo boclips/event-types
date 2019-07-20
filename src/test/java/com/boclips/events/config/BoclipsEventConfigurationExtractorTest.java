@@ -2,8 +2,6 @@ package com.boclips.events.config;
 
 import com.boclips.events.BoclipsEvent;
 import com.boclips.events.BoclipsEventListener;
-import com.boclips.events.config.EventConfigurationExtractor;
-import com.boclips.events.config.InvalidMessagingConfiguration;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
@@ -25,20 +23,20 @@ class BoclipsEventConfigurationExtractorTest {
 
     @Test
     public void getTopicName_returnsTopicNameForGivenMessageType() {
-        String topicName = eventConfigurationExtractor.getTopicName(TestPayload.class);
+        String topicName = eventConfigurationExtractor.getEventName(TestPayload.class);
 
         assertThat(topicName).isEqualTo("messaging-configurer-test-topic");
     }
 
     @Test
     public void getTopicName_whenMessageTypeIsNotAnnotatedWithTopic_throws() {
-        assertThatThrownBy(() -> eventConfigurationExtractor.getTopicName(TestPayloadWithoutTopicAnnotation.class))
+        assertThatThrownBy(() -> eventConfigurationExtractor.getEventName(TestPayloadWithoutTopicAnnotation.class))
                 .isInstanceOf(InvalidMessagingConfiguration.class);
     }
 
     @Test
     public void getTopicName_whenTopicNameIBlank_throws() {
-        assertThatThrownBy(() -> eventConfigurationExtractor.getTopicName(TestPayloadWithBlankTopicName.class))
+        assertThatThrownBy(() -> eventConfigurationExtractor.getEventName(TestPayloadWithBlankTopicName.class))
                 .isInstanceOf(InvalidMessagingConfiguration.class);
     }
 

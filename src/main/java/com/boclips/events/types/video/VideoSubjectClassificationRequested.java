@@ -1,5 +1,6 @@
 package com.boclips.events.types.video;
 
+import com.boclips.events.BoclipsEvent;
 import lombok.*;
 
 import java.io.Serializable;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@BoclipsEvent("video-subject-classification-requested")
 public class VideoSubjectClassificationRequested implements Serializable {
 
     @NonNull

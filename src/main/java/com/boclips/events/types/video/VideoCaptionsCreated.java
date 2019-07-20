@@ -1,5 +1,6 @@
 package com.boclips.events.types.video;
 
+import com.boclips.events.BoclipsEvent;
 import com.boclips.events.types.Captions;
 import lombok.*;
 
@@ -7,6 +8,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@BoclipsEvent("video-captions-created")
 public class VideoCaptionsCreated {
 
     @NonNull

@@ -4,11 +4,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.stream.test.binder.TestSupportBinderAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 
-@EnableBoclipsEvents()
-@SpringBootApplication(exclude = TestSupportBinderAutoConfiguration.class)
+@EnableBoclipsEvents
+@SpringBootApplication
 class DemoApplication {
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);

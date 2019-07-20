@@ -1,5 +1,6 @@
 package com.boclips.events.types;
 
+import com.boclips.events.BoclipsEvent;
 import com.boclips.events.types.base.UserEvent;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -9,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@BoclipsEvent("user-activated")
 public class UserActivated extends UserEvent {
 
     @NonNull

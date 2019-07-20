@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EventConfigurationExtractor {
-    public String getTopicName(Class<?> eventType) {
+    public String getEventName(Class<?> eventType) {
         BoclipsEvent boclipsEvent = AnnotationUtils.findAnnotation(eventType, BoclipsEvent.class);
 
         if (boclipsEvent == null || boclipsEvent.value().isEmpty()) {
@@ -36,7 +36,7 @@ public class EventConfigurationExtractor {
                 methods.add(ListenerMethodInfo.builder()
                         .method(method)
                         .eventType(eventType)
-                        .eventName(getTopicName(eventType))
+                        .eventName(getEventName(eventType))
                         .build());
             }
         }

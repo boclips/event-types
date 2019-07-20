@@ -1,12 +1,10 @@
 package com.boclips.events;
 
-import com.boclips.events.config.legacy.Topics;
 import com.boclips.events.types.video.VideoUpdated;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
@@ -22,23 +20,23 @@ import static org.awaitility.Awaitility.await;
 public class PubSubE2ETest {
 
     @Autowired
-    Topics topics;
+    EventBus eventBus;
 
     @Autowired
     DemoSubscriptionListener demoSubscriptionListener;
 
     @Test
     void pubSubTest() {
-        VideoUpdated message = VideoUpdated.builder()
+        VideoUpdated event = VideoUpdated.builder()
                 .videoId(UUID.randomUUID().toString())
                 .title("the title")
                 .contentPartnerName("the content partner")
                 .build();
 
-        topics.videoUpdated().send(MessageBuilder.withPayload(message).build());
+        eventBus.publish(event);
 
         await().atMost(20, SECONDS).untilAsserted(() ->
-                assertThat(demoSubscriptionListener.getMessage()).isEqualTo(message)
+                assertThat(demoSubscriptionListener.getMessage()).isEqualTo(event)
         );
     }
 }

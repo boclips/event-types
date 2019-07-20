@@ -1,5 +1,6 @@
 package com.boclips.events.types.video;
 
+import com.boclips.events.BoclipsEvent;
 import com.boclips.events.types.base.UserEvent;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
@@ -11,6 +12,7 @@ import java.util.List;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@BoclipsEvent("videos-searched")
 public class VideosSearched extends UserEvent {
 
     @NonNull

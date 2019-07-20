@@ -1,5 +1,6 @@
 package com.boclips.events.types.video;
 
+import com.boclips.events.BoclipsEvent;
 import com.boclips.events.types.Captions;
 import lombok.*;
 
@@ -10,6 +11,7 @@ import java.util.Locale;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@BoclipsEvent("video-analysed")
 public class VideoAnalysed {
 
     @NonNull

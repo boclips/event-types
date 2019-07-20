@@ -2,19 +2,20 @@ package com.boclips.events.infrastructure;
 
 import com.boclips.events.config.BoclipsEventsProperties;
 import com.boclips.events.EventBus;
+import com.boclips.events.config.EventConfigurationExtractor;
 import com.boclips.events.config.EventListener;
 import com.boclips.events.config.InvalidMessagingConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
-import com.google.cloud.pubsub.v1.MessageReceiver;
-import com.google.cloud.pubsub.v1.Subscriber;
-import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
-import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
+import com.google.cloud.pubsub.v1.*;
+import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.ProjectSubscriptionName;
 import com.google.pubsub.v1.ProjectTopicName;
+import com.google.pubsub.v1.PubsubMessage;
 import com.google.pubsub.v1.PushConfig;
 import org.springframework.stereotype.Component;
 
@@ -22,14 +23,15 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
+import java.util.concurrent.ExecutionException;
 
 @Component
 public class PubSubEventBus implements EventBus {
 
     private final String projectId;
     private final String consumerGroup;
-    private final Credentials credentials;
     private final ObjectMapper objectMapper;
+    private final CredentialsProvider credentialsProvider;
 
     public PubSubEventBus(BoclipsEventsProperties properties, ObjectMapper objectMapper) {
         validateConfig(properties);
@@ -40,7 +42,8 @@ public class PubSubEventBus implements EventBus {
 
         try {
             InputStream secretStream = new ByteArrayInputStream(Base64.getDecoder().decode(properties.getSecret()));
-            this.credentials = ServiceAccountCredentials.fromStream(secretStream);
+            Credentials credentials = ServiceAccountCredentials.fromStream(secretStream);
+            this.credentialsProvider = FixedCredentialsProvider.create(credentials);
         } catch (IOException e) {
             throw new IllegalArgumentException("PUBSUB_SECRET is invalid");
         }
@@ -73,7 +76,7 @@ public class PubSubEventBus implements EventBus {
 
         Subscriber subscriber = Subscriber
                 .newBuilder(subscriptionName, receiver)
-                .setCredentialsProvider(FixedCredentialsProvider.create(credentials))
+                .setCredentialsProvider(credentialsProvider)
                 .build();
 
         subscriber.startAsync();
@@ -81,7 +84,7 @@ public class PubSubEventBus implements EventBus {
 
     private void createSubscription(ProjectSubscriptionName subscriptionName, String topicId) throws IOException {
         SubscriptionAdminSettings subscriptionAdminSettings = SubscriptionAdminSettings.newBuilder()
-                .setCredentialsProvider(FixedCredentialsProvider.create(credentials)).build();
+                .setCredentialsProvider(credentialsProvider).build();
         SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create(subscriptionAdminSettings);
 
         if (subscriptionDoesNotExist(subscriptionAdminClient, subscriptionName)) {
@@ -101,7 +104,17 @@ public class PubSubEventBus implements EventBus {
 
     @Override
     public void publish(Object event) {
-
+        String topicName = new EventConfigurationExtractor().getEventName(event.getClass());
+        ProjectTopicName topic = ProjectTopicName.of(projectId, topicName);
+        try {
+            Publisher publisher = Publisher.newBuilder(topic).setCredentialsProvider(credentialsProvider).build();
+            byte[] eventBytes = objectMapper.writeValueAsBytes(event);
+            ByteString eventByteString = ByteString.copyFrom(eventBytes);
+            PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(eventByteString).build();
+            publisher.publish(pubsubMessage).get();
+        } catch (IOException | InterruptedException | ExecutionException e) {
+            throw new RuntimeException("Failed to publish a " + topic + " event", e);
+        }
     }
 
     private static void validateConfig(BoclipsEventsProperties properties) {
