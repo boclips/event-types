@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class SynchronousFakeEventBusTest {
 
@@ -51,14 +50,14 @@ class SynchronousFakeEventBusTest {
 
     @Test
     void getEventOfType_throws_whenNoEventFound() {
-        synchronousFakeEventBus.clear();
+        synchronousFakeEventBus.clearState();
 
         assertThatThrownBy(() -> synchronousFakeEventBus.getEventOfType(VideoUpdated.class));
     }
 
     @Test
     void clear_clearsAllState() {
-        synchronousFakeEventBus.clear();
+        synchronousFakeEventBus.clearState();
 
         assertThat(synchronousFakeEventBus.hasReceivedEventOfType(VideoUpdated.class)).isFalse();
     }

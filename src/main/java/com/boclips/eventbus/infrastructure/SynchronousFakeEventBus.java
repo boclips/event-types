@@ -55,15 +55,14 @@ public class SynchronousFakeEventBus implements EventBus {
         }
 
         if (eventsOfType.size() > 1) {
-            throw new IllegalStateException(String.format("Found more than one ({1}) events matching {2}", eventsOfType.size(), eventType));
+            throw new IllegalStateException(String.format("Found more than one (%d) events matching {%s}", eventsOfType.size(), eventType));
         }
 
         return (T) eventsOfType.stream().findFirst().get();
     }
 
-    public void clear() {
+    public void clearState() {
         allEvents.clear();
-        handlerByEvent.clear();
     }
 
     public List<Object> getReceivedEvents() {

@@ -17,7 +17,7 @@ public class BoclipsSubscriptionRegistrationPostProcessor implements BeanPostPro
     public Object postProcessAfterInitialization(Object object, String beanName) throws BeansException {
         for (EventConfigurationExtractor.ListenerMethodInfo listenerMethod : eventConfigurationExtractor.getListenerMethods(object)) {
             EventListener listener = new EventListener(object, listenerMethod);
-            eventBus.subscribe(listener.getEventType(), event -> listener.receive(event));
+            eventBus.subscribe(listener.getEventType(), listener::receive);
         }
         return object;
     }
