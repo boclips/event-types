@@ -1,88 +1,59 @@
-Latest version: [![](https://jitpack.io/v/boclips/events.svg)](https://jitpack.io/#knowledgemotion/events)
+Latest version: [![](https://jitpack.io/v/boclips/events.svg)](https://jitpack.io/#boclips/event-bus)
 
 # Usage
 
 **Set up jitpack:**
-Add the repository, as described [here](https://jitpack.io/#boclips/events)
+Add the repository, as described [here](https://jitpack.io/#boclips/event-bus)
 
 **In build.gradle**:
 ```
-ext {
-  set('springCloudVersion', 'Greenwich.SR1')
-}
-
 dependencies {
-  implementation("org.springframework.cloud:spring-cloud-gcp-starter-pubsub")
-  implementation("org.springframework.cloud:spring-cloud-gcp-pubsub-stream-binder")
-  implementation("com.github.boclips:events:<version>")
+  implementation("com.github.boclips:event-bus:<version>")
 
   testImplementation("org.springframework.cloud:spring-cloud-stream-test-support")
-}
-
-dependencyManagement {
-  imports {
-    mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-  }
 }
 ```
 
 **Add annotation**:
 ```kotlin
-@EnableBoclipsEvents(appName = "your-app-name")
+@EnableBoclipsEvents
 class MySpringBootApp
 ```
-`your-app-name` will be used as a subscription suffix.
 
 **Publishing events**:
 ```kotlin
-@Autowired lateinit var topics: Topics
+@Autowired lateinit var eventBus: EventBus
 
 val analysedVideo: AnalysedVideo = AnalysedVideo.builder().build()
-topics.videosToAnalyse().send(MessageBuilder.withPayload(videoToAnalyse).build()) 
+eventBus.publish(videoToAnalyse) 
 ```
 
 **Listening to events**:
 ```kotlin
-@StreamListener(Subscriptions.ANALYSED_VIDEOS)
+@BoclipsEventListener
 fun onVideoAnalysed(analysedVideo: AnalysedVideo) {
 }
 ```
 
 **Testing**:
-Add this to `application-test.yml` in order to run tests without access to PubSub:
-```yml
-spring:
-  cloud:
-    gcp:
-      pubsub:
-        enabled: false
+The `event-bus` provides a fake which can be used for integration tests.
+
+In your testing configuration, use `SynchronousFakeEventBus` which provides helper methods to inspect what is happening on the event bus.
+
+For example:
+
 ```
-With PubSub disabled, the app can still send and receive messages during test runs
-because Spring instantiates all the necessary channels. A `MessageCollector` bean
-can be autowired in tests and used for checking what messages have been sent to topics:
-```kotlin
-val message = messageCollector.forChannel(topics.analysedVideos()).poll()
-assertThat(message.payload.toString()).contains("1234")
+eventBus.getEventOfType(VideoUpdated.class)
 ```
 
-Testing event listeners is possible using channels available via the `Subscriptions` bean:
-```kotlin
-subscriptions.analysedVideos().send(MessageBuilder.withPayload(analysedVideo).build())
-```
-
-In order to avoid test pollution, it's a good practice to clear all topic channels
-before each test:
-```kotlin
-messageCollector.forChannel(topics.analysedVideos()).clear()
-```
+This will return the event of type VideoUpdated.
 
 ## Note
-All Topics and Events ([see](src/main/java/com/boclips/events/types)) 
-are defined in this library, so that they can be shared among all services.
+All Events ([see](src/main/java/com/boclips/event-bus/events)) are defined in this library, 
+so that they can be shared among all services.
 
 When adding a new topic, the name should:
 
 - represent an event that has happened, e.g. video-indexed, rather than an intention, e.g. analyse-video
 - conform to the noun-verbed convention, e.g. video-indexed, rather than indexed-video
 - be the same name as the type of payload passing through it
-
