@@ -55,5 +55,4 @@ class PubSubEventBusTest {
                 .isInstanceOf(InvalidMessagingConfiguration.class)
                 .hasMessage("PUBSUB_SECRET is not a base64-encoded string");
     }
-
 }

@@ -2,7 +2,7 @@ package com.boclips.eventbus;
 
 import com.boclips.eventbus.events.video.VideoAnalysisRequested;
 import com.boclips.eventbus.infrastructure.PubSubEventBus;
-import com.boclips.eventbus.infrastructure.SynchronousEventBus;
+import com.boclips.eventbus.infrastructure.SynchronousFakeEventBus;
 import com.boclips.eventbus.testsupport.AbstractSpringIntegrationTest;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -11,6 +11,8 @@ import org.junit.jupiter.params.provider.ArgumentsProvider;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.stream.Stream;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -54,12 +56,24 @@ public class EventBusContractTest extends AbstractSpringIntegrationTest {
 }
 
 class EventBusArgumentProvider implements ArgumentsProvider {
-
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
-                Arguments.of(new SynchronousEventBus()),
+                Arguments.of(new SynchronousFakeEventBus()),
                 Arguments.of(SpringExtension.getApplicationContext(context).getBean(PubSubEventBus.class))
         );
+    }
+}
+
+class TestEventHandler<T> implements EventHandler<T> {
+    private final List<T> events = new ArrayList<>();
+
+    @Override
+    public void handle(T event) {
+        events.add(event);
+    }
+
+    public List<T> getEvents() {
+        return events;
     }
 }
