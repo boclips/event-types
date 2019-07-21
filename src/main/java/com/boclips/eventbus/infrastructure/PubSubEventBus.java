@@ -152,7 +152,7 @@ public class PubSubEventBus implements EventBus {
 
         String projectId = properties.getProject();
         if (projectId == null || projectId.isEmpty()) {
-            throw new IllegalArgumentException("PUBSUB_PROJECT_ID must be defined");
+            throw new IllegalArgumentException("PUBSUB_PROJECT must be defined");
         }
 
         String secret = properties.getSecret();

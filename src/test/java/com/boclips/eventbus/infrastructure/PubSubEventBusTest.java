@@ -27,7 +27,7 @@ class PubSubEventBusTest {
         assertThatThrownBy(() -> {
             properties.setProject(null);
             new PubSubEventBus(properties, new ObjectMapper());
-        }).hasMessage("PUBSUB_PROJECT_ID must be defined");
+        }).hasMessage("PUBSUB_PROJECT must be defined");
     }
 
     @Test
