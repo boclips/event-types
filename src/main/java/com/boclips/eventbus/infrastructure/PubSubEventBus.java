@@ -101,14 +101,18 @@ public class PubSubEventBus implements EventBus {
     public void publish(Object event) {
         String topicName = new EventConfigurationExtractor().getEventName(event.getClass());
         ProjectTopicName topic = ProjectTopicName.of(projectId, topicName);
+
+        Publisher publisher = createPublisher(topic);
+
         try {
-            Publisher publisher = Publisher.newBuilder(topic).setCredentialsProvider(credentialsProvider).build();
             byte[] eventBytes = objectMapper.writeValueAsBytes(event);
             ByteString eventByteString = ByteString.copyFrom(eventBytes);
             PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(eventByteString).build();
             publisher.publish(pubsubMessage).get();
         } catch (IOException | InterruptedException | ExecutionException e) {
             throw new RuntimeException("Failed to publish a " + topic + " event", e);
+        } finally {
+            publisher.shutdown();
         }
     }
 
@@ -158,6 +162,16 @@ public class PubSubEventBus implements EventBus {
         } catch (IllegalArgumentException e) {
             throw new InvalidMessagingConfiguration("PUBSUB_SECRET is not a base64-encoded string");
         }
+    }
+
+    private Publisher createPublisher(ProjectTopicName topic) {
+        Publisher publisher;
+        try {
+            publisher = Publisher.newBuilder(topic).setCredentialsProvider(credentialsProvider).build();
+        } catch (IOException e) {
+            throw new IllegalStateException(String.format("Failed to create publisher for %s", topic));
+        }
+        return publisher;
     }
 
     @PreDestroy
