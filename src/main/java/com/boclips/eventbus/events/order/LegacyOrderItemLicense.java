@@ -1,10 +1,9 @@
-package com.boclips.eventbus.events;
+package com.boclips.eventbus.events.order;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -12,17 +11,13 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class LegacyOrderItem {
+public class LegacyOrderItemLicense {
     @NonNull
     private String id;
 
     @NonNull
     @JsonProperty("uuid")
     private String uuid;
-
-    @NonNull
-    @JsonProperty("asset_id")
-    private String assetId;
 
     @NonNull
     @JsonProperty("date_updated")
@@ -33,15 +28,8 @@ public class LegacyOrderItem {
     private Date dateCreated;
 
     @NonNull
-    private LegacyOrderItemLicense license;
+    private String code;
 
     @NonNull
-    private BigDecimal price;
-
-    @NonNull
-    @JsonProperty("transcripts_required")
-    private Boolean transcriptsRequired;
-
-    @NonNull
-    private String status;
+    private String description;
 }

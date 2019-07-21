@@ -1,4 +1,4 @@
-package com.boclips.eventbus.events;
+package com.boclips.eventbus.events.order;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;

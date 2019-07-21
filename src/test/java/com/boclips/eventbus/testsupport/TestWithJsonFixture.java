@@ -1,4 +1,4 @@
-package com.boclips.eventbus.events;
+package com.boclips.eventbus.testsupport;
 
 import java.io.BufferedReader;
 import java.io.IOException;

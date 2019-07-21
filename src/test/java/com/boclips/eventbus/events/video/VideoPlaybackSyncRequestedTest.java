@@ -1,4 +1,4 @@
-package com.boclips.eventbus.events;
+package com.boclips.eventbus.events.video;
 
 import com.boclips.eventbus.events.video.VideoPlaybackSyncRequested;
 import com.fasterxml.jackson.databind.ObjectMapper;

@@ -1,5 +1,6 @@
-package com.boclips.eventbus.events.base;
+package com.boclips.eventbus.events.video;
 
+import com.boclips.eventbus.events.base.UserEvent;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 

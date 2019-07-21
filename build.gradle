@@ -31,6 +31,7 @@ jar {
 
 dependencies {
     compile('com.google.cloud:google-cloud-pubsub:1.83.0')
+    
     compileOnly("org.springframework.boot:spring-boot-starter:$springVersion")
     compileOnly(jackson)
     compileOnly("org.projectlombok:lombok:1.18.6")

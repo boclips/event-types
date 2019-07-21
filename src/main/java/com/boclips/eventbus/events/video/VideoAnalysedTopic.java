@@ -1,6 +1,5 @@
 package com.boclips.eventbus.events.video;
 
-import com.boclips.eventbus.events.TimeSegment;
 import lombok.*;
 
 import java.util.List;

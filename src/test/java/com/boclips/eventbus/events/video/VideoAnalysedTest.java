@@ -1,6 +1,6 @@
-package com.boclips.eventbus.events;
+package com.boclips.eventbus.events.video;
 
-import com.boclips.eventbus.events.video.VideoAnalysed;
+import com.boclips.eventbus.testsupport.TestWithJsonFixture;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 

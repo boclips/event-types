@@ -1,5 +1,6 @@
-package com.boclips.eventbus.events;
+package com.boclips.eventbus.events.order;
 
+import com.boclips.eventbus.BoclipsEvent;
 import lombok.*;
 
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@BoclipsEvent(value = "legacy-order-submitted")
 public class LegacyOrderSubmitted {
     @NonNull
     private LegacyOrder order;

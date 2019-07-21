@@ -1,7 +1,6 @@
 package com.boclips.eventbus.events.video;
 
 import com.boclips.eventbus.BoclipsEvent;
-import com.boclips.eventbus.events.Captions;
 import lombok.*;
 
 @Data
