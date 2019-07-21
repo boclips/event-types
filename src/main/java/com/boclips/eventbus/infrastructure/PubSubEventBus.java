@@ -122,13 +122,16 @@ public class PubSubEventBus implements EventBus {
     }
 
     private void createSubscription(ProjectSubscriptionName subscriptionName, String topicId) throws IOException {
-        SubscriptionAdminSettings subscriptionAdminSettings = SubscriptionAdminSettings.newBuilder()
-                .setCredentialsProvider(credentialsProvider).build();
-        SubscriptionAdminClient subscriptionAdminClient = SubscriptionAdminClient.create(subscriptionAdminSettings);
+        SubscriptionAdminSettings subscriptionAdminSettings = SubscriptionAdminSettings
+                .newBuilder()
+                .setCredentialsProvider(credentialsProvider)
+                .build();
 
-        if (subscriptionDoesNotExist(subscriptionAdminClient, subscriptionName)) {
-            ProjectTopicName topicName = ProjectTopicName.of(projectId, topicId);
-            subscriptionAdminClient.createSubscription(subscriptionName, topicName, PushConfig.getDefaultInstance(), 0);
+        try (SubscriptionAdminClient adminClient = SubscriptionAdminClient.create(subscriptionAdminSettings)) {
+            if (subscriptionDoesNotExist(adminClient, subscriptionName)) {
+                ProjectTopicName topicName = ProjectTopicName.of(projectId, topicId);
+                adminClient.createSubscription(subscriptionName, topicName, PushConfig.getDefaultInstance(), 0);
+            }
         }
     }
 
