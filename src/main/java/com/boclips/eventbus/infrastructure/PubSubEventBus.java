@@ -14,10 +14,7 @@ import com.google.auth.Credentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.pubsub.v1.*;
 import com.google.protobuf.ByteString;
-import com.google.pubsub.v1.ProjectSubscriptionName;
-import com.google.pubsub.v1.ProjectTopicName;
-import com.google.pubsub.v1.PubsubMessage;
-import com.google.pubsub.v1.PushConfig;
+import com.google.pubsub.v1.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
 
@@ -92,7 +89,7 @@ public class PubSubEventBus implements EventBus {
 
         subscriberByEventType.put(eventType, subscriber);
 
-        subscriber.startAsync();
+        subscriber.startAsync().awaitRunning();
         Logger.getLogger(PubSubEventBus.class.getName())
                 .info(String.format("Started listening on %s", eventType));
     }
@@ -122,16 +119,38 @@ public class PubSubEventBus implements EventBus {
     }
 
     private void createSubscription(ProjectSubscriptionName subscriptionName, String topicId) throws IOException {
+        TopicAdminSettings topicAdminSettings = TopicAdminSettings
+                .newBuilder()
+                .setCredentialsProvider(credentialsProvider)
+                .build();
+
         SubscriptionAdminSettings subscriptionAdminSettings = SubscriptionAdminSettings
                 .newBuilder()
                 .setCredentialsProvider(credentialsProvider)
                 .build();
 
+        ProjectTopicName topicName = ProjectTopicName.of(projectId, topicId);
+        try (TopicAdminClient adminClient = TopicAdminClient.create(topicAdminSettings)) {
+            if (topicDoesNotExist(adminClient, topicName)) {
+                Topic topic = adminClient.createTopic(topicName);
+                Logger.getLogger(PubSubEventBus.class.getName()).info(String.format("Created topic %s", topic.getName()));
+            }
+        }
+
         try (SubscriptionAdminClient adminClient = SubscriptionAdminClient.create(subscriptionAdminSettings)) {
             if (subscriptionDoesNotExist(adminClient, subscriptionName)) {
-                ProjectTopicName topicName = ProjectTopicName.of(projectId, topicId);
-                adminClient.createSubscription(subscriptionName, topicName, PushConfig.getDefaultInstance(), 0);
+                Subscription subscription = adminClient.createSubscription(subscriptionName, topicName, PushConfig.getDefaultInstance(), 0);
+                Logger.getLogger(PubSubEventBus.class.getName()).info(String.format("Created subscription %s", subscription.getName()));
             }
+        }
+    }
+
+    private boolean topicDoesNotExist(TopicAdminClient topicAdminClient, ProjectTopicName topicName) {
+        try {
+            topicAdminClient.getTopic(topicName);
+            return false;
+        } catch(NotFoundException e) {
+            return true;
         }
     }
 
