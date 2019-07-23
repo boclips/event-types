@@ -97,7 +97,13 @@ public class PubSubEventBus implements EventBus {
     @Override
     public void publish(Object event) {
         String topicName = new EventConfigurationExtractor().getEventName(event.getClass());
-        ProjectTopicName topic = ProjectTopicName.of(projectId, topicName);
+
+        ProjectTopicName topic;
+        try {
+            topic = createTopicIfDoesNotExist(topicName);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to publish a " + topicName + " event", e);
+        }
 
         Publisher publisher = createPublisher(topic);
 
@@ -119,30 +125,42 @@ public class PubSubEventBus implements EventBus {
     }
 
     private void createSubscription(ProjectSubscriptionName subscriptionName, String topicId) throws IOException {
+
+        ProjectTopicName topicName = createTopicIfDoesNotExist(topicId);
+
+        try (SubscriptionAdminClient subscriptionAdmin = subscriptionAdminClient()) {
+            if (subscriptionDoesNotExist(subscriptionAdmin, subscriptionName)) {
+                Subscription subscription = subscriptionAdmin.createSubscription(subscriptionName, topicName, PushConfig.getDefaultInstance(), 0);
+                Logger.getLogger(PubSubEventBus.class.getName()).info(String.format("Created subscription %s", subscription.getName()));
+            }
+        }
+    }
+
+    public TopicAdminClient topicAdminClient() throws IOException {
         TopicAdminSettings topicAdminSettings = TopicAdminSettings
                 .newBuilder()
                 .setCredentialsProvider(credentialsProvider)
                 .build();
+        return TopicAdminClient.create(topicAdminSettings);
+    }
 
+    public SubscriptionAdminClient subscriptionAdminClient() throws IOException {
         SubscriptionAdminSettings subscriptionAdminSettings = SubscriptionAdminSettings
                 .newBuilder()
                 .setCredentialsProvider(credentialsProvider)
                 .build();
+        return SubscriptionAdminClient.create(subscriptionAdminSettings);
+    }
 
+    private ProjectTopicName createTopicIfDoesNotExist(String topicId) throws IOException {
         ProjectTopicName topicName = ProjectTopicName.of(projectId, topicId);
-        try (TopicAdminClient adminClient = TopicAdminClient.create(topicAdminSettings)) {
-            if (topicDoesNotExist(adminClient, topicName)) {
-                Topic topic = adminClient.createTopic(topicName);
+        try (TopicAdminClient topicAdmin = topicAdminClient()) {
+            if (topicDoesNotExist(topicAdmin, topicName)) {
+                Topic topic = topicAdmin.createTopic(topicName);
                 Logger.getLogger(PubSubEventBus.class.getName()).info(String.format("Created topic %s", topic.getName()));
             }
         }
-
-        try (SubscriptionAdminClient adminClient = SubscriptionAdminClient.create(subscriptionAdminSettings)) {
-            if (subscriptionDoesNotExist(adminClient, subscriptionName)) {
-                Subscription subscription = adminClient.createSubscription(subscriptionName, topicName, PushConfig.getDefaultInstance(), 0);
-                Logger.getLogger(PubSubEventBus.class.getName()).info(String.format("Created subscription %s", subscription.getName()));
-            }
-        }
+        return topicName;
     }
 
     private boolean topicDoesNotExist(TopicAdminClient topicAdminClient, ProjectTopicName topicName) {

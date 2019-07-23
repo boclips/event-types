@@ -1,7 +1,7 @@
 package com.boclips.eventbus;
 
 import com.boclips.eventbus.events.video.VideoUpdated;
-import com.boclips.eventbus.testsupport.AbstractSpringIntegrationTest;
+import com.boclips.eventbus.testsupport.AbstractPubSubTest;
 import com.boclips.eventbus.testsupport.DemoSubscriptionListener;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
 
-public class PubSubE2ETest extends AbstractSpringIntegrationTest {
+public class SpringAutoconfigurationPubSubTest extends AbstractPubSubTest {
 
     @Autowired
     EventBus eventBus;
