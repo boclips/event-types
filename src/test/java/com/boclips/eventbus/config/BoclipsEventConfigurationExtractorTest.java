@@ -2,6 +2,7 @@ package com.boclips.eventbus.config;
 
 import com.boclips.eventbus.BoclipsEvent;
 import com.boclips.eventbus.BoclipsEventListener;
+import com.boclips.eventbus.ExceptionHandlingPolicy;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
@@ -58,6 +59,23 @@ class BoclipsEventConfigurationExtractorTest {
         assertThat(listenerMethods.get(0).getMethod()).isEqualTo(expectedListenerMethod);
         assertThat(listenerMethods.get(0).getEventType()).isEqualTo(TestPayload.class);
         assertThat(listenerMethods.get(0).getEventName()).isEqualTo("messaging-configurer-test-topic");
+        assertThat(listenerMethods.get(0).getExceptionHandlingPolicy()).isEqualTo(ExceptionHandlingPolicy.NO_RETRY);
+    }
+
+    static class RetriableTestListener {
+
+        @BoclipsEventListener(onException = ExceptionHandlingPolicy.RETRY)
+        public void onEvent(TestPayload eventPayload) {
+
+        }
+    }
+
+    @Test
+    public void getListenerMethods_whenOnExceptionRetry_returnsAnnotatedMethods() {
+        List<EventConfigurationExtractor.ListenerMethodInfo> listenerMethods = eventConfigurationExtractor.getListenerMethods(new RetriableTestListener());
+
+        assertThat(listenerMethods).hasSize(1);
+        assertThat(listenerMethods.get(0).getExceptionHandlingPolicy()).isEqualTo(ExceptionHandlingPolicy.RETRY);
     }
 
 }

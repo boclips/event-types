@@ -3,6 +3,7 @@ package com.boclips.eventbus.infrastructure;
 import com.boclips.eventbus.ConflictingSubscriberException;
 import com.boclips.eventbus.EventBus;
 import com.boclips.eventbus.EventHandler;
+import com.boclips.eventbus.ExceptionHandlingPolicy;
 import com.boclips.eventbus.config.BoclipsEventsProperties;
 import com.boclips.eventbus.config.EventConfigurationExtractor;
 import com.boclips.eventbus.config.InvalidMessagingConfiguration;
@@ -55,7 +56,7 @@ public class PubSubEventBus implements EventBus {
     }
 
     @Override
-    public <T> void subscribe(Class<T> eventType, EventHandler<T> eventHandler) {
+    public <T> void subscribe(Class<T> eventType, EventHandler<T> eventHandler, ExceptionHandlingPolicy exceptionHandlingPolicy) {
         subscriberByEventType.computeIfPresent(eventType, (cls, subscriber) -> {
             throw new ConflictingSubscriberException("There already is a subscription for " + eventType.getSimpleName());
         });
@@ -75,11 +76,15 @@ public class PubSubEventBus implements EventBus {
                     try {
                         T payload = objectMapper.readValue(message.getData().toStringUtf8(), eventType);
                         eventHandler.handle(payload);
+                        consumer.ack();
                     } catch (Exception e) {
                         logger.severe("Error handling message from " + subscriptionName.toString() + ": " + e.getMessage());
                         e.printStackTrace();
-                    } finally {
-                        consumer.ack();
+                        if(exceptionHandlingPolicy == ExceptionHandlingPolicy.NO_RETRY) {
+                            consumer.ack();
+                        } else {
+                            consumer.nack();
+                        }
                     }
                 };
 

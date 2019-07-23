@@ -1,6 +1,7 @@
 package com.boclips.eventbus;
 
 import com.boclips.eventbus.events.video.VideoAnalysisRequested;
+import com.boclips.eventbus.events.video.VideoPlaybackSyncRequested;
 import com.boclips.eventbus.infrastructure.PubSubEventBus;
 import com.boclips.eventbus.infrastructure.SynchronousFakeEventBus;
 import com.boclips.eventbus.testsupport.AbstractPubSubTest;
@@ -37,6 +38,23 @@ public class EventBusContractTest extends AbstractPubSubTest {
 
         await().atMost(5, SECONDS).untilAsserted(() ->
                 assertThat(handler.getEvents()).containsExactly(event)
+        );
+
+        eventBus.unsubscribe(VideoAnalysisRequested.class);
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(EventBusArgumentProvider.class)
+    void subscription_whenExceptionPolicyRetry_receivedTheEventAgain(EventBus eventBus) {
+        SecondTimeLuckyEventHandler<VideoPlaybackSyncRequested> handler = new SecondTimeLuckyEventHandler<>();
+        eventBus.subscribe(VideoPlaybackSyncRequested.class, handler, ExceptionHandlingPolicy.RETRY);
+
+        VideoPlaybackSyncRequested event = VideoPlaybackSyncRequested.builder().videoId("1").build();
+
+        eventBus.publish(event);
+
+        await().atMost(5, SECONDS).untilAsserted(() ->
+                assertThat(handler.getEvent()).isEqualTo(event)
         );
 
         eventBus.unsubscribe(VideoAnalysisRequested.class);
@@ -102,5 +120,25 @@ class TestEventHandler<T> implements EventHandler<T> {
 
     public List<T> getEvents() {
         return events;
+    }
+}
+
+class SecondTimeLuckyEventHandler<T> implements EventHandler<T> {
+
+    private boolean firstTime = true;
+
+    private T event;
+
+    @Override
+    public void handle(T event) {
+        if(firstTime) {
+            firstTime = false;
+            throw new RuntimeException("Perhaps it'll work the next time round?");
+        }
+        this.event = event;
+    }
+
+    public T getEvent() {
+        return event;
     }
 }

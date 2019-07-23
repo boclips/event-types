@@ -8,4 +8,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface BoclipsEventListener {
+
+    ExceptionHandlingPolicy onException() default ExceptionHandlingPolicy.NO_RETRY;
 }

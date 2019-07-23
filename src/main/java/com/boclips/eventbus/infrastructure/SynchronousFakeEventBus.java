@@ -3,6 +3,7 @@ package com.boclips.eventbus.infrastructure;
 import com.boclips.eventbus.ConflictingSubscriberException;
 import com.boclips.eventbus.EventBus;
 import com.boclips.eventbus.EventHandler;
+import com.boclips.eventbus.ExceptionHandlingPolicy;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,16 +13,19 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class SynchronousFakeEventBus implements EventBus {
+    private Logger logger = Logger.getLogger(getClass().getName());
     private Map<Class<?>, EventHandler<?>> handlerByEvent = new HashMap<>();
+    private Map<Class<?>, ExceptionHandlingPolicy> exceptionPolicyByEvent = new HashMap<>();
     private List<Object> allEvents = new ArrayList<>();
 
     @Override
-    public <T> void subscribe(Class<T> eventType, EventHandler<T> eventHandler) {
+    public <T> void subscribe(Class<T> eventType, EventHandler<T> eventHandler, ExceptionHandlingPolicy exceptionHandlingPolicy) {
         handlerByEvent.computeIfPresent(eventType, (cls, handler) -> {
             throw new ConflictingSubscriberException("There already is a subscription for " + eventType.getSimpleName() + ": " + handler.getClass().getSimpleName());
         });
         handlerByEvent.put(eventType, eventHandler);
-        Logger.getLogger(SynchronousFakeEventBus.class.getSimpleName()).info("Subscribed handler for " + eventType);
+        exceptionPolicyByEvent.put(eventType, exceptionHandlingPolicy);
+        logger.info("Subscribed handler for " + eventType);
     }
 
     @Override
@@ -31,10 +35,16 @@ public class SynchronousFakeEventBus implements EventBus {
 
         EventHandler<Object> eventHandler = (EventHandler<Object>) handlerByEvent.get(event.getClass());
         if (eventHandler != null) {
-            eventHandler.handle(event);
+            try {
+                eventHandler.handle(event);
+                logger.info("Published event " + event.getClass());
+            } catch(Exception e) {
+                logger.severe(e.getMessage());
+                if(exceptionPolicyByEvent.get(event.getClass()) == ExceptionHandlingPolicy.RETRY) {
+                    eventHandler.handle(event);
+                }
+            }
         }
-
-        Logger.getLogger(SynchronousFakeEventBus.class.getSimpleName()).info("Published event " + event.getClass());
     }
 
     @Override

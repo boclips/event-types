@@ -1,6 +1,7 @@
 package com.boclips.eventbus.testsupport;
 
 import com.boclips.eventbus.BoclipsEventListener;
+import com.boclips.eventbus.ExceptionHandlingPolicy;
 import com.boclips.eventbus.events.video.VideoUpdated;
 import org.springframework.stereotype.Component;
 
@@ -13,7 +14,7 @@ public class DemoSubscriptionListener {
         return message;
     }
 
-    @BoclipsEventListener
+    @BoclipsEventListener(onException = ExceptionHandlingPolicy.RETRY)
     public void onMessage(VideoUpdated message) {
         this.message = message;
     }

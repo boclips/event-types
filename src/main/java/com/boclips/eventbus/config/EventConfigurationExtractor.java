@@ -2,6 +2,7 @@ package com.boclips.eventbus.config;
 
 import com.boclips.eventbus.BoclipsEventListener;
 import com.boclips.eventbus.BoclipsEvent;
+import com.boclips.eventbus.ExceptionHandlingPolicy;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.aop.support.AopUtils;
@@ -37,6 +38,7 @@ public class EventConfigurationExtractor {
                         .method(method)
                         .eventType(eventType)
                         .eventName(getEventName(eventType))
+                        .exceptionHandlingPolicy(boclipsEventListener.onException())
                         .build());
             }
         }
@@ -49,5 +51,6 @@ public class EventConfigurationExtractor {
         private final String eventName;
         private final Method method;
         private final Class<?> eventType;
+        private final ExceptionHandlingPolicy exceptionHandlingPolicy;
     }
 }
