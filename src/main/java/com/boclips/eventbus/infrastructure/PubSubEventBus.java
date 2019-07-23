@@ -31,6 +31,7 @@ import java.util.logging.Logger;
 @Component
 @ConditionalOnMissingBean(EventBus.class)
 public class PubSubEventBus implements EventBus {
+    private final Logger logger = Logger.getLogger(PubSubEventBus.class.getName());
     private final String projectId;
     private final String consumerGroup;
     private final ObjectMapper objectMapper;
@@ -75,8 +76,8 @@ public class PubSubEventBus implements EventBus {
                         T payload = objectMapper.readValue(message.getData().toStringUtf8(), eventType);
                         eventHandler.handle(payload);
                     } catch (Exception e) {
+                        logger.severe("Error handling message from " + subscriptionName.toString() + ": " + e.getMessage());
                         e.printStackTrace();
-
                     } finally {
                         consumer.ack();
                     }
@@ -90,8 +91,7 @@ public class PubSubEventBus implements EventBus {
         subscriberByEventType.put(eventType, subscriber);
 
         subscriber.startAsync().awaitRunning();
-        Logger.getLogger(PubSubEventBus.class.getName())
-                .info(String.format("Started listening on %s", eventType));
+        logger.info(String.format("Started listening on %s", eventType));
     }
 
     @Override
@@ -131,7 +131,7 @@ public class PubSubEventBus implements EventBus {
         try (SubscriptionAdminClient subscriptionAdmin = subscriptionAdminClient()) {
             if (subscriptionDoesNotExist(subscriptionAdmin, subscriptionName)) {
                 Subscription subscription = subscriptionAdmin.createSubscription(subscriptionName, topicName, PushConfig.getDefaultInstance(), 0);
-                Logger.getLogger(PubSubEventBus.class.getName()).info(String.format("Created subscription %s", subscription.getName()));
+                logger.info(String.format("Created subscription %s", subscription.getName()));
             }
         }
     }
@@ -157,7 +157,7 @@ public class PubSubEventBus implements EventBus {
         try (TopicAdminClient topicAdmin = topicAdminClient()) {
             if (topicDoesNotExist(topicAdmin, topicName)) {
                 Topic topic = topicAdmin.createTopic(topicName);
-                Logger.getLogger(PubSubEventBus.class.getName()).info(String.format("Created topic %s", topic.getName()));
+                logger.info(String.format("Created topic %s", topic.getName()));
             }
         }
         return topicName;
@@ -219,8 +219,7 @@ public class PubSubEventBus implements EventBus {
         subscriberByEventType.forEach((key, subscriber) -> {
             subscriber.stopAsync().awaitTerminated();
 
-            Logger.getLogger(PubSubEventBus.class.getName())
-                    .info(String.format("Closed subscription for %s [%s]", key, subscriber.state()));
+            logger.info(String.format("Closed subscription for %s [%s]", key, subscriber.state()));
         });
     }
 }
