@@ -3,6 +3,8 @@ package com.boclips.eventbus.events.video;
 import com.boclips.eventbus.BoclipsEvent;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,4 +20,21 @@ public class VideoUpdated {
 
     @NonNull
     private String contentPartnerName;
+
+    @NonNull
+    private List<String> subject;
+
+    private AgeRange ageRange;
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    static class AgeRange {
+
+        @NonNull
+        private Integer min;
+
+        private Integer max;
+    }
 }
