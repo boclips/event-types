@@ -6,6 +6,7 @@ import com.boclips.eventbus.testsupport.DemoSubscriptionListener;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Collections;
 import java.util.UUID;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
@@ -26,6 +27,7 @@ public class SpringAutoconfigurationPubSubTest extends AbstractPubSubTest {
                 .videoId(UUID.randomUUID().toString())
                 .title("the title")
                 .contentPartnerName("the content partner")
+                .subjects(Collections.emptyList())
                 .build();
 
         eventBus.publish(event);

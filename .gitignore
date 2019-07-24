@@ -16,3 +16,5 @@ spring-shell.log
 .DS_Store
 .Rproj.user
 
+.env
+

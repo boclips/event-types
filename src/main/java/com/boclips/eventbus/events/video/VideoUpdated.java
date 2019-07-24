@@ -22,7 +22,7 @@ public class VideoUpdated {
     private String contentPartnerName;
 
     @NonNull
-    private List<String> subject;
+    private List<String> subjects;
 
     private AgeRange ageRange;
 
