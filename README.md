@@ -1,15 +1,22 @@
 Latest version: [![](https://jitpack.io/v/boclips/events.svg)](https://jitpack.io/#boclips/event-bus)
 
-# Usage
-
-**Set up jitpack:**
-Add the repository, as described [here](https://jitpack.io/#boclips/event-bus)
+# Compiling
 
 **Enable Lombok**
 1. Make sure you have the Lombok plugin for IntelliJ installed.
 2. In `Preferences`, select `Build, Execution, Deployment`, then `Compiler`, then `Annotation Processors`.
 3. Check the box for `Enable annotation processing`.
 4. Hit `Apply` and `Ok`!
+
+# Running tests
+* Make sure to issue `direnv allow` in the terminal in order for an `.env` file with PubSub secret to be created.
+* Check that the `envfile` IntelliJ plugin is installed.
+* In the `Edit configurations` modal, check `Enable env file` and add the `.env` file to the list.
+
+# Usage
+
+**Set up jitpack:**
+Add the repository, as described [here](https://jitpack.io/#boclips/event-bus)
 
 **In build.gradle**:
 ```
