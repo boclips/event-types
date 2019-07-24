@@ -5,6 +5,8 @@ import com.boclips.eventbus.events.video.VideoUpdated;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
@@ -68,6 +70,6 @@ class SynchronousFakeEventBusTest {
     }
 
     private VideoUpdated anEvent() {
-        return VideoUpdated.builder().videoId("").contentPartnerName("").title("").build();
+        return VideoUpdated.builder().videoId("").contentPartnerName("").title("").subjects(Collections.emptyList()).build();
     }
 }
