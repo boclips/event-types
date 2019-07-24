@@ -43,12 +43,12 @@ public class SynchronousFakeEventBus implements EventBus {
     }
 
     public Boolean hasReceivedEventOfType(Class<?> eventType) {
-        List<Object> eventsOfType = findEvent(eventType);
+        List<Object> eventsOfType = getEventsOfType(eventType);
         return eventsOfType.size() != 0;
     }
 
     public <T> T getEventOfType(Class<T> eventType) {
-        List<Object> eventsOfType = findEvent(eventType);
+        List<Object> eventsOfType = getEventsOfType(eventType);
 
         if (eventsOfType.size() == 0) {
             throw new IllegalStateException("Found 0 events matching " + eventType);
@@ -70,10 +70,12 @@ public class SynchronousFakeEventBus implements EventBus {
     }
 
     public int countEventsOfType(Class<?> eventType) {
-        return findEvent(eventType).size();
+        return getEventsOfType(eventType).size();
     }
 
-    private List<Object> findEvent(Class<?> eventType) {
-        return allEvents.stream().filter(object -> object.getClass() == eventType).collect(Collectors.toList());
+    public <T> List<T> getEventsOfType(Class<?> eventType) {
+        @SuppressWarnings("unchecked")
+        List<T> events = (List<T>) allEvents.stream().filter(object -> object.getClass() == eventType).collect(Collectors.toList());
+        return events;
     }
 }
