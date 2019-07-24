@@ -5,6 +5,12 @@ Latest version: [![](https://jitpack.io/v/boclips/events.svg)](https://jitpack.i
 **Set up jitpack:**
 Add the repository, as described [here](https://jitpack.io/#boclips/event-bus)
 
+**Enable Lombok**
+1. Make sure you have the Lombok plugin for IntelliJ installed.
+2. In `Preferences`, select `Build, Execution, Deployment`, then `Compiler`, then `Annotation Processors`.
+3. Check the box for `Enable annotation processing`.
+4. Hit `Apply` and `Ok`!
+
 **In build.gradle**:
 ```
 dependencies {
