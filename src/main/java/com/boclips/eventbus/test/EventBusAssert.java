@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 public class EventBusAssert extends AbstractAssert<EventBusAssert, SynchronousFakeEventBus> {
 
     public EventBusAssert(SynchronousFakeEventBus actual) {
-        super(actual, SynchronousFakeEventBus.class);
+        super(actual, EventBusAssert.class);
     }
 
     public static EventBusAssert assertThat(SynchronousFakeEventBus eventBus) {
