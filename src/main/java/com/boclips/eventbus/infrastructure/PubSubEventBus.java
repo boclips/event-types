@@ -38,10 +38,10 @@ public class PubSubEventBus implements EventBus {
     private final CredentialsProvider credentialsProvider;
     private final Map<Class<?>, Subscriber> subscriberByEventType = new HashMap<>();
 
-    public PubSubEventBus(BoclipsEventsProperties properties, ObjectMapper objectMapper) {
+    public PubSubEventBus(BoclipsEventsProperties properties) {
         validateConfig(properties);
 
-        this.objectMapper = objectMapper;
+        this.objectMapper = new ObjectMapper();
         this.projectId = properties.getProject();
         this.consumerGroup = properties.getConsumerGroup();
 

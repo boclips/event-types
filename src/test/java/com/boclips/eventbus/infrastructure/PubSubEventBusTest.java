@@ -2,7 +2,6 @@ package com.boclips.eventbus.infrastructure;
 
 import com.boclips.eventbus.config.BoclipsEventsProperties;
 import com.boclips.eventbus.config.InvalidMessagingConfiguration;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +25,7 @@ class PubSubEventBusTest {
     public void throwsWhenProjectIdIsNull() {
         assertThatThrownBy(() -> {
             properties.setProject(null);
-            new PubSubEventBus(properties, new ObjectMapper());
+            new PubSubEventBus(properties);
         }).hasMessage("PUBSUB_PROJECT must be defined");
     }
 
@@ -34,7 +33,7 @@ class PubSubEventBusTest {
     public void throwsWhenConsumerGroupIsNull() {
         assertThatThrownBy(() -> {
             properties.setConsumerGroup(null);
-            new PubSubEventBus(properties, new ObjectMapper());
+            new PubSubEventBus(properties);
         }).hasMessage("PUBSUB_CONSUMER_GROUP must be defined");
     }
 
@@ -42,7 +41,7 @@ class PubSubEventBusTest {
     public void throwsWhenCredentialsNotSet() {
         assertThatThrownBy(() -> {
             properties.setSecret(null);
-            new PubSubEventBus(properties, new ObjectMapper());
+            new PubSubEventBus(properties);
         }).hasMessage("PUBSUB_SECRET must be defined");
     }
 
@@ -50,7 +49,7 @@ class PubSubEventBusTest {
     public void throwsWhenSecretIsNotBase64Encoded() {
         assertThatThrownBy(() -> {
             properties.setSecret("not a valid base64");
-            new PubSubEventBus(properties, new ObjectMapper());
+            new PubSubEventBus(properties);
         })
                 .isInstanceOf(InvalidMessagingConfiguration.class)
                 .hasMessage("PUBSUB_SECRET is not a base64-encoded string");
