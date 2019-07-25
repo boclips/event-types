@@ -1,4 +1,4 @@
-package com.boclips.eventbus.events.user;
+package com.boclips.eventbus.domain.user;
 
 import lombok.*;
 

@@ -1,6 +1,7 @@
 package com.boclips.eventbus.events.video;
 
 import com.boclips.eventbus.BoclipsEvent;
+import com.boclips.eventbus.domain.SubjectId;
 import lombok.*;
 
 import java.io.Serializable;
@@ -17,5 +18,5 @@ public class VideoSubjectClassified implements Serializable {
     private String videoId;
 
     @NonNull
-    private Set<Subject> subjects;
+    private Set<SubjectId> subjects;
 }

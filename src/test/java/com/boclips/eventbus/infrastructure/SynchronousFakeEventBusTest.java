@@ -1,5 +1,9 @@
 package com.boclips.eventbus.infrastructure;
 
+import com.boclips.eventbus.domain.AgeRange;
+import com.boclips.eventbus.domain.video.ContentPartner;
+import com.boclips.eventbus.domain.video.Video;
+import com.boclips.eventbus.domain.video.VideoId;
 import com.boclips.eventbus.events.video.VideoAnalysed;
 import com.boclips.eventbus.events.video.VideoUpdated;
 import org.junit.jupiter.api.BeforeEach;
@@ -70,6 +74,14 @@ class SynchronousFakeEventBusTest {
     }
 
     private VideoUpdated anEvent() {
-        return VideoUpdated.builder().videoId("").contentPartnerName("").title("").subjects(Collections.emptyList()).build();
+        Video video = Video.builder()
+                .id(VideoId.of(""))
+                .contentPartner(ContentPartner.of(""))
+                .title("")
+                .subjects(Collections.emptyList())
+                .ageRange(new AgeRange())
+                .build();
+
+        return VideoUpdated.of(video);
     }
 }

@@ -4,19 +4,13 @@ import com.boclips.eventbus.BoclipsEvent;
 import com.boclips.eventbus.domain.video.Video;
 import lombok.*;
 
-import java.util.List;
-
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@BoclipsEvent("video-updated")
-public class VideoUpdated {
+@BoclipsEvent("video-created")
+public class VideoCreated {
 
     @NonNull
     private Video video;
-
-    public static VideoUpdated of(Video video) {
-        return new VideoUpdated(video);
-    }
 }

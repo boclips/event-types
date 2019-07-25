@@ -1,5 +1,6 @@
 package com.boclips.eventbus.events.user;
 
+import com.boclips.eventbus.domain.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 

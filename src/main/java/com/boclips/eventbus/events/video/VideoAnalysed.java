@@ -1,6 +1,9 @@
 package com.boclips.eventbus.events.video;
 
 import com.boclips.eventbus.BoclipsEvent;
+import com.boclips.eventbus.domain.video.Captions;
+import com.boclips.eventbus.domain.video.VideoAnalysedKeyword;
+import com.boclips.eventbus.domain.video.VideoAnalysedTopic;
 import lombok.*;
 
 import java.util.List;

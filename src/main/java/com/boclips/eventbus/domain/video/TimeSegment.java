@@ -1,4 +1,4 @@
-package com.boclips.eventbus.events.video;
+package com.boclips.eventbus.domain.video;
 
 import lombok.*;
 

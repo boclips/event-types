@@ -1,4 +1,4 @@
-package com.boclips.eventbus.events.video;
+package com.boclips.eventbus.domain;
 
 import lombok.*;
 
@@ -9,5 +9,9 @@ import lombok.*;
 public class Subject {
 
     @NonNull
-    private String id;
+    private SubjectId id;
+
+    @NonNull
+    private String name;
+
 }

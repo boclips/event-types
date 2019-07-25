@@ -1,6 +1,6 @@
 package com.boclips.eventbus.events.base;
 
-import com.boclips.eventbus.events.user.User;
+import com.boclips.eventbus.domain.user.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
