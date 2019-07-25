@@ -41,7 +41,7 @@ public class PubSubEventBus implements EventBus {
     public PubSubEventBus(BoclipsEventsProperties properties) {
         validateConfig(properties);
 
-        this.objectMapper = new ObjectMapper();
+        this.objectMapper = ObjectMapperProvider.get();
         this.projectId = properties.getProject();
         this.consumerGroup = properties.getConsumerGroup();
 

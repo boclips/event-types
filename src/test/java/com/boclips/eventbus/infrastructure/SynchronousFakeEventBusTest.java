@@ -1,5 +1,6 @@
 package com.boclips.eventbus.infrastructure;
 
+import com.boclips.eventbus.BoclipsEvent;
 import com.boclips.eventbus.domain.AgeRange;
 import com.boclips.eventbus.domain.video.ContentPartner;
 import com.boclips.eventbus.domain.video.Video;
@@ -43,6 +44,13 @@ class SynchronousFakeEventBusTest {
     }
 
     @Test
+    void publish_whenEventCannotBeSerialized_throws() {
+        synchronousFakeEventBus.subscribe(ObjectMapperIncompatibleEvent.class, (event) -> {});
+
+        assertThatThrownBy(() -> synchronousFakeEventBus.publish(new ObjectMapperIncompatibleEvent("hello"))).hasMessageContaining("Failed de-serialising");
+    }
+
+    @Test
     void getEventOfType_returnsEvent() {
         assertThat(synchronousFakeEventBus.getEventOfType(VideoUpdated.class)).isEqualTo(anEvent());
     }
@@ -83,5 +91,19 @@ class SynchronousFakeEventBusTest {
                 .build();
 
         return VideoUpdated.of(video);
+    }
+
+    @BoclipsEvent("object-mapper-incompatible-event")
+    private static class ObjectMapperIncompatibleEvent {
+
+        private final String value;
+
+        public ObjectMapperIncompatibleEvent(String value) {
+            this.value = value;
+        }
+
+        public String getValue() {
+            return value;
+        }
     }
 }
