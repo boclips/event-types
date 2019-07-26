@@ -7,6 +7,7 @@ import com.boclips.eventbus.config.BoclipsEventsProperties;
 import com.boclips.eventbus.config.EventConfigurationExtractor;
 import com.boclips.eventbus.config.InvalidMessagingConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.api.gax.batching.BatchingSettings;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.rpc.NotFoundException;
@@ -17,12 +18,14 @@ import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.stereotype.Component;
+import org.threeten.bp.Duration;
 
 import javax.annotation.PreDestroy;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
@@ -37,6 +40,12 @@ public class PubSubEventBus implements EventBus {
     private final ObjectMapper objectMapper;
     private final CredentialsProvider credentialsProvider;
     private final Map<Class<?>, Subscriber> subscriberByEventType = new HashMap<>();
+
+    private final BatchingSettings publisherBatchingSettings = BatchingSettings.newBuilder()
+            .setElementCountThreshold(10L)
+            .setRequestByteThreshold(5000L)
+            .setDelayThreshold(Duration.ofMillis(250))
+            .build();
 
     public PubSubEventBus(BoclipsEventsProperties properties) {
         validateConfig(properties);
@@ -95,25 +104,24 @@ public class PubSubEventBus implements EventBus {
     }
 
     @Override
-    public void publish(Object event) {
-        String topicName = new EventConfigurationExtractor().getEventName(event.getClass());
+    public <T> void publish(T event) {
+        publish(Collections.singletonList(event));
+    }
 
-        ProjectTopicName topic;
+    @Override
+    public <T> void publish(Iterable<T> events) {
+        String topicName = new EventConfigurationExtractor().getEventName(events.iterator().next().getClass());
+
+        Publisher publisher = getPublisherFor(topicName);
         try {
-            topic = createTopicIfDoesNotExist(topicName);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to publish a " + topicName + " event", e);
-        }
-
-        Publisher publisher = createPublisher(topic);
-
-        try {
-            byte[] eventBytes = objectMapper.writeValueAsBytes(event);
-            ByteString eventByteString = ByteString.copyFrom(eventBytes);
-            PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(eventByteString).build();
-            publisher.publish(pubsubMessage).get();
+            for(T event: events) {
+                byte[] eventBytes = objectMapper.writeValueAsBytes(event);
+                ByteString eventByteString = ByteString.copyFrom(eventBytes);
+                PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(eventByteString).build();
+                publisher.publish(pubsubMessage).get();
+            }
         } catch (IOException | InterruptedException | ExecutionException e) {
-            throw new RuntimeException("Failed to publish a " + topic + " event", e);
+            throw new RuntimeException("Failed to publish a " + topicName + " event", e);
         } finally {
             publisher.shutdown();
         }
@@ -122,6 +130,25 @@ public class PubSubEventBus implements EventBus {
     @Override
     public void unsubscribe(Class<?> eventType) {
         subscriberByEventType.remove(eventType);
+    }
+
+    private Publisher getPublisherFor(String topicName) {
+        ProjectTopicName topic;
+        try {
+            topic = createTopicIfDoesNotExist(topicName);
+        } catch (IOException e) {
+            throw new RuntimeException("Failed to publish a " + topicName + " event", e);
+        }
+
+        try {
+            return Publisher
+                    .newBuilder(topic)
+                    .setCredentialsProvider(credentialsProvider)
+                    .setBatchingSettings(publisherBatchingSettings)
+                    .build();
+        } catch (IOException e) {
+            throw new IllegalStateException(String.format("Failed to create publisher for %s", topic));
+        }
     }
 
     private void createSubscription(ProjectSubscriptionName subscriptionName, String topicId) throws IOException {
@@ -202,16 +229,6 @@ public class PubSubEventBus implements EventBus {
         } catch (IllegalArgumentException e) {
             throw new InvalidMessagingConfiguration("PUBSUB_SECRET is not a base64-encoded string");
         }
-    }
-
-    private Publisher createPublisher(ProjectTopicName topic) {
-        Publisher publisher;
-        try {
-            publisher = Publisher.newBuilder(topic).setCredentialsProvider(credentialsProvider).build();
-        } catch (IOException e) {
-            throw new IllegalStateException(String.format("Failed to create publisher for %s", topic));
-        }
-        return publisher;
     }
 
     @PreDestroy

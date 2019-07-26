@@ -30,7 +30,13 @@ public class SynchronousFakeEventBus implements EventBus {
 
     @Override
     @SuppressWarnings("unchecked")
-    public void publish(Object event) {
+    public <T> void publish(Iterable<T> events) {
+        events.forEach(this::publish);
+    }
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public <T> void publish(T event) {
         allEvents.add(event);
         byte[] eventBytes = serialise(event);
 
