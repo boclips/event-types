@@ -29,7 +29,6 @@ public class SynchronousFakeEventBus implements EventBus {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
     public <T> void publish(Iterable<T> events) {
         events.forEach(this::publish);
     }
