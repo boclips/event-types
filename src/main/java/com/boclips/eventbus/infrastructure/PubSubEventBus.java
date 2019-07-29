@@ -42,9 +42,9 @@ public class PubSubEventBus implements EventBus {
     private final Map<Class<?>, Subscriber> subscriberByEventType = new HashMap<>();
 
     private final BatchingSettings publisherBatchingSettings = BatchingSettings.newBuilder()
-            .setElementCountThreshold(10L)
-            .setRequestByteThreshold(5000L)
-            .setDelayThreshold(Duration.ofMillis(250))
+            .setElementCountThreshold(200L)
+            .setRequestByteThreshold(10000L)
+            .setDelayThreshold(Duration.ofMillis(500))
             .build();
 
     public PubSubEventBus(BoclipsEventsProperties properties) {
@@ -112,7 +112,9 @@ public class PubSubEventBus implements EventBus {
     public <T> void publish(Iterable<T> events) {
         String topicName = new EventConfigurationExtractor().getEventName(events.iterator().next().getClass());
 
+        logger.fine("Obtaining publisher for " + topicName);
         Publisher publisher = getPublisherFor(topicName);
+        logger.fine("Obtained publisher for " + topicName);
         try {
             for(T event: events) {
                 byte[] eventBytes = objectMapper.writeValueAsBytes(event);
@@ -125,6 +127,7 @@ public class PubSubEventBus implements EventBus {
         } finally {
             publisher.shutdown();
         }
+        logger.fine("Done publishing batch");
     }
 
     @Override
@@ -192,6 +195,7 @@ public class PubSubEventBus implements EventBus {
 
     private boolean topicDoesNotExist(TopicAdminClient topicAdminClient, ProjectTopicName topicName) {
         try {
+            logger.fine("Checking if topic " + topicName + " exists");
             topicAdminClient.getTopic(topicName);
             return false;
         } catch(NotFoundException e) {
