@@ -12,7 +12,7 @@ public class EventBusAssert extends AbstractAssert<EventBusAssert, SynchronousFa
         super(actual, EventBusAssert.class);
     }
 
-    public static EventBusAssert assertThat(SynchronousFakeEventBus eventBus) {
+    public static EventBusAssert assertThatEventBus(SynchronousFakeEventBus eventBus) {
         return new EventBusAssert(eventBus);
     }
 
