@@ -69,13 +69,13 @@ public class SynchronousFakeEventBus implements EventBus {
         handlerByEvent.remove(eventType);
     }
 
-    public Boolean hasReceivedEventOfType(Class<?> eventType) {
-        List<Object> eventsOfType = getEventsOfType(eventType);
+    public <T> Boolean hasReceivedEventOfType(Class<T> eventType) {
+        List<T> eventsOfType = getEventsOfType(eventType);
         return eventsOfType.size() != 0;
     }
 
     public <T> T getEventOfType(Class<T> eventType) {
-        List<Object> eventsOfType = getEventsOfType(eventType);
+        List<T> eventsOfType = getEventsOfType(eventType);
 
         if (eventsOfType.size() == 0) {
             throw new IllegalStateException("Found 0 events matching " + eventType);
@@ -85,7 +85,7 @@ public class SynchronousFakeEventBus implements EventBus {
             throw new IllegalStateException(String.format("Found more than one (%d) events matching {%s}", eventsOfType.size(), eventType));
         }
 
-        return (T) eventsOfType.stream().findFirst().get();
+        return eventsOfType.stream().findFirst().get();
     }
 
     public void clearState() {
@@ -100,9 +100,11 @@ public class SynchronousFakeEventBus implements EventBus {
         return getEventsOfType(eventType).size();
     }
 
-    public <T> List<T> getEventsOfType(Class<?> eventType) {
-        @SuppressWarnings("unchecked")
-        List<T> events = (List<T>) allEvents.stream().filter(object -> object.getClass() == eventType).collect(Collectors.toList());
-        return events;
+    @SuppressWarnings("unchecked")
+    public <T> List<T> getEventsOfType(Class<T> eventType) {
+        return allEvents.stream()
+                .filter(eventType::isInstance)
+                .map(event -> (T) event)
+                .collect(Collectors.toList());
     }
 }
