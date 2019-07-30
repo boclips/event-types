@@ -29,6 +29,7 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 @Component
@@ -125,9 +126,19 @@ public class PubSubEventBus implements EventBus {
         } catch (IOException | InterruptedException | ExecutionException e) {
             throw new RuntimeException("Failed to publish a " + topicName + " event", e);
         } finally {
-            publisher.shutdown();
+            closePublisher(publisher);
         }
         logger.fine("Done publishing batch");
+    }
+
+    private void closePublisher(Publisher publisher) {
+        long timeoutSeconds = 300;
+        publisher.shutdown();
+        try {
+            publisher.awaitTermination(timeoutSeconds, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            logger.severe("Publisher did not terminate within " + timeoutSeconds + " seconds after shutdown.");
+        }
     }
 
     @Override
