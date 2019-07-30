@@ -28,8 +28,7 @@ import java.util.Base64;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @Component
@@ -41,11 +40,12 @@ public class PubSubEventBus implements EventBus {
     private final ObjectMapper objectMapper;
     private final CredentialsProvider credentialsProvider;
     private final Map<Class<?>, Subscriber> subscriberByEventType = new HashMap<>();
+    private final Map<String, Publisher> publisherByTopic = new HashMap<>();
 
     private final BatchingSettings publisherBatchingSettings = BatchingSettings.newBuilder()
             .setElementCountThreshold(200L)
             .setRequestByteThreshold(10000L)
-            .setDelayThreshold(Duration.ofMillis(500))
+            .setDelayThreshold(Duration.ofSeconds(1))
             .build();
 
     public PubSubEventBus(BoclipsEventsProperties properties) {
@@ -117,52 +117,41 @@ public class PubSubEventBus implements EventBus {
         Publisher publisher = getPublisherFor(topicName);
         logger.fine("Obtained publisher for " + topicName);
         try {
-            for(T event: events) {
+            for (T event : events) {
+                logger.fine("Serializing event...");
                 byte[] eventBytes = objectMapper.writeValueAsBytes(event);
                 ByteString eventByteString = ByteString.copyFrom(eventBytes);
                 PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(eventByteString).build();
-                publisher.publish(pubsubMessage).get();
+                logger.fine("Serialized event. Publishing...");
+                publisher.publish(pubsubMessage);
+                logger.fine("Published");
             }
-        } catch (IOException | InterruptedException | ExecutionException e) {
+
+        } catch (IOException e) {
             throw new RuntimeException("Failed to publish a " + topicName + " event", e);
-        } finally {
-            closePublisher(publisher);
         }
         logger.fine("Done publishing batch");
     }
 
-    private void closePublisher(Publisher publisher) {
-        long timeoutSeconds = 300;
-        publisher.shutdown();
-        try {
-            publisher.awaitTermination(timeoutSeconds, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            logger.severe("Publisher did not terminate within " + timeoutSeconds + " seconds after shutdown.");
-        }
-    }
 
     @Override
     public void unsubscribe(Class<?> eventType) {
         subscriberByEventType.remove(eventType);
     }
 
-    private Publisher getPublisherFor(String topicName) {
-        ProjectTopicName topic;
-        try {
-            topic = createTopicIfDoesNotExist(topicName);
-        } catch (IOException e) {
-            throw new RuntimeException("Failed to publish a " + topicName + " event", e);
-        }
-
-        try {
-            return Publisher
-                    .newBuilder(topic)
-                    .setCredentialsProvider(credentialsProvider)
-                    .setBatchingSettings(publisherBatchingSettings)
-                    .build();
-        } catch (IOException e) {
-            throw new IllegalStateException(String.format("Failed to create publisher for %s", topic));
-        }
+    private synchronized Publisher getPublisherFor(String topicName) {
+        return publisherByTopic.computeIfAbsent(topicName, key -> {
+            try {
+                ProjectTopicName topic = createTopicIfDoesNotExist(topicName);
+                return Publisher
+                        .newBuilder(topic)
+                        .setCredentialsProvider(credentialsProvider)
+                        .setBatchingSettings(publisherBatchingSettings)
+                        .build();
+            } catch (IOException e) {
+                throw new IllegalStateException(String.format("Failed to create publisher for %s", topicName));
+            }
+        });
     }
 
     private void createSubscription(ProjectSubscriptionName subscriptionName, String topicId) throws IOException {
@@ -209,7 +198,7 @@ public class PubSubEventBus implements EventBus {
             logger.fine("Checking if topic " + topicName + " exists");
             topicAdminClient.getTopic(topicName);
             return false;
-        } catch(NotFoundException e) {
+        } catch (NotFoundException e) {
             return true;
         }
     }
@@ -247,11 +236,23 @@ public class PubSubEventBus implements EventBus {
     }
 
     @PreDestroy
-    public void closeSubscriptions() {
+    public void closeSubscriptionsAndPublishers() {
         subscriberByEventType.forEach((key, subscriber) -> {
-            subscriber.stopAsync().awaitTerminated();
+            try {
+                subscriber.stopAsync().awaitTerminated();
+                logger.info(String.format("Closed subscription for %s [%s]", key, subscriber.state()));
+            } catch(Exception e) {
+                logger.log(Level.SEVERE, e, () -> "Error shutting down subscriber for " + key);
+            }
+        });
+        publisherByTopic.forEach((key, publisher) -> {
+            try {
+                publisher.shutdown();
+                logger.info(String.format("Shutdown publisher for %s", key));
+            } catch(Exception e) {
+                logger.log(Level.SEVERE, e, () -> "Error shutting down publisher for " + key);
+            }
 
-            logger.info(String.format("Closed subscription for %s [%s]", key, subscriber.state()));
         });
     }
 }

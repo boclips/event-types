@@ -1,3 +1,7 @@
 pubsub:
   consumerGroup: demo-application
   project: pubsub-test-246814
+
+logging:
+  level:
+    com.boclips.eventbus: debug
