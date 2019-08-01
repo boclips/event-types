@@ -24,4 +24,7 @@ public class Video {
 
     @NonNull
     private AgeRange ageRange;
+
+    @NonNull
+    private PlaybackProviderType playbackProviderType;
 }
