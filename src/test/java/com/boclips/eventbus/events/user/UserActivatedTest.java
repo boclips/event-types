@@ -1,6 +1,5 @@
 package com.boclips.eventbus.events.user;
 
-import com.boclips.eventbus.domain.user.Organisation;
 import com.boclips.eventbus.domain.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -55,7 +54,7 @@ class UserActivatedTest {
                 .activatedUsers(3L)
                 .build();
 
-        assertThat(userActivated.getUser().getOrganisation()).isNull();
+        assertThat(userActivated.getUser().getOrganisationId()).isNull();
     }
 
     @Test
@@ -65,10 +64,7 @@ class UserActivatedTest {
                 .user(
                         User.builder()
                                 .id("id")
-                                .organisation(Organisation.builder()
-                                        .id(organisationId)
-                                        .build()
-                                )
+                                .organisationId(organisationId)
                                 .isBoclipsEmployee(true)
                                 .build()
                 )
@@ -76,6 +72,6 @@ class UserActivatedTest {
                 .activatedUsers(3L)
                 .build();
 
-        assertThat(userActivated.getUser().getOrganisation().getId()).isEqualTo(organisationId);
+        assertThat(userActivated.getUser().getOrganisationId()).isEqualTo(organisationId);
     }
 }

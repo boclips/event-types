@@ -11,7 +11,7 @@ public class User {
     @NonNull
     private String id;
 
-    private Organisation organisation;
+    private String organisationId;
 
     @NonNull
     private Boolean isBoclipsEmployee;
