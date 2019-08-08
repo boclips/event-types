@@ -20,6 +20,6 @@ public class VideoPlayerEvent extends UserEvent {
     @NonNull
     private Long videoDurationSeconds;
 
-    private String consumerDevice;
+    private String playbackDevice;
 
 }
