@@ -6,13 +6,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
+public class Organisation {
     @NonNull
     private String id;
-
-    private Organisation organisation;
-
-    @NonNull
-    private Boolean isBoclipsEmployee;
 }
