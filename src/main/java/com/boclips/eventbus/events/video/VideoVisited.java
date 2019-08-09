@@ -17,12 +17,4 @@ public class VideoVisited extends UserEvent {
     @NonNull
     private String videoId;
 
-    private String searchQuery;
-
-    private Integer searchIndex;
-
-    private Integer pageIndex;
-
-    private Integer pageSize;
-
 }
