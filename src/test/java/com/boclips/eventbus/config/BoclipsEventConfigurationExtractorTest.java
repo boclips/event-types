@@ -12,12 +12,15 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class BoclipsEventConfigurationExtractorTest {
     @BoclipsEvent("messaging-configurer-test-topic")
-    private class TestPayload { }
+    private class TestPayload {
+    }
 
-    private class TestPayloadWithoutTopicAnnotation {}
+    private class TestPayloadWithoutTopicAnnotation {
+    }
 
     @BoclipsEvent("")
-    private class TestPayloadWithBlankTopicName {}
+    private class TestPayloadWithBlankTopicName {
+    }
 
     private EventConfigurationExtractor eventConfigurationExtractor = new EventConfigurationExtractor();
 

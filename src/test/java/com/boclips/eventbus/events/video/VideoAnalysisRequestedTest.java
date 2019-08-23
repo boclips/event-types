@@ -1,6 +1,5 @@
 package com.boclips.eventbus.events.video;
 
-import com.boclips.eventbus.events.video.VideoAnalysisRequested;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;

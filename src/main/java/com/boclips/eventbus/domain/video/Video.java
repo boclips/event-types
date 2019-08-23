@@ -3,6 +3,7 @@ package com.boclips.eventbus.domain.video;
 import com.boclips.eventbus.domain.AgeRange;
 import com.boclips.eventbus.domain.Subject;
 import lombok.*;
+
 import java.util.List;
 
 @Data

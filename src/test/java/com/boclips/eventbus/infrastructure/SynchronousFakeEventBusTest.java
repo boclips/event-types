@@ -46,7 +46,8 @@ class SynchronousFakeEventBusTest {
 
     @Test
     void publish_whenEventCannotBeSerialized_throws() {
-        synchronousFakeEventBus.subscribe(ObjectMapperIncompatibleEvent.class, (event) -> {});
+        synchronousFakeEventBus.subscribe(ObjectMapperIncompatibleEvent.class, (event) -> {
+        });
 
         assertThatThrownBy(() -> synchronousFakeEventBus.publish(new ObjectMapperIncompatibleEvent("hello"))).hasMessageContaining("Failed de-serialising");
     }

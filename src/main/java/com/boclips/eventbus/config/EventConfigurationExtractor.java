@@ -1,7 +1,7 @@
 package com.boclips.eventbus.config;
 
-import com.boclips.eventbus.BoclipsEventListener;
 import com.boclips.eventbus.BoclipsEvent;
+import com.boclips.eventbus.BoclipsEventListener;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.aop.support.AopUtils;

@@ -34,12 +34,12 @@ class VideoPlayerInteractedWithTest extends TestWithJsonFixture {
                 "\"videoId\": \"video-id-123\"," +
                 "\"videoDurationSeconds\":120," +
                 "\"payload\": {" +
-                    "\"kind\": \"caption-kind\"," +
-                    "\"label\": \"caption-label\"," +
-                    "\"language\": \"caption-language\"," +
-                    "\"id\": \"caption-id\"" +
+                "\"kind\": \"caption-kind\"," +
+                "\"label\": \"caption-label\"," +
+                "\"language\": \"caption-language\"," +
+                "\"id\": \"caption-id\"" +
                 "}" +
-            "}";
+                "}";
 
         VideoPlayerInteractedWith event = new ObjectMapper().readValue(json, VideoPlayerInteractedWith.class);
 

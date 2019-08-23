@@ -4,7 +4,9 @@ import com.boclips.eventbus.config.BoclipsEventsProperties;
 import com.boclips.eventbus.infrastructure.PubSubEventBus;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
-import com.google.pubsub.v1.*;
+import com.google.pubsub.v1.ProjectName;
+import com.google.pubsub.v1.Subscription;
+import com.google.pubsub.v1.Topic;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
@@ -23,7 +25,7 @@ public class PubSubTestHelper {
 
     public void deleteSubscriptionsAndTopics() {
         String projectId = boclipsEventsProperties.getProject();
-        try(SubscriptionAdminClient subscriptionAdmin = pubSubEventBus.subscriptionAdminClient()) {
+        try (SubscriptionAdminClient subscriptionAdmin = pubSubEventBus.subscriptionAdminClient()) {
             for (Subscription subscription : subscriptionAdmin.listSubscriptions(ProjectName.of(projectId)).iterateAll()) {
                 System.out.println("Deleting subscription " + subscription.getName());
                 subscriptionAdmin.deleteSubscription(subscription.getName());
@@ -31,8 +33,8 @@ public class PubSubTestHelper {
         } catch (IOException e) {
             throw new RuntimeException("Error trying to delete subscriptions from " + projectId, e);
         }
-        try(TopicAdminClient topicAdmin = pubSubEventBus.topicAdminClient()) {
-            for(Topic topic : topicAdmin.listTopics(ProjectName.of(projectId)).iterateAll()) {
+        try (TopicAdminClient topicAdmin = pubSubEventBus.topicAdminClient()) {
+            for (Topic topic : topicAdmin.listTopics(ProjectName.of(projectId)).iterateAll()) {
                 System.out.println("Deleting topic " + topic.getName());
                 topicAdmin.deleteTopic(topic.getName());
             }

@@ -20,7 +20,7 @@ public class EventBusAssert extends AbstractAssert<EventBusAssert, SynchronousFa
         @SuppressWarnings("unchecked")
         Class<TEvent> eventClass = (Class<TEvent>) event.getClass();
         List<TEvent> receivedEvents = actual.getEventsOfType(eventClass);
-        if(!receivedEvents.contains(event)) {
+        if (!receivedEvents.contains(event)) {
             String receivedEventsStr = receivedEvents.stream().map(Object::toString).collect(Collectors.joining(", ", "[", "]"));
             failWithMessage("Expected received events %s to contain %s", receivedEventsStr, event);
         }

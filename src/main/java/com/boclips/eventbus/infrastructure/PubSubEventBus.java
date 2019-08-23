@@ -241,7 +241,7 @@ public class PubSubEventBus implements EventBus {
             try {
                 subscriber.stopAsync().awaitTerminated();
                 logger.info(String.format("Closed subscription for %s [%s]", key, subscriber.state()));
-            } catch(Exception e) {
+            } catch (Exception e) {
                 logger.log(Level.SEVERE, e, () -> "Error shutting down subscriber for " + key);
             }
         });
@@ -249,7 +249,7 @@ public class PubSubEventBus implements EventBus {
             try {
                 publisher.shutdown();
                 logger.info(String.format("Shutdown publisher for %s", key));
-            } catch(Exception e) {
+            } catch (Exception e) {
                 logger.log(Level.SEVERE, e, () -> "Error shutting down publisher for " + key);
             }
 
