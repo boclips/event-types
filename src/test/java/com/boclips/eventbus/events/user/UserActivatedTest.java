@@ -1,6 +1,5 @@
 package com.boclips.eventbus.events.user;
 
-import com.boclips.eventbus.domain.user.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
@@ -16,9 +15,7 @@ class UserActivatedTest {
     @Test
     void timestampIsSetAutomatically() {
         UserActivated userActivated = UserActivated.builder()
-                .user(User.builder().id("id").isBoclipsEmployee(true).build())
-                .totalUsers(10L)
-                .activatedUsers(3L)
+                .userId("abc")
                 .build();
 
         assertThat(userActivated.getTimestamp()).isToday();
@@ -29,9 +26,7 @@ class UserActivatedTest {
         Date timestamp = Date.from(ZonedDateTime.now(ZoneOffset.UTC).plusDays(1).toInstant());
 
         UserActivated userActivated = UserActivated.builder()
-                .user(User.builder().id("id").isBoclipsEmployee(true).build())
-                .totalUsers(10L)
-                .activatedUsers(3L)
+                .userId("abc")
                 .timestamp(timestamp)
                 .build();
 
@@ -41,37 +36,4 @@ class UserActivatedTest {
         assertThat(om.readValue(json, UserActivated.class).getTimestamp()).isEqualTo(timestamp);
     }
 
-    @Test
-    void organisationIsNullIfUserDoesNotBelongToOne() {
-        UserActivated userActivated = UserActivated.builder()
-                .user(
-                        User.builder()
-                                .id("id")
-                                .isBoclipsEmployee(true)
-                                .build()
-                )
-                .totalUsers(10L)
-                .activatedUsers(3L)
-                .build();
-
-        assertThat(userActivated.getUser().getOrganisationId()).isNull();
-    }
-
-    @Test
-    void organisationIsSetAccordinglyIfUserBelongsToOne() {
-        String organisationId = "test-organisation-id";
-        UserActivated userActivated = UserActivated.builder()
-                .user(
-                        User.builder()
-                                .id("id")
-                                .organisationId(organisationId)
-                                .isBoclipsEmployee(true)
-                                .build()
-                )
-                .totalUsers(10L)
-                .activatedUsers(3L)
-                .build();
-
-        assertThat(userActivated.getUser().getOrganisationId()).isEqualTo(organisationId);
-    }
 }

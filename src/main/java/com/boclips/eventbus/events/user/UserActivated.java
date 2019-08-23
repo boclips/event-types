@@ -1,7 +1,7 @@
 package com.boclips.eventbus.events.user;
 
 import com.boclips.eventbus.BoclipsEvent;
-import com.boclips.eventbus.events.base.UserEvent;
+import com.boclips.eventbus.events.base.Event;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -11,11 +11,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @BoclipsEvent("user-activated")
-public class UserActivated extends UserEvent {
-
+public class UserActivated extends Event {
     @NonNull
-    private Long totalUsers;
-
-    @NonNull
-    private Long activatedUsers;
+    private String userId;
 }
