@@ -22,4 +22,10 @@ public class LegacyOrderSubmitted {
 
     @NonNull
     private String vendor;
+
+    @NonNull
+    private LegacyOrderUser requestingUser;
+
+    @NonNull
+    private LegacyOrderUser authorisingUser;
 }

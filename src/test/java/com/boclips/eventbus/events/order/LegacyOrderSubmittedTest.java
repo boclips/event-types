@@ -40,7 +40,7 @@ class LegacyOrderSubmittedTest extends TestWithJsonFixture {
                                 .roles(Collections.singletonList("super"))
                                 .nextStates(Arrays.asList("PROCESSING", "CANCELLED"))
                                 .build())
-                        .build()
+                .build()
         );
         assertThat(event.getOrderItems()).isEqualTo(Arrays.asList(
                 LegacyOrderItem.builder()
@@ -84,5 +84,35 @@ class LegacyOrderSubmittedTest extends TestWithJsonFixture {
                         .status("OPEN")
                         .build()
         ));
+
+        assertThat(event.getAuthorisingUser()).isEqualTo(
+                LegacyOrderUser.builder()
+                        .email("bo@bo.com")
+                        .firstName("bo")
+                        .lastName("obob")
+                        .id("bob123")
+                        .organisation(LegacyOrderOrganisation.builder()
+                                .id("4bo5")
+                                .name("QueenOfTheBos")
+                                .build())
+                        .username("thisObBo")
+                        .build()
+        );
+
+
+        assertThat(event.getRequestingUser()).isEqualTo(
+                LegacyOrderUser.builder()
+                        .email("bo@bo.com")
+                        .firstName("bo")
+                        .lastName("obob")
+                        .id("bob123")
+                        .organisation(LegacyOrderOrganisation.builder()
+                                .id("4bo5")
+                                .name("QueenOfTheBos")
+                                .build())
+                        .username("thisObBo")
+                        .build()
+        );
+
     }
 }

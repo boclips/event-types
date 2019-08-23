@@ -84,5 +84,27 @@
     }
   ],
   "creator": "somecreator@boclips.com",
-  "vendor": "somevendor@boclips.com"
+  "vendor": "somevendor@boclips.com",
+  "authorisingUser": {
+    "id": "bob123",
+    "email": "bo@bo.com",
+    "firstName": "bo",
+    "lastName": "obob",
+    "username": "thisObBo",
+    "organisation": {
+      "id": "4bo5",
+      "name": "QueenOfTheBos"
+    }
+  },
+  "requestingUser": {
+    "id": "bob123",
+    "email": "bo@bo.com",
+    "firstName": "bo",
+    "lastName": "obob",
+    "username": "thisObBo",
+    "organisation": {
+      "id": "4bo5",
+      "name": "QueenOfTheBos"
+    }
+  }
 }
