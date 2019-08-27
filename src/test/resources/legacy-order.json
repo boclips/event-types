@@ -52,7 +52,8 @@
       },
       "items": null,
       "_refModel": "Orderline",
-      "id": "5cd158e96385cd18c208119e"
+      "id": "5cd158e96385cd18c208119e",
+      "trimming": "1 - 145"
     },
     {
       "_id": "5cd158dcc5380897ad1aa329",
@@ -80,7 +81,8 @@
       },
       "items": null,
       "_refModel": "Orderline",
-      "id": "5cd158dcc5380897ad1aa329"
+      "id": "5cd158dcc5380897ad1aa329",
+      "trimming": ""
     }
   ],
   "creator": "somecreator@boclips.com",

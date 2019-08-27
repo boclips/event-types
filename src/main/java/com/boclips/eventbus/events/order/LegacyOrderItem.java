@@ -44,4 +44,7 @@ public class LegacyOrderItem {
 
     @NonNull
     private String status;
+
+    @NonNull
+    private String trimming;
 }

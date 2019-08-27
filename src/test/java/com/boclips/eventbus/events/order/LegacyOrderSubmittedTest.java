@@ -62,6 +62,7 @@ class LegacyOrderSubmittedTest extends TestWithJsonFixture {
                         .price(new BigDecimal("1000.00"))
                         .transcriptsRequired(true)
                         .status("OPEN")
+                        .trimming("1 - 145")
                         .build(),
                 LegacyOrderItem.builder()
                         .id("5cd158dcc5380897ad1aa329")
@@ -82,6 +83,7 @@ class LegacyOrderSubmittedTest extends TestWithJsonFixture {
                         .price(new BigDecimal("560.00"))
                         .transcriptsRequired(true)
                         .status("OPEN")
+                        .trimming("")
                         .build()
         ));
 
