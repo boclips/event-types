@@ -21,13 +21,9 @@ class LegacyOrderSubmittedTest extends TestWithJsonFixture {
 
         LegacyOrderSubmitted event = new ObjectMapper().readValue(json, LegacyOrderSubmitted.class);
 
-        assertThat(event.getCreator()).isEqualTo("somecreator@boclips.com");
-        assertThat(event.getVendor()).isEqualTo("somevendor@boclips.com");
         assertThat(event.getOrder()).isEqualTo(
                 LegacyOrder.builder()
                         .status("CONFIRMED")
-                        .vendor("5bb49b8dc939fc45e4e5cd8d")
-                        .creator("5bb49b8dc939fc45e4e5cd8d")
                         .dateUpdated(Date.from(Instant.parse("2019-05-07T10:08:35.216Z")))
                         .dateCreated(Date.from(Instant.parse("2019-05-07T10:08:35.216Z")))
                         .extraFields(LegacyOrderExtraFields.builder()

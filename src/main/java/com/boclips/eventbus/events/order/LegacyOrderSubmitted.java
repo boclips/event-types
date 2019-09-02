@@ -18,12 +18,6 @@ public class LegacyOrderSubmitted {
     private List<LegacyOrderItem> orderItems;
 
     @NonNull
-    private String creator;
-
-    @NonNull
-    private String vendor;
-
-    @NonNull
     private LegacyOrderUser requestingUser;
 
     @NonNull

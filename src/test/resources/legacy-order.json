@@ -2,8 +2,6 @@
   "order": {
     "__v": 0,
     "status": "CONFIRMED",
-    "vendor": "5bb49b8dc939fc45e4e5cd8d",
-    "creator": "5bb49b8dc939fc45e4e5cd8d",
     "date_updated": "2019-05-07T10:08:35.216Z",
     "date_created": "2019-05-07T10:08:35.216Z",
     "extra_fields": {
@@ -85,8 +83,6 @@
       "trimming": ""
     }
   ],
-  "creator": "somecreator@boclips.com",
-  "vendor": "somevendor@boclips.com",
   "authorisingUser": {
     "id": "bob123",
     "email": "bo@bo.com",

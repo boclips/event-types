@@ -23,12 +23,6 @@ public class LegacyOrder {
     private String status;
 
     @NonNull
-    private String vendor;
-
-    @NonNull
-    private String creator;
-
-    @NonNull
     @JsonProperty("date_updated")
     private Date dateUpdated;
 
