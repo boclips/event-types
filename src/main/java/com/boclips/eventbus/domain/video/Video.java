@@ -28,4 +28,7 @@ public class Video {
 
     @NonNull
     private PlaybackProviderType playbackProviderType;
+
+    @NonNull
+    private Integer durationSeconds;
 }

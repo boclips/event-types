@@ -91,6 +91,7 @@ class SynchronousFakeEventBusTest {
                 .title("")
                 .subjects(Collections.emptyList())
                 .ageRange(new AgeRange())
+                .durationSeconds(180)
                 .build();
 
         return VideoUpdated.of(video);
