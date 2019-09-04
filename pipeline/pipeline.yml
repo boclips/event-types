@@ -1,0 +1,51 @@
+---
+jobs:
+
+- name: build-event-bus
+  plan:
+  - get: source
+    resource: event-bus
+    trigger: true
+  - task: build
+    file: source/pipeline/tasks/build.yml
+    params:
+      PUBSUB_SECRET: ((event-bus.pubsub-secret))
+
+- name: cut-release-event-bus
+  plan:
+  - get: source
+    resource: event-bus
+    passed: [build-event-bus]
+    trigger: false
+    params: {depth: 1}
+  - put: version
+    params:
+      bump: minor
+    resource: version-event-bus
+  - put: source
+    resource: event-bus
+    params:
+      repository: source
+      tag: version/version
+      only_tag: true
+
+resources:
+
+- name: event-bus
+  type: git
+  icon: github-circle
+  source:
+    branch: master
+    private_key: ((event-bus.repo-key))
+    uri: git@github.com:boclips/event-bus.git
+
+- name: version-event-bus
+  type: semver
+  icon: github-circle
+  source:
+    initial_version: "0.1.0"
+    driver: git
+    uri: git@github.com:boclips/versions.git
+    branch: master
+    file: event-bus
+    private_key: ((versions.repo-key))
