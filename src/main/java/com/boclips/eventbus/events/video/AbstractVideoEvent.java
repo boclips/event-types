@@ -1,6 +1,6 @@
 package com.boclips.eventbus.events.video;
 
-import com.boclips.eventbus.events.base.UserEvent;
+import com.boclips.eventbus.events.base.AbstractUserEvent;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -9,16 +9,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class VideoPlayerEvent extends UserEvent {
-
-    @NonNull
-    private String playerId;
+public class AbstractVideoEvent extends AbstractUserEvent {
 
     @NonNull
     private String videoId;
-
-    @NonNull
-    private Long videoDurationSeconds;
 
     private String playbackDevice;
 

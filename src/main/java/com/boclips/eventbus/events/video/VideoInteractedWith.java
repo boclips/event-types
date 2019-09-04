@@ -12,15 +12,11 @@ import java.util.Map;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@BoclipsEvent("video-player-interacted-with")
-public class VideoPlayerInteractedWith extends VideoPlayerEvent {
-
-    @NonNull
-    private Number currentTime;
+@BoclipsEvent("video-interacted-with")
+public class VideoInteractedWith extends AbstractVideoEvent {
 
     @NonNull
     private String subtype;
 
     private Map<String, Object> payload = new HashMap<>();
-
 }
