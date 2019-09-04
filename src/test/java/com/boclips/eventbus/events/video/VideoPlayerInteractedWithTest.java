@@ -8,16 +8,18 @@ import java.io.IOException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class VideoInteractedWithTest extends TestWithJsonFixture {
+class VideoPlayerInteractedWithTest extends TestWithJsonFixture {
 
     @Test
     void fullscreenOn() throws IOException {
         String json = "{" +
                 "\"subtype\":\"fullscreen-on\"," +
-                "\"videoId\": \"video-id-123\"" +
+                "\"playerId\":\"player-id-123\"," +
+                "\"videoId\": \"video-id-123\"," +
+                "\"videoDurationSeconds\":120" +
                 "}";
 
-        VideoInteractedWith event = new ObjectMapper().readValue(json, VideoInteractedWith.class);
+        VideoPlayerInteractedWith event = new ObjectMapper().readValue(json, VideoPlayerInteractedWith.class);
 
         assertThat(event.getSubtype()).isEqualTo("fullscreen-on");
         assertThat(event.getPayload()).isNotNull();
@@ -28,7 +30,9 @@ class VideoInteractedWithTest extends TestWithJsonFixture {
     void captionsOn() throws IOException {
         String json = "{" +
                 "\"subtype\":\"captions-on\"," +
+                "\"playerId\":\"player-id-123\"," +
                 "\"videoId\": \"video-id-123\"," +
+                "\"videoDurationSeconds\":120," +
                 "\"payload\": {" +
                 "\"kind\": \"caption-kind\"," +
                 "\"label\": \"caption-label\"," +
@@ -37,7 +41,7 @@ class VideoInteractedWithTest extends TestWithJsonFixture {
                 "}" +
                 "}";
 
-        VideoInteractedWith event = new ObjectMapper().readValue(json, VideoInteractedWith.class);
+        VideoPlayerInteractedWith event = new ObjectMapper().readValue(json, VideoPlayerInteractedWith.class);
 
         assertThat(event.getSubtype()).isEqualTo("captions-on");
         assertThat(event.getPayload()).isNotNull();

@@ -11,7 +11,7 @@ import java.util.Date;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class AbstractEvent {
+public abstract class Event {
 
     @NonNull
     @Builder.Default

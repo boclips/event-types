@@ -10,7 +10,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @BoclipsEvent("video-segment-played")
-public class VideoSegmentPlayed extends AbstractVideoEvent {
+public class VideoSegmentPlayed extends VideoPlayerEvent {
 
     private Integer videoIndex;
 
