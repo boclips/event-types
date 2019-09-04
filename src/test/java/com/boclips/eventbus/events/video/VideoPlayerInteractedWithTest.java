@@ -15,8 +15,7 @@ class VideoPlayerInteractedWithTest extends TestWithJsonFixture {
         String json = "{" +
                 "\"subtype\":\"fullscreen-on\"," +
                 "\"playerId\":\"player-id-123\"," +
-                "\"videoId\": \"video-id-123\"," +
-                "\"videoDurationSeconds\":120" +
+                "\"videoId\": \"video-id-123\"" +
                 "}";
 
         VideoPlayerInteractedWith event = new ObjectMapper().readValue(json, VideoPlayerInteractedWith.class);
@@ -32,7 +31,6 @@ class VideoPlayerInteractedWithTest extends TestWithJsonFixture {
                 "\"subtype\":\"captions-on\"," +
                 "\"playerId\":\"player-id-123\"," +
                 "\"videoId\": \"video-id-123\"," +
-                "\"videoDurationSeconds\":120," +
                 "\"payload\": {" +
                 "\"kind\": \"caption-kind\"," +
                 "\"label\": \"caption-label\"," +

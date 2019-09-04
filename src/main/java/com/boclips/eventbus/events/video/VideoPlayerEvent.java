@@ -17,9 +17,6 @@ public class VideoPlayerEvent extends UserEvent {
     @NonNull
     private String videoId;
 
-    @NonNull
-    private Long videoDurationSeconds;
-
     private String playbackDevice;
 
 }
