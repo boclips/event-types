@@ -1,6 +1,6 @@
 package com.boclips.eventbus.events.collection;
 
-import com.boclips.eventbus.events.base.UserEvent;
+import com.boclips.eventbus.events.base.AbstractUserEvent;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CollectionEvent extends UserEvent {
+public class CollectionEvent extends AbstractUserEvent {
 
     @NonNull
     private String collectionId;

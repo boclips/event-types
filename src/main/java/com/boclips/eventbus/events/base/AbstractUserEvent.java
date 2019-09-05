@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserEvent extends Event {
+public class AbstractUserEvent extends AbstractEvent {
 
     @NonNull
     private User user;
