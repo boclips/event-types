@@ -17,7 +17,7 @@ test {
 
 def junitVersion = "5.3.1"
 def springVersion = "2.1.2.RELEASE"
-def jackson = "com.fasterxml.jackson.core:jackson-databind:2.9.5"
+def jackson = "com.fasterxml.jackson.core:jackson-databind:2.9.10"
 def assertj = "org.assertj:assertj-core:3.12.2"
 
 jar {
