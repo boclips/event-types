@@ -1,3 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.2.xsd">
+    <suppress>
+        <notes><![CDATA[
+   file name: grpc-netty-shaded-1.23.0.jar
+
+   The vulnerability is related to cookies and httpOnly flag. This dependency
+   is a transitive of pubsub.
+   ]]></notes>
+        <gav regex="true">^io\.grpc:grpc-netty-shaded:.*$</gav>
+        <cve>CVE-2015-2156</cve>
+    </suppress>
 </suppressions>
