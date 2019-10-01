@@ -18,3 +18,5 @@ spring-shell.log
 
 .env
 
+dependency-check-cache/
+security-report/

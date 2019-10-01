@@ -1,6 +1,14 @@
+buildscript {
+    dependencies {
+        classpath 'org.owasp:dependency-check-gradle:5.0.0'
+    }
+}
+
 plugins {
     id 'java'
 }
+
+apply plugin: 'org.owasp.dependencycheck'
 
 group 'com.boclips'
 version '1.0-SNAPSHOT'
@@ -49,4 +57,20 @@ dependencies {
 
     testImplementation(jackson)
     testImplementation(assertj)
+}
+
+dependencyCheck {
+    failBuildOnCVSS = 7 // Fail on high severity or greater
+
+    data {
+        directory = './dependency-check-cache'
+    }
+
+    analyzers {
+        assemblyEnabled = false
+    }
+
+    suppressionFile = './dependency-check-suppressions.xml'
+
+    outputDirectory = 'security-report'
 }
