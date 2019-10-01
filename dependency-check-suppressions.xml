@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <suppressions xmlns="https://jeremylong.github.io/DependencyCheck/dependency-suppression.1.2.xsd">
-    <suppress>
+    <suppress until="2019-11-01Z">
         <notes><![CDATA[
    file name: grpc-netty-shaded-1.23.0.jar
 
