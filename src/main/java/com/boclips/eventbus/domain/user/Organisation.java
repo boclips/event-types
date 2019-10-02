@@ -11,5 +11,8 @@ public class Organisation {
     @NonNull
     private String id;
 
+    @NonNull
+    private String type;
+
     private Organisation parent;
 }
