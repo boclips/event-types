@@ -14,6 +14,5 @@ import lombok.experimental.SuperBuilder;
 @BoclipsEvent("user-created")
 public class UserCreated extends AbstractUserEvent {
 
-    @NonNull
     private Organisation organisation;
 }
