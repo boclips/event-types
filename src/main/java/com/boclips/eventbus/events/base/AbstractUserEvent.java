@@ -14,4 +14,6 @@ public class AbstractUserEvent extends AbstractEvent {
     @NonNull
     private User user;
 
+    @NonNull
+    private String userId;
 }
