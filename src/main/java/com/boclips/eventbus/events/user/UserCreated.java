@@ -1,9 +1,11 @@
 package com.boclips.eventbus.events.user;
 
 import com.boclips.eventbus.BoclipsEvent;
-import com.boclips.eventbus.domain.user.Organisation;
-import com.boclips.eventbus.events.base.AbstractUserEvent;
-import lombok.*;
+import com.boclips.eventbus.events.base.AbstractEventWithUser;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 @Getter
@@ -12,7 +14,6 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @BoclipsEvent("user-created")
-public class UserCreated extends AbstractUserEvent {
+public class UserCreated extends AbstractEventWithUser {
 
-    private Organisation organisation;
 }
