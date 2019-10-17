@@ -21,6 +21,7 @@ public class VideoPlayerInteractedWith extends VideoPlayerEvent {
     @NonNull
     private String subtype;
 
+    @Builder.Default
     private Map<String, Object> payload = new HashMap<>();
 
 }
