@@ -10,6 +10,9 @@ import lombok.experimental.SuperBuilder;
 @Setter
 @EqualsAndHashCode(callSuper=true)
 @SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
 @BoclipsEvent("subject-updated")
 public class SubjectChanged extends AbstractEvent {
 
