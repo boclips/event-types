@@ -9,6 +9,8 @@ import java.util.Date;
 
 @Data
 @SuperBuilder
+@NoArgsConstructor
+@AllArgsConstructor
 public abstract class AbstractEvent {
 
     @NonNull
