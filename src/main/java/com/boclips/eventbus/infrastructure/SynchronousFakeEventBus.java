@@ -59,7 +59,7 @@ public class SynchronousFakeEventBus implements EventBus {
         try {
             return objectMapper.readValue(eventBytes, event.getClass());
         } catch (IOException e) {
-            throw new RuntimeException("Failed de-serialising event: " + event);
+            throw new RuntimeException("Failed de-serialising event: " + event, e);
         }
     }
 
