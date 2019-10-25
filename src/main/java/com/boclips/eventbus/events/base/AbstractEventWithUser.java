@@ -4,11 +4,9 @@ import com.boclips.eventbus.domain.user.User;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
+@SuperBuilder
 @Getter
 @Setter
-@SuperBuilder
-@NoArgsConstructor
-@AllArgsConstructor
 public class AbstractEventWithUser extends AbstractEvent {
 
     @NonNull
