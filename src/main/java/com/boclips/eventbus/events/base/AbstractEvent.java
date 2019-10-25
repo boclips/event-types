@@ -7,8 +7,10 @@ import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
-@Data
+@Getter
+@Setter
 @SuperBuilder
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class AbstractEvent {

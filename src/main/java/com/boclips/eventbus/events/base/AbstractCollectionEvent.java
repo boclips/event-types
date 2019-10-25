@@ -1,15 +1,15 @@
-package com.boclips.eventbus.events.collection;
+package com.boclips.eventbus.events.base;
 
-import com.boclips.eventbus.events.base.AbstractEventWithUserId;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @SuperBuilder
+@EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class CollectionEvent extends AbstractEventWithUserId {
+public abstract class AbstractCollectionEvent extends AbstractEventWithUserId {
 
     @NonNull
     private String collectionId;

@@ -7,6 +7,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
 public class AbstractEventWithUser extends AbstractEvent {
 
     @NonNull

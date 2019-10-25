@@ -1,18 +1,19 @@
 package com.boclips.eventbus.events.collection;
 
 import com.boclips.eventbus.BoclipsEvent;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.Setter;
+import com.boclips.eventbus.events.base.AbstractCollectionEvent;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
+@EqualsAndHashCode(callSuper=true)
 @SuperBuilder
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString(callSuper = true)
 @BoclipsEvent("collection-visibility-changed")
-public class CollectionVisibilityChanged extends CollectionEvent {
+public class CollectionVisibilityChanged extends AbstractCollectionEvent {
 
     @NonNull
     private Boolean isPublic;
