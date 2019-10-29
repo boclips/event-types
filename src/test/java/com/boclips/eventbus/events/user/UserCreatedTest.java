@@ -4,6 +4,7 @@ import com.boclips.eventbus.domain.user.User;
 import com.boclips.eventbus.infrastructure.EventSerializer;
 import org.junit.jupiter.api.Test;
 
+import static java.util.Collections.emptyList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UserCreatedTest {
@@ -11,7 +12,7 @@ class UserCreatedTest {
     @Test
     void userCreated_canBeDeserialized() {
         UserCreated event = UserCreated.builder()
-                .user(User.builder().id("user-id").isBoclipsEmployee(false).build())
+                .user(User.builder().id("user-id").isBoclipsEmployee(false).subjects(emptyList()).build())
                 .build();
         EventSerializer serializer = new EventSerializer();
 
