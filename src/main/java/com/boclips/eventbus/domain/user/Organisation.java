@@ -17,5 +17,7 @@ public class Organisation {
     @NonNull
     private String name;
 
+    private String postcode;
+
     private Organisation parent;
 }
