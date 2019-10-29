@@ -1,6 +1,9 @@
 package com.boclips.eventbus.domain.user;
 
+import com.boclips.eventbus.domain.Subject;
 import lombok.*;
+
+import java.util.List;
 
 @Data
 @Builder
@@ -16,6 +19,9 @@ public class User {
     private String lastName;
 
     private String email;
+
+    @NonNull
+    private List<Subject> subjects;
 
     private Organisation organisation;
 
