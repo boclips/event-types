@@ -12,7 +12,7 @@ class UserCreatedTest {
     @Test
     void userCreated_canBeDeserialized() {
         UserCreated event = UserCreated.builder()
-                .user(User.builder().id("user-id").isBoclipsEmployee(false).subjects(emptyList()).build())
+                .user(User.builder().id("user-id").isBoclipsEmployee(false).subjects(emptyList()).ages(emptyList()).build())
                 .build();
         EventSerializer serializer = new EventSerializer();
 
