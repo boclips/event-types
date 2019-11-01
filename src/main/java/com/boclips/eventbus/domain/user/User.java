@@ -23,6 +23,9 @@ public class User {
     @NonNull
     private List<Subject> subjects;
 
+    @NonNull
+    private List<Integer> ages;
+
     private Organisation organisation;
 
     @NonNull
