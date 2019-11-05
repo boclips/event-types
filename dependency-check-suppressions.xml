@@ -13,13 +13,4 @@
         <gav regex="true">^io\.grpc:grpc-netty-shaded:.*$</gav>
         <cve>CVE-2015-2156</cve>
     </suppress>
-    <suppress until="2019-11-01Z">
-        <notes><![CDATA[
-            file name: jackson-databind-2.9.10.jar
-
-            AO: https://github.com/FasterXML/jackson-databind/issues/2478 They indicate a fix should be issued around the 19th october
-      ]]></notes>
-        <gav regex="true">^com\.fasterxml\.jackson\.core:jackson-databind:.*$</gav>
-        <cpe>cpe:/a:fasterxml:jackson</cpe>
-    </suppress>
 </suppressions>
