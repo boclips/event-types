@@ -33,12 +33,6 @@ public class LegacyOrderItem {
     private Date dateCreated;
 
     @NonNull
-    private LegacyOrderItemLicense license;
-
-    @NonNull
-    private BigDecimal price;
-
-    @NonNull
     @JsonProperty("transcripts_required")
     private Boolean transcriptsRequired;
 
