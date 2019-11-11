@@ -40,7 +40,7 @@ public class Collection {
     private List<UserId> bookmarks;
 
     @NonNull
-    private Boolean visible;
+    private Boolean isPublic;
 
     @NonNull
     private Date updatedTime;
