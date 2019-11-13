@@ -10,7 +10,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper=true)
 @SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString(callSuper = true)
 @BoclipsEvent("collection-deleted")
 public class CollectionDeleted extends AbstractCollectionEvent {
