@@ -1,5 +1,9 @@
 package com.boclips.eventbus.domain.video;
 
 public enum CaptionsFormat {
-    VTT
+    VTT,
+    SRT,
+    DFXP,
+    WEBVTT,
+    CAP
 }
