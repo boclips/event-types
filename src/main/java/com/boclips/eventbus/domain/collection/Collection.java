@@ -43,5 +43,8 @@ public class Collection {
     private Boolean isPublic;
 
     @NonNull
+    private Date createdTime;
+
+    @NonNull
     private Date updatedTime;
 }
