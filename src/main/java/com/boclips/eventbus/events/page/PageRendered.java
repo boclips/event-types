@@ -1,7 +1,7 @@
 package com.boclips.eventbus.events.page;
 
 import com.boclips.eventbus.BoclipsEvent;
-import com.boclips.eventbus.events.base.AbstractEventWithUser;
+import com.boclips.eventbus.events.base.AbstractEventWithUserId;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -12,6 +12,6 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @BoclipsEvent("page-rendered")
-public class PageRendered extends AbstractEventWithUser {
+public class PageRendered extends AbstractEventWithUserId {
 
 }
