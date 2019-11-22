@@ -20,4 +20,7 @@ public class Organisation {
     private String postcode;
 
     private Organisation parent;
+
+    @NonNull
+    private String accountType;
 }
