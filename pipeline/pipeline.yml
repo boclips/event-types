@@ -3,14 +3,12 @@ groups:
 - name: all
   jobs:
   - build
-  - pre-release
   - major
   - minor
   - release
 - name: develop
   jobs:
   - build
-  - pre-release
 - name: release
   jobs:
   - major
@@ -30,23 +28,6 @@ jobs:
     params:
       PUBSUB_SECRET: ((event-bus.pubsub-secret))
 
-- name: pre-release
-  plan:
-  - get: source
-    passed: [build]
-    trigger: true
-  - get: version
-    params:
-      pre: dev
-  - put: source
-    params:
-      repository: source
-      tag: version/version
-      only_tag: true
-  - put: version
-    params:
-      file: version/version
-
 - name: major
   plan:
   - put: version
@@ -64,7 +45,7 @@ jobs:
 - name: release
   plan:
   - get: source
-    passed: [pre-release]
+    passed: [build]
   - get: version
     params:
       bump: final
