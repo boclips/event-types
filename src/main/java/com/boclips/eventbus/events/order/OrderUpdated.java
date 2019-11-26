@@ -10,8 +10,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
-@BoclipsEvent("order-created")
-public class OrderCreated extends AbstractEvent {
+@BoclipsEvent("order-updated")
+public class OrderUpdated extends AbstractEvent {
 
     @NonNull
     private Order order;
