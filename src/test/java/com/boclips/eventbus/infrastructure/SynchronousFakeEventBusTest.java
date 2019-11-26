@@ -53,6 +53,11 @@ class SynchronousFakeEventBusTest {
     }
 
     @Test
+    void publish_whenEventClassNotAnnotated_throws() {
+        assertThatThrownBy(() -> synchronousFakeEventBus.publish(new NotAnnotatedEvent())).hasMessageContaining("not annotated with @BoclipsEvent");
+    }
+
+    @Test
     void getEventOfType_returnsEvent() {
         assertThat(synchronousFakeEventBus.getEventOfType(VideoUpdated.class)).isEqualTo(anEvent());
     }
@@ -109,5 +114,10 @@ class SynchronousFakeEventBusTest {
         public String getValue() {
             return value;
         }
+    }
+
+    private static class NotAnnotatedEvent {
+
+
     }
 }

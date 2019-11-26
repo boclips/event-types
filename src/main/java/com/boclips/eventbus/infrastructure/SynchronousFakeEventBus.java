@@ -3,6 +3,7 @@ package com.boclips.eventbus.infrastructure;
 import com.boclips.eventbus.ConflictingSubscriberException;
 import com.boclips.eventbus.EventBus;
 import com.boclips.eventbus.EventHandler;
+import com.boclips.eventbus.config.EventConfigurationExtractor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +34,8 @@ public class SynchronousFakeEventBus implements EventBus {
     @Override
     @SuppressWarnings("unchecked")
     public <T> void publish(T event) {
+        new EventConfigurationExtractor().getEventName(event.getClass());
+
         allEvents.add(event);
         byte[] eventBytes = serializer.serialise(event);
 

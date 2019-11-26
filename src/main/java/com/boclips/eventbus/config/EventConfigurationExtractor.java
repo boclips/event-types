@@ -18,7 +18,7 @@ public class EventConfigurationExtractor {
         BoclipsEvent boclipsEvent = AnnotationUtils.findAnnotation(eventType, BoclipsEvent.class);
 
         if (boclipsEvent == null || boclipsEvent.value().isEmpty()) {
-            throw new InvalidMessagingConfiguration(eventType.getName() + " not annotated with " + BoclipsEvent.class.getName());
+            throw new InvalidMessagingConfiguration(eventType.getName() + " not annotated with @" + BoclipsEvent.class.getSimpleName());
         }
 
         return boclipsEvent.value();
