@@ -17,5 +17,5 @@ public class CollectionInteractedWith extends AbstractEventWithUserId {
     private String collectionId;
 
     @NonNull
-    private String subtype;
+    private CollectionInteractionType subtype;
 }
