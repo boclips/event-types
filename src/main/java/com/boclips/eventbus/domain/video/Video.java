@@ -31,4 +31,6 @@ public class Video {
 
     @NonNull
     private Integer durationSeconds;
+
+    private VideoType type;
 }
