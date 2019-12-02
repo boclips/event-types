@@ -8,8 +8,8 @@ import com.boclips.eventbus.events.video.VideoUpdated;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.Collections;
-import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -100,7 +100,7 @@ class SynchronousFakeEventBusTest {
                 .ageRange(new AgeRange())
                 .durationSeconds(180)
                 .type(VideoType.INSTRUCTIONAL)
-                .ingestedOn(new Date())
+                .ingestedOn(LocalDate.now())
                 .build();
 
         return VideoUpdated.of(video);
