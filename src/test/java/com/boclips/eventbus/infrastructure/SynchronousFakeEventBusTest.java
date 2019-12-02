@@ -2,16 +2,14 @@ package com.boclips.eventbus.infrastructure;
 
 import com.boclips.eventbus.BoclipsEvent;
 import com.boclips.eventbus.domain.AgeRange;
-import com.boclips.eventbus.domain.video.ContentPartner;
-import com.boclips.eventbus.domain.video.PlaybackProviderType;
-import com.boclips.eventbus.domain.video.Video;
-import com.boclips.eventbus.domain.video.VideoId;
+import com.boclips.eventbus.domain.video.*;
 import com.boclips.eventbus.events.video.VideoAnalysed;
 import com.boclips.eventbus.events.video.VideoUpdated;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
+import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -21,11 +19,15 @@ class SynchronousFakeEventBusTest {
 
     private SynchronousFakeEventBus synchronousFakeEventBus;
 
+    private VideoUpdated event;
+
     @BeforeEach
     void setUp() {
         synchronousFakeEventBus = new SynchronousFakeEventBus();
 
-        synchronousFakeEventBus.publish(anEvent());
+        event = anEvent();
+
+        synchronousFakeEventBus.publish(event);
     }
 
     @Test
@@ -41,7 +43,7 @@ class SynchronousFakeEventBusTest {
 
     @Test
     void publish_canGetPublishedEvent() {
-        assertThat(synchronousFakeEventBus.getReceivedEvents()).containsExactly(anEvent());
+        assertThat(synchronousFakeEventBus.getReceivedEvents()).containsExactly(event);
     }
 
     @Test
@@ -59,7 +61,7 @@ class SynchronousFakeEventBusTest {
 
     @Test
     void getEventOfType_returnsEvent() {
-        assertThat(synchronousFakeEventBus.getEventOfType(VideoUpdated.class)).isEqualTo(anEvent());
+        assertThat(synchronousFakeEventBus.getEventOfType(VideoUpdated.class)).isEqualTo(event);
     }
 
     @Test
@@ -97,6 +99,8 @@ class SynchronousFakeEventBusTest {
                 .subjects(Collections.emptyList())
                 .ageRange(new AgeRange())
                 .durationSeconds(180)
+                .type(VideoType.INSTRUCTIONAL)
+                .ingestedOn(new Date())
                 .build();
 
         return VideoUpdated.of(video);
