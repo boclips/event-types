@@ -3,7 +3,6 @@ package com.boclips.eventbus.events.order;
 
 import com.boclips.eventbus.infrastructure.ObjectMapperProvider;
 import com.boclips.eventbus.testsupport.TestWithJsonFixture;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
