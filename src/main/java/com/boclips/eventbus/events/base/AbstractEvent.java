@@ -3,9 +3,8 @@ package com.boclips.eventbus.events.base;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.ZoneOffset;
+import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.util.Date;
 
 @Getter
 @Setter
@@ -17,7 +16,7 @@ public abstract class AbstractEvent {
 
     @NonNull
     @Builder.Default
-    private Date timestamp = Date.from(ZonedDateTime.now(ZoneOffset.UTC).toInstant());
+    private ZonedDateTime timestamp = ZonedDateTime.now(ZoneId.of("UTC"));
 
     private String url;
 }

@@ -3,7 +3,7 @@ package com.boclips.eventbus.events.order;
 import com.boclips.eventbus.domain.video.VideoId;
 import lombok.*;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
@@ -16,10 +16,10 @@ public class Order {
     private String id;
 
     @NonNull
-    private Date dateUpdated;
+    private ZonedDateTime updatedAt;
 
     @NonNull
-    private Date dateCreated;
+    private ZonedDateTime createdAt;
 
     @NonNull
     private List<VideoId> videoIds;

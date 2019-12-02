@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.Date;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -62,6 +63,17 @@ public class ObjectMapperProviderTest {
         assertThat(restoredEvent.dateTimeField).isEqualTo("2019-11-07T13:12:11Z");
     }
 
+    @Test
+    public void javaUtilDateSerizlisedWithVanillaObjectMapperCanBeDeserialised() throws JsonProcessingException {
+        Date date = new Date();
+        event.setJavaUtilDateField(date);
+
+        String json = new ObjectMapper().writeValueAsString(event);
+        AnEvent restoredEvent = objectMapper.readValue(json, AnEvent.class);
+
+        assertThat(restoredEvent.javaUtilDateField).isEqualTo(date);
+    }
+
     enum AnEnum {
         A_VALUE
     }
@@ -73,6 +85,8 @@ public class ObjectMapperProviderTest {
         private LocalDate dateField;
 
         private ZonedDateTime dateTimeField;
+
+        private Date javaUtilDateField;
 
         public AnEnum getEnumField() {
             return enumField;
@@ -96,6 +110,14 @@ public class ObjectMapperProviderTest {
 
         public void setDateTimeField(ZonedDateTime dateTimeField) {
             this.dateTimeField = dateTimeField;
+        }
+
+        public Date getJavaUtilDateField() {
+            return javaUtilDateField;
+        }
+
+        public void setJavaUtilDateField(Date javaUtilDateField) {
+            this.javaUtilDateField = javaUtilDateField;
         }
     }
 }

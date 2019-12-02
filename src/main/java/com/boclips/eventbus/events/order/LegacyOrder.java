@@ -3,9 +3,8 @@ package com.boclips.eventbus.events.order;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
-import lombok.experimental.SuperBuilder;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @Data
 @Builder
@@ -25,11 +24,11 @@ public class LegacyOrder {
 
     @NonNull
     @JsonProperty("date_updated")
-    private Date dateUpdated;
+    private ZonedDateTime dateUpdated;
 
     @NonNull
     @JsonProperty("date_created")
-    private Date dateCreated;
+    private ZonedDateTime dateCreated;
 
     @NonNull
     @JsonProperty("extra_fields")

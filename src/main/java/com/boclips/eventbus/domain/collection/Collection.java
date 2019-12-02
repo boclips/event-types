@@ -6,7 +6,7 @@ import com.boclips.eventbus.domain.user.UserId;
 import com.boclips.eventbus.domain.video.VideoId;
 import lombok.*;
 
-import java.util.Date;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
@@ -43,8 +43,8 @@ public class Collection {
     private Boolean isPublic;
 
     @NonNull
-    private Date createdTime;
+    private ZonedDateTime createdAt;
 
     @NonNull
-    private Date updatedTime;
+    private ZonedDateTime updatedAt;
 }

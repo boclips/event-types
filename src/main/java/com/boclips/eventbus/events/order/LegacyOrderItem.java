@@ -4,8 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.time.ZonedDateTime;
 
 @Data
 @Builder
@@ -26,11 +25,11 @@ public class LegacyOrderItem {
 
     @NonNull
     @JsonProperty("date_updated")
-    private Date dateUpdated;
+    private ZonedDateTime dateUpdated;
 
     @NonNull
     @JsonProperty("date_created")
-    private Date dateCreated;
+    private ZonedDateTime dateCreated;
 
     @NonNull
     @JsonProperty("transcripts_required")

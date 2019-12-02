@@ -1,14 +1,13 @@
 package com.boclips.eventbus.events.order;
 
 
+import com.boclips.eventbus.infrastructure.ObjectMapperProvider;
 import com.boclips.eventbus.testsupport.TestWithJsonFixture;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.sql.Date;
-import java.time.Instant;
+import java.time.ZonedDateTime;
 import java.util.Arrays;
 import java.util.Collections;
 
@@ -19,13 +18,13 @@ class LegacyOrderSubmittedTest extends TestWithJsonFixture {
     void objectMapperCanParseJsonIntoLegacyOrderSubmitted() throws IOException {
         String json = loadExample("legacy-order.json");
 
-        LegacyOrderSubmitted event = new ObjectMapper().readValue(json, LegacyOrderSubmitted.class);
+        LegacyOrderSubmitted event = ObjectMapperProvider.get().readValue(json, LegacyOrderSubmitted.class);
 
         assertThat(event.getOrder()).isEqualTo(
                 LegacyOrder.builder()
                         .status("CONFIRMED")
-                        .dateUpdated(Date.from(Instant.parse("2019-05-07T10:08:35.216Z")))
-                        .dateCreated(Date.from(Instant.parse("2019-05-07T10:08:35.216Z")))
+                        .dateUpdated(ZonedDateTime.parse("2019-05-07T10:08:35.216Z[UTC]"))
+                        .dateCreated(ZonedDateTime.parse("2019-05-07T10:08:35.216Z[UTC]"))
                         .extraFields(LegacyOrderExtraFields.builder()
                                 .agreeTerms(true)
                                 .isbnOrProductNumber("")
@@ -43,8 +42,8 @@ class LegacyOrderSubmittedTest extends TestWithJsonFixture {
                         .id("5cd158e96385cd18c208119e")
                         .uuid("4b0cdd04-ba2f-450e-bfbd-8d27d708d9e3")
                         .assetId("5c542ac05438cdbcb56df2c3")
-                        .dateUpdated(Date.from(Instant.parse("2019-05-07T10:08:36.028Z")))
-                        .dateCreated(Date.from(Instant.parse("2019-05-07T10:07:37.431Z")))
+                        .dateUpdated(ZonedDateTime.parse("2019-05-07T10:08:36.028Z[UTC]"))
+                        .dateCreated(ZonedDateTime.parse("2019-05-07T10:07:37.431Z[UTC]"))
                         .transcriptsRequired(true)
                         .status("OPEN")
                         .trimming("1 - 145")
@@ -53,8 +52,8 @@ class LegacyOrderSubmittedTest extends TestWithJsonFixture {
                         .id("5cd158dcc5380897ad1aa329")
                         .uuid("714c50b4-fa58-463e-a374-81ac39996cf4")
                         .assetId("5c542ab95438cdbcb56de2ec")
-                        .dateUpdated(Date.from(Instant.parse("2019-05-07T10:08:36.029Z")))
-                        .dateCreated(Date.from(Instant.parse("2019-05-07T10:07:24.672Z")))
+                        .dateUpdated(ZonedDateTime.parse("2019-05-07T10:08:36.029Z[UTC]"))
+                        .dateCreated(ZonedDateTime.parse("2019-05-07T10:07:24.672Z[UTC]"))
                         .transcriptsRequired(true)
                         .status("OPEN")
                         .trimming("")
