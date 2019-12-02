@@ -4,6 +4,7 @@ import com.boclips.eventbus.domain.AgeRange;
 import com.boclips.eventbus.domain.Subject;
 import lombok.*;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -34,4 +35,6 @@ public class Video {
 
     @NonNull
     private VideoType type;
+
+    private Date ingestedOn;
 }
