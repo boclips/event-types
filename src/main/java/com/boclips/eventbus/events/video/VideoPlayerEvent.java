@@ -12,9 +12,6 @@ import lombok.experimental.SuperBuilder;
 public class VideoPlayerEvent extends AbstractEventWithUserId {
 
     @NonNull
-    private String playerId;
-
-    @NonNull
     private String videoId;
 
     private String playbackDevice;
