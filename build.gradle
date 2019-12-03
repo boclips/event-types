@@ -6,6 +6,7 @@ buildscript {
 
 plugins {
     id 'java'
+    id 'maven'
 }
 
 apply plugin: 'org.owasp.dependencycheck'
@@ -27,16 +28,6 @@ def springVersion = '2.2.0.RELEASE'
 def jackson = 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
 def assertj = 'org.assertj:assertj-core:3.13.2'
 def lombok = 'org.projectlombok:lombok:1.18.6'
-
-jar {
-    manifest {
-        attributes 'Main-Class': 'com.baeldung.fatjar.Application'
-    }
-
-    from {
-        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
-    }
-}
 
 dependencies {
     compile('com.google.cloud:google-cloud-pubsub:1.97.0')
