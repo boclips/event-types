@@ -1,5 +1,6 @@
 package com.boclips.eventbus.events.video;
 
+import com.boclips.eventbus.infrastructure.ObjectMapperProvider;
 import com.boclips.eventbus.testsupport.TestWithJsonFixture;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
@@ -18,7 +19,7 @@ class VideoPlayerInteractedWithTest extends TestWithJsonFixture {
                 "\"videoId\": \"video-id-123\"" +
                 "}";
 
-        VideoPlayerInteractedWith event = new ObjectMapper().readValue(json, VideoPlayerInteractedWith.class);
+        VideoPlayerInteractedWith event = ObjectMapperProvider.get().readValue(json, VideoPlayerInteractedWith.class);
 
         assertThat(event.getSubtype()).isEqualTo("fullscreen-on");
         assertThat(event.getPayload()).isNotNull();
@@ -39,7 +40,7 @@ class VideoPlayerInteractedWithTest extends TestWithJsonFixture {
                 "}" +
                 "}";
 
-        VideoPlayerInteractedWith event = new ObjectMapper().readValue(json, VideoPlayerInteractedWith.class);
+        VideoPlayerInteractedWith event = ObjectMapperProvider.get().readValue(json, VideoPlayerInteractedWith.class);
 
         assertThat(event.getSubtype()).isEqualTo("captions-on");
         assertThat(event.getPayload()).isNotNull();

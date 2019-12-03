@@ -74,6 +74,15 @@ public class ObjectMapperProviderTest {
         assertThat(restoredEvent.javaUtilDateField).isEqualTo(date);
     }
 
+    @Test
+    public void deserialisationDoesNotFailOnUnknownProperties() throws JsonProcessingException {
+        String json = "{\"unknownProperty\": 0}";
+
+        AnEvent restoredEvent = objectMapper.readValue(json, AnEvent.class);
+
+        assertThat(restoredEvent).isNotNull();
+    }
+
     enum AnEnum {
         A_VALUE
     }
