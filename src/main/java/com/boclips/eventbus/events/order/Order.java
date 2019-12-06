@@ -1,6 +1,5 @@
 package com.boclips.eventbus.events.order;
 
-import com.boclips.eventbus.domain.video.VideoId;
 import lombok.*;
 
 import java.time.ZonedDateTime;
@@ -23,9 +22,6 @@ public class Order {
 
     @NonNull
     private ZonedDateTime createdAt;
-
-    @NonNull
-    private List<VideoId> videoIds;
 
     @NonNull
     private List<OrderItem> items;
