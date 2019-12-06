@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -83,6 +84,25 @@ public class ObjectMapperProviderTest {
         assertThat(restoredEvent).isNotNull();
     }
 
+    @Test
+    public void bigDecimalValuesAreSentAsStrings() throws JsonProcessingException {
+        event.setBigDecimalField(new BigDecimal("1.5"));
+
+        String json = objectMapper.writeValueAsString(event);
+
+        assertThat(json).contains("\"bigDecimalField\":\"1.5\"");
+    }
+
+    @Test
+    public void bigDecimalValuesCanBeRestored() throws JsonProcessingException {
+        event.setBigDecimalField(new BigDecimal("1.50"));
+
+        String json = objectMapper.writeValueAsString(event);
+        AnEvent restoredEvent = objectMapper.readValue(json, AnEvent.class);
+
+        assertThat(restoredEvent.bigDecimalField).isEqualTo("1.50");
+    }
+
     enum AnEnum {
         A_VALUE
     }
@@ -96,6 +116,8 @@ public class ObjectMapperProviderTest {
         private ZonedDateTime dateTimeField;
 
         private Date javaUtilDateField;
+
+        private BigDecimal bigDecimalField;
 
         public AnEnum getEnumField() {
             return enumField;
@@ -119,6 +141,14 @@ public class ObjectMapperProviderTest {
 
         public void setDateTimeField(ZonedDateTime dateTimeField) {
             this.dateTimeField = dateTimeField;
+        }
+
+        public BigDecimal getBigDecimalField() {
+            return bigDecimalField;
+        }
+
+        public void setBigDecimalField(BigDecimal bigDecimalField) {
+            this.bigDecimalField = bigDecimalField;
         }
 
         public Date getJavaUtilDateField() {

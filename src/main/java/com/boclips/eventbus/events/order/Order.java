@@ -16,6 +16,9 @@ public class Order {
     private String id;
 
     @NonNull
+    private String customerOrganisationName;
+
+    @NonNull
     private ZonedDateTime updatedAt;
 
     @NonNull
@@ -23,4 +26,7 @@ public class Order {
 
     @NonNull
     private List<VideoId> videoIds;
+
+    @NonNull
+    private List<OrderItem> items;
 }
