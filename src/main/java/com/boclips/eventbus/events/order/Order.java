@@ -26,5 +26,5 @@ public class Order {
     @NonNull
     private List<OrderItem> items;
 
-    private OrderStatus orderStatus;
+    private OrderStatus status;
 }
