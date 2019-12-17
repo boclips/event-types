@@ -38,4 +38,8 @@ public class Video {
 
     @NonNull
     private LocalDate ingestedOn;
+
+    private Dimensions originalDimensions;
+
+    private List<VideoAsset> assets;
 }
