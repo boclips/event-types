@@ -13,9 +13,9 @@ public class ContentPartner {
 
     @NonNull
     private String name;
-    
+
     @NonNull
     private AgeRange ageRange;
 
-    private LegalRestrictions legalRestrictions;
+    private String legalRestrictions;
 }
