@@ -5,6 +5,7 @@ import com.boclips.eventbus.domain.Subject;
 import lombok.*;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Data
@@ -38,6 +39,8 @@ public class Video {
 
     @NonNull
     private LocalDate ingestedOn;
+
+    private ZonedDateTime ingestedAt;
 
     private Dimensions originalDimensions;
 
