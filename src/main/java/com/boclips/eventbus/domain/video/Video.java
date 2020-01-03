@@ -40,6 +40,7 @@ public class Video {
     @NonNull
     private LocalDate ingestedOn;
 
+    @NonNull
     private ZonedDateTime ingestedAt;
 
     private Dimensions originalDimensions;
