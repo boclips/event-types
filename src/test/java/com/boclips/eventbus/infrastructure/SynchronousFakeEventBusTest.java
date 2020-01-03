@@ -8,7 +8,6 @@ import com.boclips.eventbus.events.video.VideoUpdated;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 
@@ -101,7 +100,6 @@ class SynchronousFakeEventBusTest {
                 .ageRange(new AgeRange())
                 .durationSeconds(180)
                 .type(VideoType.INSTRUCTIONAL)
-                .ingestedOn(LocalDate.now())
                 .ingestedAt(ZonedDateTime.now())
                 .build();
 
