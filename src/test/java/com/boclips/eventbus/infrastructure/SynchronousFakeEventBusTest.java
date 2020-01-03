@@ -9,6 +9,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -101,6 +102,7 @@ class SynchronousFakeEventBusTest {
                 .durationSeconds(180)
                 .type(VideoType.INSTRUCTIONAL)
                 .ingestedOn(LocalDate.now())
+                .ingestedAt(ZonedDateTime.now())
                 .build();
 
         return VideoUpdated.of(video);
