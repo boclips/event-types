@@ -1,6 +1,6 @@
 buildscript {
     dependencies {
-        classpath 'org.owasp:dependency-check-gradle:5.2.2'
+        classpath 'org.owasp:dependency-check-gradle:5.2.4'
     }
 }
 
@@ -24,13 +24,13 @@ test {
     useJUnitPlatform()
 }
 
-def springVersion = '2.2.0.RELEASE'
-def jackson = 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
+def springVersion = '2.2.3.RELEASE'
+def jackson = 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
 def assertj = 'org.assertj:assertj-core:3.13.2'
 def lombok = 'org.projectlombok:lombok:1.18.6'
 
 dependencies {
-    compile('com.google.cloud:google-cloud-pubsub:1.97.0')
+    compile('com.google.cloud:google-cloud-pubsub:1.102.1')
     compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1')
     
     compileOnly("org.springframework.boot:spring-boot-starter:$springVersion")
