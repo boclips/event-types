@@ -10,7 +10,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AbstractEventWithUserId extends AbstractEvent {
-
     @NonNull
     private String userId;
+
+    private String overrideUserId;
 }
