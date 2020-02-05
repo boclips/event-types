@@ -3,6 +3,8 @@ package com.boclips.eventbus.domain.contentpartner;
 import com.boclips.eventbus.domain.AgeRange;
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -18,4 +20,18 @@ public class ContentPartner {
     private AgeRange ageRange;
 
     private String legalRestrictions;
+
+    private String description;
+
+    private List<String> contentType;
+
+    private List<String> contentCategories;
+
+    private String language;
+
+    private String hubspotId;
+
+    private String awards;
+
+    private String notes;
 }
