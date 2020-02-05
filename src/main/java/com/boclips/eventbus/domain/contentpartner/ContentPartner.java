@@ -28,7 +28,7 @@ public class ContentPartner {
 
     private List<String> contentCategories;
 
-    private String language;
+    private Locale language;
 
     private String hubspotId;
 
