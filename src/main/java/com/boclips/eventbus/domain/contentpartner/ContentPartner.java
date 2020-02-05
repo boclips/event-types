@@ -4,6 +4,7 @@ import com.boclips.eventbus.domain.AgeRange;
 import lombok.*;
 
 import java.util.List;
+import java.util.Locale;
 
 @Data
 @Builder
@@ -23,7 +24,7 @@ public class ContentPartner {
 
     private String description;
 
-    private List<String> contentType;
+    private List<String> contentTypes;
 
     private List<String> contentCategories;
 
