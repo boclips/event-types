@@ -3,6 +3,7 @@ package com.boclips.eventbus;
 import com.boclips.eventbus.config.BoclipsEventsProperties;
 import com.boclips.eventbus.config.BoclipsSubscriptionRegistrationPostProcessor;
 import com.boclips.eventbus.infrastructure.PubSubEventBus;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
@@ -19,5 +20,6 @@ import java.lang.annotation.Target;
         BoclipsEventsProperties.class,
         PubSubEventBus.class
 })
+@ConditionalOnProperty(name = "eventbus.enabled", havingValue = "true", matchIfMissing = true)
 public @interface EnableBoclipsEvents {
 }
