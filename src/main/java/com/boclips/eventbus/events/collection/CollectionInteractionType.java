@@ -1,5 +1,6 @@
 package com.boclips.eventbus.events.collection;
 
 public enum CollectionInteractionType {
-    NAVIGATE_TO_COLLECTION_DETAILS
+    NAVIGATE_TO_COLLECTION_DETAILS,
+    VISIT_LESSON_GUIDE
 }
