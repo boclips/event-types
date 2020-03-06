@@ -3,6 +3,7 @@ package com.boclips.eventbus.domain.contentpartner;
 import com.boclips.eventbus.domain.AgeRange;
 import lombok.*;
 
+import java.time.Period;
 import java.util.List;
 import java.util.Locale;
 
@@ -35,4 +36,9 @@ public class ContentPartner {
     private String awards;
 
     private String notes;
+
+    private Period deliveryFrequency;
+
+    @NonNull
+    private IngestDetails ingest;
 }
