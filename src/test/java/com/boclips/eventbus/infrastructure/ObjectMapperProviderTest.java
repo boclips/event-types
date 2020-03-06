@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.Period;
 import java.time.ZonedDateTime;
 import java.util.Date;
 
@@ -103,6 +104,25 @@ public class ObjectMapperProviderTest {
         assertThat(restoredEvent.bigDecimalField).isEqualTo("1.50");
     }
 
+    @Test
+    public void periodValuesAreWrittenAsStrings() throws JsonProcessingException {
+        event.setPeriodField(Period.ofMonths(5));
+
+        String json = objectMapper.writeValueAsString(event);
+
+        assertThat(json).contains("\"P5M\"");
+    }
+
+    @Test
+    public void periodValuesCanBeRestored() throws JsonProcessingException {
+        event.setPeriodField(Period.ofMonths(5));
+
+        String json = objectMapper.writeValueAsString(event);
+        AnEvent restoredEvent = objectMapper.readValue(json, AnEvent.class);
+
+        assertThat(restoredEvent.periodField).isEqualTo(Period.ofMonths(5));
+    }
+
     enum AnEnum {
         A_VALUE
     }
@@ -118,6 +138,8 @@ public class ObjectMapperProviderTest {
         private Date javaUtilDateField;
 
         private BigDecimal bigDecimalField;
+
+        private Period periodField;
 
         public AnEnum getEnumField() {
             return enumField;
@@ -157,6 +179,14 @@ public class ObjectMapperProviderTest {
 
         public void setJavaUtilDateField(Date javaUtilDateField) {
             this.javaUtilDateField = javaUtilDateField;
+        }
+
+        public Period getPeriodField() {
+            return periodField;
+        }
+
+        public void setPeriodField(Period periodField) {
+            this.periodField = periodField;
         }
     }
 }
