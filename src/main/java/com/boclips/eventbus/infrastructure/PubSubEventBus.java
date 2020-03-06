@@ -4,7 +4,6 @@ import com.boclips.eventbus.ConflictingSubscriberException;
 import com.boclips.eventbus.EventBus;
 import com.boclips.eventbus.EventHandler;
 import com.boclips.eventbus.config.BoclipsEventsProperties;
-import com.boclips.eventbus.config.EventConfigurationExtractor;
 import com.boclips.eventbus.config.InvalidMessagingConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.gax.batching.BatchingSettings;
@@ -25,7 +24,6 @@ import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -33,13 +31,13 @@ import java.util.logging.Logger;
 
 @Component
 @ConditionalOnMissingBean(EventBus.class)
-public class PubSubEventBus implements EventBus {
+public class PubSubEventBus extends AbstractEventBus {
     private final Logger logger = Logger.getLogger(PubSubEventBus.class.getName());
     private final String projectId;
     private final String consumerGroup;
     private final ObjectMapper objectMapper;
     private final CredentialsProvider credentialsProvider;
-    private final Map<Class<?>, Subscriber> subscriberByEventType = new HashMap<>();
+    private final Map<String, Subscriber> subscriberByTopic = new HashMap<>();
     private final Map<String, Publisher> publisherByTopic = new HashMap<>();
 
     private final BatchingSettings publisherBatchingSettings = BatchingSettings.newBuilder()
@@ -65,12 +63,10 @@ public class PubSubEventBus implements EventBus {
     }
 
     @Override
-    public <T> void subscribe(Class<T> eventType, EventHandler<T> eventHandler) {
-        subscriberByEventType.computeIfPresent(eventType, (cls, subscriber) -> {
+    public <T> void doSubscribe(String topicName, Class<T> eventType, EventHandler<T> eventHandler) {
+        subscriberByTopic.computeIfPresent(topicName, (cls, subscriber) -> {
             throw new ConflictingSubscriberException("There already is a subscription for " + eventType.getSimpleName());
         });
-
-        String topicName = new EventConfigurationExtractor().getEventName(eventType);
 
         ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(projectId, topicName + "." + consumerGroup);
 
@@ -98,26 +94,19 @@ public class PubSubEventBus implements EventBus {
                 .setCredentialsProvider(credentialsProvider)
                 .build();
 
-        subscriberByEventType.put(eventType, subscriber);
+        subscriberByTopic.put(topicName, subscriber);
 
         subscriber.startAsync().awaitRunning();
-        logger.info(String.format("Started listening on %s", eventType));
+        logger.info(String.format("Subscribed to %s", topicName));
     }
 
     @Override
-    public <T> void publish(T event) {
-        publish(Collections.singletonList(event));
-    }
-
-    @Override
-    public <T> void publish(Iterable<T> events) {
-        String topicName = new EventConfigurationExtractor().getEventName(events.iterator().next().getClass());
-
+    protected void doPublish(Iterable<?> events, String topicName) {
         logger.fine("Obtaining publisher for " + topicName);
         Publisher publisher = getPublisherFor(topicName);
         logger.fine("Obtained publisher for " + topicName);
         try {
-            for (T event : events) {
+            for (Object event : events) {
                 logger.fine("Serializing event...");
                 byte[] eventBytes = objectMapper.writeValueAsBytes(event);
                 ByteString eventByteString = ByteString.copyFrom(eventBytes);
@@ -135,8 +124,8 @@ public class PubSubEventBus implements EventBus {
 
 
     @Override
-    public void unsubscribe(Class<?> eventType) {
-        subscriberByEventType.remove(eventType);
+    public void doUnsubscribe(String topicName) {
+        subscriberByTopic.remove(topicName);
     }
 
     private synchronized Publisher getPublisherFor(String topicName) {
@@ -237,7 +226,7 @@ public class PubSubEventBus implements EventBus {
 
     @PreDestroy
     public void closeSubscriptionsAndPublishers() {
-        subscriberByEventType.forEach((key, subscriber) -> {
+        subscriberByTopic.forEach((key, subscriber) -> {
             try {
                 subscriber.stopAsync().awaitTerminated();
                 logger.info(String.format("Closed subscription for %s [%s]", key, subscriber.state()));

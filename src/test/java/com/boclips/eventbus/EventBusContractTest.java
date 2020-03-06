@@ -1,6 +1,7 @@
 package com.boclips.eventbus;
 
 import com.boclips.eventbus.events.video.VideoAnalysisRequested;
+import com.boclips.eventbus.events.video.VideoTranscriptCreated;
 import com.boclips.eventbus.infrastructure.PubSubEventBus;
 import com.boclips.eventbus.infrastructure.SynchronousFakeEventBus;
 import com.boclips.eventbus.testsupport.AbstractPubSubTest;
@@ -13,6 +14,7 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -22,21 +24,26 @@ import static org.awaitility.Awaitility.await;
 
 public class EventBusContractTest extends AbstractPubSubTest {
 
+    private VideoAnalysisRequested videoAnalysisRequested = VideoAnalysisRequested.builder()
+            .videoId("1")
+            .videoUrl("url")
+            .build();
+
+    private VideoTranscriptCreated videoTranscriptCreated = VideoTranscriptCreated.builder()
+            .videoId("1")
+            .transcript("bla bla bla")
+            .build();
+
     @ParameterizedTest
     @ArgumentsSource(EventBusArgumentProvider.class)
     void subscription_whenEventPublished_receivesTheEvent(EventBus eventBus) {
         TestEventHandler<VideoAnalysisRequested> handler = new TestEventHandler<>();
         eventBus.subscribe(VideoAnalysisRequested.class, handler);
 
-        VideoAnalysisRequested event = VideoAnalysisRequested.builder()
-                .videoId("1")
-                .videoUrl("url")
-                .build();
-
-        eventBus.publish(event);
+        eventBus.publish(videoAnalysisRequested);
 
         await().atMost(5, SECONDS).untilAsserted(() ->
-                assertThat(handler.getEvents()).containsExactly(event)
+                assertThat(handler.getEvents()).containsExactly(videoAnalysisRequested)
         );
 
         eventBus.unsubscribe(VideoAnalysisRequested.class);
@@ -60,6 +67,18 @@ public class EventBusContractTest extends AbstractPubSubTest {
         assertThatCode(() -> {
             eventBus.publish(new EventNooneSubscribesTo());
         }).doesNotThrowAnyException();
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(EventBusArgumentProvider.class)
+    void bulkPublishing_whenDifferentClasses_throws(EventBus eventBus) {
+        assertThatThrownBy(() -> {
+            eventBus.publish(Arrays.asList(
+                    videoAnalysisRequested,
+                    videoTranscriptCreated
+            ));
+        })
+                .hasMessageContaining("the same class");
     }
 
     @BoclipsEvent("noone-subscribed-to-this")

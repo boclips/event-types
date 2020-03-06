@@ -1,9 +1,7 @@
 package com.boclips.eventbus.infrastructure;
 
 import com.boclips.eventbus.ConflictingSubscriberException;
-import com.boclips.eventbus.EventBus;
 import com.boclips.eventbus.EventHandler;
-import com.boclips.eventbus.config.EventConfigurationExtractor;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -12,44 +10,37 @@ import java.util.Map;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-public class SynchronousFakeEventBus implements EventBus {
-    private Map<Class<?>, EventHandler<?>> handlerByEvent = new HashMap<>();
+public class SynchronousFakeEventBus extends AbstractEventBus {
+    private Map<String, EventHandler<?>> handlerByTopic = new HashMap<>();
     private List<Object> allEvents = new ArrayList<>();
     private final EventSerializer serializer = new EventSerializer();
 
     @Override
-    public <T> void subscribe(Class<T> eventType, EventHandler<T> eventHandler) {
-        handlerByEvent.computeIfPresent(eventType, (cls, handler) -> {
+    public <T> void doSubscribe(String topicName, Class<T> eventType, EventHandler<T> eventHandler) {
+        handlerByTopic.computeIfPresent(topicName, (cls, handler) -> {
             throw new ConflictingSubscriberException("There already is a subscription for " + eventType.getSimpleName() + ": " + handler.getClass().getSimpleName());
         });
-        handlerByEvent.put(eventType, eventHandler);
-        Logger.getLogger(SynchronousFakeEventBus.class.getSimpleName()).info("Subscribed handler for " + eventType);
-    }
-
-    @Override
-    public <T> void publish(Iterable<T> events) {
-        events.forEach(this::publish);
+        handlerByTopic.put(topicName, eventHandler);
+        Logger.getLogger(SynchronousFakeEventBus.class.getSimpleName()).info("Subscribed: " + topicName);
     }
 
     @Override
     @SuppressWarnings("unchecked")
-    public <T> void publish(T event) {
-        new EventConfigurationExtractor().getEventName(event.getClass());
-
-        allEvents.add(event);
-        byte[] eventBytes = serializer.serialise(event);
-
-        EventHandler<Object> eventHandler = (EventHandler<Object>) handlerByEvent.get(event.getClass());
-        if (eventHandler != null) {
-            eventHandler.handle(serializer.deserialise(event, eventBytes));
-        }
-
-        Logger.getLogger(SynchronousFakeEventBus.class.getSimpleName()).info("Published event " + event.getClass());
+    protected void doPublish(Iterable<?> events, String topicName) {
+        EventHandler<Object> eventHandler = (EventHandler<Object>) handlerByTopic.get(topicName);
+        events.forEach(event -> {
+            allEvents.add(event);
+            byte[] eventBytes = serializer.serialise(event);
+            if (eventHandler != null) {
+                eventHandler.handle(serializer.deserialise(event, eventBytes));
+            }
+            Logger.getLogger(SynchronousFakeEventBus.class.getSimpleName()).info("Published event: " + topicName);
+        });
     }
 
     @Override
-    public void unsubscribe(Class<?> eventType) {
-        handlerByEvent.remove(eventType);
+    public void doUnsubscribe(String topicName) {
+        handlerByTopic.remove(topicName);
     }
 
     public <T> Boolean hasReceivedEventOfType(Class<T> eventType) {

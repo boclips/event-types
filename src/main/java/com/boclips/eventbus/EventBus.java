@@ -5,7 +5,7 @@ public interface EventBus {
 
     void unsubscribe(Class<?> eventType);
 
-    <T> void publish(Iterable<T> event);
+    <T> void publish(Iterable<T> events);
 
     <T> void publish(T event);
 }
