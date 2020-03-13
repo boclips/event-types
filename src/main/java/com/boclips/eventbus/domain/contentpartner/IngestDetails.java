@@ -2,6 +2,8 @@ package com.boclips.eventbus.domain.contentpartner;
 
 import lombok.*;
 
+import java.util.List;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -11,5 +13,5 @@ public class IngestDetails {
     @NonNull
     private String type;
 
-    private String url;
+    private List<String> urls;
 }
