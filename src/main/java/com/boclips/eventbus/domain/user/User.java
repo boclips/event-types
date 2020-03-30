@@ -30,4 +30,6 @@ public class User {
 
     @NonNull
     private Boolean isBoclipsEmployee;
+
+    private String role;
 }
