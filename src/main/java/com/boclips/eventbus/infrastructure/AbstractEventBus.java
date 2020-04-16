@@ -13,12 +13,12 @@ public abstract class AbstractEventBus implements EventBus {
 
     private final EventConfigurationExtractor eventConfigurationExtractor = new EventConfigurationExtractor();
 
-    protected abstract <T> void doSubscribe(String topicName, Class<T> eventType, EventHandler<T> eventHandler);
+    protected abstract <T> void doSubscribe(String topicName, Class<T> eventType, EventHandler<? super T> eventHandler);
     protected abstract void doUnsubscribe(String topicName);
     protected abstract void doPublish(Iterable<?> events, String topicName);
 
     @Override
-    public final <T> void subscribe(Class<T> eventType, EventHandler<T> eventHandler) {
+    public final <T> void subscribe(Class<T> eventType, EventHandler<? super T> eventHandler) {
         doSubscribe(topicName(eventType), eventType, eventHandler);
     }
 

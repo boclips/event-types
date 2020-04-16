@@ -7,12 +7,13 @@ import com.boclips.eventbus.config.BoclipsEventsProperties;
 import com.boclips.eventbus.config.InvalidMessagingConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.gax.batching.BatchingSettings;
-import com.google.api.gax.core.CredentialsProvider;
-import com.google.api.gax.core.FixedCredentialsProvider;
+import com.google.api.gax.batching.FlowControlSettings;
+import com.google.api.gax.core.*;
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.auth.Credentials;
 import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.pubsub.v1.*;
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.*;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
@@ -26,6 +27,10 @@ import java.io.InputStream;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
+import java.util.concurrent.ThreadFactory;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,6 +44,16 @@ public class PubSubEventBus extends AbstractEventBus {
     private final CredentialsProvider credentialsProvider;
     private final Map<String, Subscriber> subscriberByTopic = new HashMap<>();
     private final Map<String, Publisher> publisherByTopic = new HashMap<>();
+
+    private final ExecutorProvider executorProvider = InstantiatingExecutorProvider.newBuilder()
+            .setExecutorThreadCount(1)
+            .setThreadFactory(threadFactory("PubSub-executor"))
+            .build();
+
+    private final FlowControlSettings flowControlSettings = FlowControlSettings.newBuilder()
+            .setMaxOutstandingElementCount(10L)
+            .setMaxOutstandingRequestBytes(1024L * 1024L) // 1MB
+            .build();
 
     private final BatchingSettings publisherBatchingSettings = BatchingSettings.newBuilder()
             .setElementCountThreshold(200L)
@@ -62,8 +77,15 @@ public class PubSubEventBus extends AbstractEventBus {
         }
     }
 
+    private static ThreadFactory threadFactory(String name) {
+        return new ThreadFactoryBuilder()
+                        .setDaemon(true)
+                        .setNameFormat(name + "-%d")
+                        .build();
+    }
+
     @Override
-    public <T> void doSubscribe(String topicName, Class<T> eventType, EventHandler<T> eventHandler) {
+    public <T> void doSubscribe(String topicName, Class<T> eventType, EventHandler<? super T> eventHandler) {
         subscriberByTopic.computeIfPresent(topicName, (cls, subscriber) -> {
             throw new ConflictingSubscriberException("There already is a subscription for " + eventType.getSimpleName());
         });
@@ -92,6 +114,9 @@ public class PubSubEventBus extends AbstractEventBus {
         Subscriber subscriber = Subscriber
                 .newBuilder(subscriptionName, receiver)
                 .setCredentialsProvider(credentialsProvider)
+                .setExecutorProvider(executorProvider)
+                .setParallelPullCount(1)
+                .setFlowControlSettings(flowControlSettings)
                 .build();
 
         subscriberByTopic.put(topicName, subscriber);
@@ -131,7 +156,7 @@ public class PubSubEventBus extends AbstractEventBus {
     private synchronized Publisher getPublisherFor(String topicName) {
         return publisherByTopic.computeIfAbsent(topicName, key -> {
             try {
-                ProjectTopicName topic = createTopicIfDoesNotExist(topicName);
+                TopicName topic = createTopicIfDoesNotExist(topicName);
                 return Publisher
                         .newBuilder(topic)
                         .setCredentialsProvider(credentialsProvider)
@@ -145,7 +170,7 @@ public class PubSubEventBus extends AbstractEventBus {
 
     private void createSubscription(ProjectSubscriptionName subscriptionName, String topicId) throws IOException {
 
-        ProjectTopicName topicName = createTopicIfDoesNotExist(topicId);
+        TopicName topicName = createTopicIfDoesNotExist(topicId);
 
         try (SubscriptionAdminClient subscriptionAdmin = subscriptionAdminClient()) {
             if (subscriptionDoesNotExist(subscriptionAdmin, subscriptionName)) {
@@ -171,8 +196,8 @@ public class PubSubEventBus extends AbstractEventBus {
         return SubscriptionAdminClient.create(subscriptionAdminSettings);
     }
 
-    private ProjectTopicName createTopicIfDoesNotExist(String topicId) throws IOException {
-        ProjectTopicName topicName = ProjectTopicName.of(projectId, topicId);
+    private TopicName createTopicIfDoesNotExist(String topicId) throws IOException {
+        TopicName topicName = TopicName.of(projectId, topicId);
         try (TopicAdminClient topicAdmin = topicAdminClient()) {
             if (topicDoesNotExist(topicAdmin, topicName)) {
                 Topic topic = topicAdmin.createTopic(topicName);
@@ -182,7 +207,7 @@ public class PubSubEventBus extends AbstractEventBus {
         return topicName;
     }
 
-    private boolean topicDoesNotExist(TopicAdminClient topicAdminClient, ProjectTopicName topicName) {
+    private boolean topicDoesNotExist(TopicAdminClient topicAdminClient, TopicName topicName) {
         try {
             logger.fine("Checking if topic " + topicName + " exists");
             topicAdminClient.getTopic(topicName);

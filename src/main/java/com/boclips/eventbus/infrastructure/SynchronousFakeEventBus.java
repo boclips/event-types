@@ -16,7 +16,7 @@ public class SynchronousFakeEventBus extends AbstractEventBus {
     private final EventSerializer serializer = new EventSerializer();
 
     @Override
-    public <T> void doSubscribe(String topicName, Class<T> eventType, EventHandler<T> eventHandler) {
+    public <T> void doSubscribe(String topicName, Class<T> eventType, EventHandler<? super T> eventHandler) {
         handlerByTopic.computeIfPresent(topicName, (cls, handler) -> {
             throw new ConflictingSubscriberException("There already is a subscription for " + eventType.getSimpleName() + ": " + handler.getClass().getSimpleName());
         });

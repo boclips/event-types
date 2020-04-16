@@ -1,7 +1,7 @@
 package com.boclips.eventbus;
 
 public interface EventBus {
-    <T> void subscribe(Class<T> eventType, EventHandler<T> eventHandler);
+    <T> void subscribe(Class<T> eventType, EventHandler<? super T> eventHandler);
 
     void unsubscribe(Class<?> eventType);
 

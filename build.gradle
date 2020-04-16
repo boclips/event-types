@@ -30,9 +30,9 @@ def assertj = 'org.assertj:assertj-core:3.13.2'
 def lombok = 'org.projectlombok:lombok:1.18.6'
 
 dependencies {
-    compile('com.google.cloud:google-cloud-pubsub:1.103.0')
+    compile('com.google.cloud:google-cloud-pubsub:1.105.0')
     compile('com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.1')
-    
+
     compileOnly("org.springframework.boot:spring-boot-starter:$springVersion")
     compileOnly(lombok)
     compileOnly(jackson)
