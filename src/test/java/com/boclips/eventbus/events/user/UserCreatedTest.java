@@ -15,8 +15,6 @@ class UserCreatedTest {
         User user = User.builder()
                 .id("user-id")
                 .isBoclipsEmployee(false)
-                .subjects(emptyList())
-                .ages(emptyList())
                 .profile(UserProfile.builder()
                         .subjects(emptyList())
                         .ages(emptyList())
