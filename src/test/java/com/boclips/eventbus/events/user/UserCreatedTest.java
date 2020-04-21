@@ -1,6 +1,7 @@
 package com.boclips.eventbus.events.user;
 
 import com.boclips.eventbus.domain.user.User;
+import com.boclips.eventbus.domain.user.UserProfile;
 import com.boclips.eventbus.infrastructure.EventSerializer;
 import org.junit.jupiter.api.Test;
 
@@ -11,8 +12,18 @@ class UserCreatedTest {
 
     @Test
     void userCreated_canBeDeserialized() {
+        User user = User.builder()
+                .id("user-id")
+                .isBoclipsEmployee(false)
+                .subjects(emptyList())
+                .ages(emptyList())
+                .profile(UserProfile.builder()
+                        .subjects(emptyList())
+                        .ages(emptyList())
+                        .build())
+                .build();
         UserCreated event = UserCreated.builder()
-                .user(User.builder().id("user-id").isBoclipsEmployee(false).subjects(emptyList()).ages(emptyList()).build())
+                .user(user)
                 .build();
         EventSerializer serializer = new EventSerializer();
 

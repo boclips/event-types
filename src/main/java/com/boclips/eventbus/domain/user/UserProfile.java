@@ -9,35 +9,18 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
-    @NonNull
-    private String id;
-
-    @Deprecated
+public class UserProfile {
     private String firstName;
 
-    @Deprecated
     private String lastName;
 
-    private String email;
-
-    @Deprecated
     @NonNull
     private List<Subject> subjects;
 
-    @Deprecated
     @NonNull
     private List<Integer> ages;
 
-    private Organisation organisation;
+    private Organisation school;
 
-    @NonNull
-    private Boolean isBoclipsEmployee;
-
-    @Deprecated
     private String role;
-
-    @NonNull
-    private UserProfile profile;
 }
