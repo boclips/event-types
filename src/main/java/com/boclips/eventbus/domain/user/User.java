@@ -2,6 +2,8 @@ package com.boclips.eventbus.domain.user;
 
 import lombok.*;
 
+import java.time.ZonedDateTime;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -10,6 +12,9 @@ public class User {
 
     @NonNull
     private String id;
+
+    @NonNull
+    private ZonedDateTime createdAt;
 
     private String email;
 
