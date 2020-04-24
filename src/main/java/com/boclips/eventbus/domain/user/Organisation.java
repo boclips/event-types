@@ -19,6 +19,10 @@ public class Organisation {
 
     private String postcode;
 
+    private String state;
+
+    private String countryCode;
+
     private Organisation parent;
 
     @NonNull
