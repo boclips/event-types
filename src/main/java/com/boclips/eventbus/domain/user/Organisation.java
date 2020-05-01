@@ -2,6 +2,8 @@ package com.boclips.eventbus.domain.user;
 
 import lombok.*;
 
+import java.util.Set;
+
 @Data
 @Builder
 @NoArgsConstructor
@@ -26,5 +28,9 @@ public class Organisation {
     private Organisation parent;
 
     @NonNull
+    @Deprecated
     private String accountType;
+
+    @NonNull
+    private Set<String> tags;
 }
