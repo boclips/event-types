@@ -28,9 +28,5 @@ public class Organisation {
     private Organisation parent;
 
     @NonNull
-    @Deprecated
-    private String accountType;
-
-    @NonNull
     private Set<String> tags;
 }
