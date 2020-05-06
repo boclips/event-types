@@ -19,13 +19,22 @@ public class Organisation {
     @NonNull
     private String name;
 
+    @NonNull
+    private Address addres;
+
+    @Deprecated
     private String postcode;
 
+    @Deprecated
     private String state;
 
+    @Deprecated
     private String countryCode;
 
     private Organisation parent;
+
+    @NonNull
+    private Deal deal;
 
     @NonNull
     private Set<String> tags;
