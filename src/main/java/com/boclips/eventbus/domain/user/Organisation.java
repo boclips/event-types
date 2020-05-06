@@ -20,7 +20,7 @@ public class Organisation {
     private String name;
 
     @NonNull
-    private Address addres;
+    private Address address;
 
     @Deprecated
     private String postcode;
