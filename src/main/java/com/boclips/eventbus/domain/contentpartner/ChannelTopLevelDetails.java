@@ -13,7 +13,7 @@ import java.util.Locale;
 @NoArgsConstructor
 @AllArgsConstructor
 public class ChannelTopLevelDetails {
-    private List<String> contentType;
+    private List<String> contentTypes;
 
     private List<String> contentCategories;
 

@@ -2,7 +2,6 @@ package com.boclips.eventbus.domain.contentpartner;
 
 import com.boclips.eventbus.domain.AgeRange;
 import com.boclips.eventbus.domain.Subject;
-import com.boclips.eventbus.domain.Toggle;
 import lombok.*;
 
 import java.util.List;
@@ -18,9 +17,9 @@ public class ChannelPedagogyDetails {
 
     private List<String> bestForTags;
 
-    private Toggle<String> curriculumAligned;
+    private String curriculumAligned;
 
-    private Toggle<String> educationalResources;
+    private String educationalResources;
 
     private Boolean transcriptProvided;
 }
