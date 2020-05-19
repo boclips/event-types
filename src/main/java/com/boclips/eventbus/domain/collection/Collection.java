@@ -39,8 +39,11 @@ public class Collection {
     @NonNull
     private List<UserId> bookmarks;
 
+    @Deprecated
     @NonNull
     private Boolean isPublic;
+
+    private Boolean isDiscoverable;
 
     @NonNull
     private ZonedDateTime createdAt;
