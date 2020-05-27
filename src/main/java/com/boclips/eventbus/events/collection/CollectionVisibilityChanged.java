@@ -15,9 +15,6 @@ import lombok.experimental.SuperBuilder;
 @BoclipsEvent("collection-visibility-changed")
 public class CollectionVisibilityChanged extends AbstractCollectionEvent {
 
-    @Deprecated
     @NonNull
-    private Boolean isPublic;
-
     private Boolean isDiscoverable;
 }
