@@ -20,4 +20,7 @@ public class Channel {
     private ChannelIngestDetails ingest;
 
     private ChannelMarketingDetails marketing;
+
+    @Deprecated
+    private String legalRestrictions;
 }
