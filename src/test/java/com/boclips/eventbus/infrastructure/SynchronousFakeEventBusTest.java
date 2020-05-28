@@ -93,7 +93,6 @@ class SynchronousFakeEventBusTest {
     private VideoUpdated anEvent() {
         Video video = Video.builder()
                 .id(VideoId.of(""))
-                .contentPartner(ContentPartner.of(""))
                 .playbackProviderType(PlaybackProviderType.KALTURA)
                 .title("")
                 .subjects(Collections.emptyList())

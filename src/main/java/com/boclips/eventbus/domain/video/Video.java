@@ -21,9 +21,6 @@ public class Video {
     private String title;
 
     @NonNull
-    @Deprecated
-    private ContentPartner contentPartner;
-
     private ChannelId channelId;
 
     @NonNull
