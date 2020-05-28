@@ -2,6 +2,7 @@ package com.boclips.eventbus.infrastructure;
 
 import com.boclips.eventbus.BoclipsEvent;
 import com.boclips.eventbus.domain.AgeRange;
+import com.boclips.eventbus.domain.contentpartner.ChannelId;
 import com.boclips.eventbus.domain.video.*;
 import com.boclips.eventbus.events.video.VideoAnalysed;
 import com.boclips.eventbus.events.video.VideoUpdated;
@@ -93,6 +94,7 @@ class SynchronousFakeEventBusTest {
     private VideoUpdated anEvent() {
         Video video = Video.builder()
                 .id(VideoId.of(""))
+                .channelId(new ChannelId("channel-id"))
                 .playbackProviderType(PlaybackProviderType.KALTURA)
                 .title("")
                 .subjects(Collections.emptyList())

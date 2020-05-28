@@ -38,6 +38,7 @@ public class Video {
     @NonNull
     private VideoType type;
 
+    @NonNull
     private LocalDate releasedOn;
 
     @NonNull
