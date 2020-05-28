@@ -4,6 +4,7 @@ import com.boclips.eventbus.domain.AgeRange;
 import com.boclips.eventbus.domain.Subject;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
 
@@ -35,6 +36,8 @@ public class Video {
 
     @NonNull
     private VideoType type;
+
+    private LocalDate releasedOn;
 
     @NonNull
     private ZonedDateTime ingestedAt;
