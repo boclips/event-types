@@ -11,9 +11,9 @@ import java.util.Locale;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ContentPartner {
+public class Channel {
     @NonNull
-    private ContentPartnerId id;
+    private ChannelId id;
 
     @NonNull
     private String name;

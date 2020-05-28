@@ -2,7 +2,7 @@ package com.boclips.eventbus.domain.video;
 
 import com.boclips.eventbus.domain.AgeRange;
 import com.boclips.eventbus.domain.Subject;
-import com.boclips.eventbus.domain.contentpartner.ContentPartnerId;
+import com.boclips.eventbus.domain.contentpartner.ChannelId;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -24,7 +24,7 @@ public class Video {
     @Deprecated
     private ContentPartner contentPartner;
 
-    private ContentPartnerId channelId;
+    private ChannelId channelId;
 
     @NonNull
     private List<Subject> subjects;

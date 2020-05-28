@@ -1,7 +1,7 @@
 package com.boclips.eventbus.events.contentpartner;
 
 import com.boclips.eventbus.BoclipsEvent;
-import com.boclips.eventbus.domain.contentpartner.ContentPartner;
+import com.boclips.eventbus.domain.contentpartner.Channel;
 import lombok.*;
 
 @Data
@@ -11,5 +11,5 @@ import lombok.*;
 @BoclipsEvent("channel-broadcast-requested")
 public class BroadcastChannelRequested {
     @NonNull
-    private ContentPartner channel;
+    private Channel channel;
 }
