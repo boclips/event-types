@@ -43,6 +43,9 @@ public class Collection {
     private Boolean isDiscoverable;
 
     @NonNull
+    private Boolean isDefault;
+
+    @NonNull
     private ZonedDateTime createdAt;
 
     @NonNull
