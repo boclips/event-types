@@ -24,6 +24,5 @@ public class UserProfile {
 
     private String role;
 
-    @NonNull
     private Boolean hasOptedIntoMarketing;
 }
