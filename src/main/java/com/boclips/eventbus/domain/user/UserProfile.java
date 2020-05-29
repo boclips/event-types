@@ -23,4 +23,7 @@ public class UserProfile {
     private Organisation school;
 
     private String role;
+
+    @NonNull
+    private Boolean hasOptedIntoMarketing;
 }

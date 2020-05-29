@@ -22,6 +22,7 @@ class UserCreatedTest {
                 .profile(UserProfile.builder()
                         .subjects(emptyList())
                         .ages(emptyList())
+                        .hasOptedIntoMarketing(true)
                         .build())
                 .build();
         UserCreated event = UserCreated.builder()
