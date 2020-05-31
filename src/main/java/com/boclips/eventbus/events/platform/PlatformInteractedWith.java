@@ -1,7 +1,7 @@
 package com.boclips.eventbus.events.platform;
 
 import com.boclips.eventbus.BoclipsEvent;
-import com.boclips.eventbus.events.base.AbstractEventWithUserId;
+import com.boclips.eventbus.events.base.AbstractEvent;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -12,8 +12,12 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @BoclipsEvent("platform-interacted-with")
-public class PlatformInteractedWith extends AbstractEventWithUserId {
+public class PlatformInteractedWith extends AbstractEvent {
 
   @NonNull
   private String subtype;
+
+  private String userId;
+
+  private String overrideUserId;
 }
