@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @ToString(callSuper = true)
 @BoclipsEvent("contract-updated")
-public class ContractUpdated extends AbstractEvent {
+public class BroadcastContractRequested extends AbstractEvent {
     @NonNull
     private Contract contract;
 }
