@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString(callSuper = true)
-@BoclipsEvent("contract-updated")
+@BoclipsEvent("contract-broadcast-requested")
 public class BroadcastContractRequested extends AbstractEvent {
     @NonNull
     private Contract contract;
