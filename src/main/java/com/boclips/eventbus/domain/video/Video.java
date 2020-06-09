@@ -39,6 +39,9 @@ public class Video {
     private VideoType type;
 
     @NonNull
+    private List<VideoType> types;
+
+    @NonNull
     private LocalDate releasedOn;
 
     @NonNull

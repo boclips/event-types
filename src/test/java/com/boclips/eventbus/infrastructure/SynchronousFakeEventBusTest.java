@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
+import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -102,6 +103,7 @@ class SynchronousFakeEventBusTest {
                 .ageRange(new AgeRange())
                 .durationSeconds(180)
                 .type(VideoType.INSTRUCTIONAL)
+                .types(Collections.singletonList(VideoType.INSTRUCTIONAL))
                 .ingestedAt(ZonedDateTime.now())
                 .releasedOn(LocalDate.now())
                 .build();
