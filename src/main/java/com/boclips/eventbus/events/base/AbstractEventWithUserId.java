@@ -17,4 +17,6 @@ public class AbstractEventWithUserId extends AbstractEvent {
     private String overrideUserId;
 
     private String externalUserId;
+
+    private String deviceId;
 }
