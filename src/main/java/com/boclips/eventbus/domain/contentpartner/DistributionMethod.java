@@ -1,6 +1,6 @@
 package com.boclips.eventbus.domain.contentpartner;
 
-enum DistributionMethod {
+public enum DistributionMethod {
     DOWNLOAD,
     STREAM;
 }
