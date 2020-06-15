@@ -4,6 +4,7 @@ import lombok.*;
 
 import java.time.Period;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
@@ -19,5 +20,5 @@ public class ChannelIngestDetails {
 
     private Period deliveryFrequency;
 
-
+    private Set<DistributionMethod> distributionMethods;
 }
