@@ -13,9 +13,6 @@ public class AbstractEventWithUserId extends AbstractEvent {
     @NonNull
     private String userId;
 
-    @Deprecated
-    private String overrideUserId;
-
     private String externalUserId;
 
     private String deviceId;
