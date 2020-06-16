@@ -14,9 +14,6 @@ public class VideoPlayerEvent extends AbstractEvent {
     @NonNull
     private String videoId;
 
-    @Deprecated
-    private String playbackDevice;
-
     private String userId;
 
     private String externalUserId;
