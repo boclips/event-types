@@ -7,16 +7,15 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrderUser {
-    @NonNull
+
     private String email;
 
-    @NonNull
     private String firstName;
 
-    @NonNull
     private String lastName;
 
-    @NonNull
     private String legacyUserId;
+
+    private String label;
 
 }
