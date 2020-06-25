@@ -2,7 +2,9 @@ package com.boclips.eventbus.events.order;
 
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.ZonedDateTime;
+import java.util.Currency;
 import java.util.List;
 
 @Data
@@ -27,4 +29,18 @@ public class Order {
     private List<OrderItem> items;
 
     private OrderStatus status;
+
+    private OrderUser authorisingUser;
+
+    @NonNull
+    private OrderUser requestingUser;
+
+    private String isbnOrProductNumber;
+
+    @NonNull
+    private Boolean isThroughPlatform;
+
+    private Currency currency;
+
+    private BigDecimal fxRateToGbp;
 }
