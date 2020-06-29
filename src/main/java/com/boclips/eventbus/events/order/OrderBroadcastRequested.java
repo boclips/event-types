@@ -1,7 +1,6 @@
-package com.boclips.eventbus.events.collection;
+package com.boclips.eventbus.events.order;
 
 import com.boclips.eventbus.BoclipsEvent;
-import com.boclips.eventbus.events.order.Order;
 import lombok.*;
 
 @Data
