@@ -1,9 +1,11 @@
 package com.boclips.eventbus.events.searchsuggestions;
 
 import com.boclips.eventbus.BoclipsEvent;
-import com.boclips.eventbus.events.base.AbstractEventWithUserId;
+import com.boclips.eventbus.events.base.AbstractEventWithUser;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
+
+import java.util.List;
 
 @Getter
 @Setter
@@ -12,10 +14,10 @@ import lombok.experimental.SuperBuilder;
 @ToString(callSuper = true)
 @NoArgsConstructor
 @BoclipsEvent("search-query-completions-suggested")
-public class SearchQueryCompletionsSuggested extends AbstractEventWithUserId {
+public class SearchQueryCompletionsSuggested extends AbstractEventWithUser {
 
     @NonNull
-    private String[] impressions;
+    private List<String> impressions;
 
     @NonNull
     private String completionId;
