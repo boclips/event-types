@@ -25,4 +25,7 @@ public class UserProfile {
     private String role;
 
     private Boolean hasOptedIntoMarketing;
+
+    private MarketingTracking marketingTracking;
+
 }
