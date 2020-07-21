@@ -51,6 +51,5 @@ public class Video {
 
     private List<VideoAsset> assets;
 
-    @NonNull
     private Boolean promoted;
 }

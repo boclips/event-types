@@ -106,6 +106,7 @@ class SynchronousFakeEventBusTest {
                 .types(Collections.singletonList(VideoType.INSTRUCTIONAL))
                 .ingestedAt(ZonedDateTime.now())
                 .releasedOn(LocalDate.now())
+                .promoted(true)
                 .build();
 
         return VideoUpdated.of(video);
