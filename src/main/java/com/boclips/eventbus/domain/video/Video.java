@@ -50,4 +50,7 @@ public class Video {
     private Dimensions originalDimensions;
 
     private List<VideoAsset> assets;
+
+    @NonNull
+    private Boolean promoted;
 }

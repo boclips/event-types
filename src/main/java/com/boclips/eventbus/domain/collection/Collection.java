@@ -50,4 +50,7 @@ public class Collection {
 
     @NonNull
     private ZonedDateTime updatedAt;
+
+    @NonNull
+    private Boolean promoted;
 }
