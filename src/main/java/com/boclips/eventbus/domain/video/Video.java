@@ -52,4 +52,7 @@ public class Video {
     private List<VideoAsset> assets;
 
     private Boolean promoted;
+
+    @NonNull
+    private List<VideoTopic> topics;
 }
