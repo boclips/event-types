@@ -2,6 +2,7 @@ package com.boclips.eventbus.infrastructure;
 
 import com.boclips.eventbus.BoclipsEvent;
 import com.boclips.eventbus.domain.AgeRange;
+import com.boclips.eventbus.domain.collection.Collection;
 import com.boclips.eventbus.domain.contentpartner.ChannelId;
 import com.boclips.eventbus.domain.video.*;
 import com.boclips.eventbus.events.video.VideoAnalysed;
@@ -107,6 +108,7 @@ class SynchronousFakeEventBusTest {
                 .ingestedAt(ZonedDateTime.now())
                 .releasedOn(LocalDate.now())
                 .promoted(true)
+                .topics(Collections.emptyList())
                 .build();
 
         return VideoUpdated.of(video);
