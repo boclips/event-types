@@ -17,6 +17,9 @@ public class Order {
     private String id;
 
     @NonNull
+    private String legacyOrderId;
+
+    @NonNull
     private String customerOrganisationName;
 
     @NonNull
