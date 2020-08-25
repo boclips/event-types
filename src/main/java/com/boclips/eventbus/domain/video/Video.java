@@ -33,6 +33,9 @@ public class Video {
     private PlaybackProviderType playbackProviderType;
 
     @NonNull
+    private String playbackId;
+
+    @NonNull
     private Integer durationSeconds;
 
     @NonNull
