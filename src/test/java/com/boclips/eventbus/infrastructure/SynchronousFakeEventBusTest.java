@@ -99,6 +99,7 @@ class SynchronousFakeEventBusTest {
                 .id(VideoId.of(""))
                 .channelId(new ChannelId("channel-id"))
                 .playbackProviderType(PlaybackProviderType.KALTURA)
+                .playbackId("some-playback-id")
                 .title("")
                 .subjects(Collections.emptyList())
                 .ageRange(new AgeRange())
