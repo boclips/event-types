@@ -1,4 +1,4 @@
-package com.boclips.eventbus.domain.contract;
+package com.boclips.eventbus.domain;
 
 
 import lombok.*;
