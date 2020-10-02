@@ -24,7 +24,7 @@ test {
     useJUnitPlatform()
 }
 
-def springVersion = '2.3.3.RELEASE'
+def springVersion = '2.3.4.RELEASE'
 def jackson = 'com.fasterxml.jackson.core:jackson-databind:2.10.1'
 def assertj = 'org.assertj:assertj-core:3.13.2'
 def lombok = 'org.projectlombok:lombok:1.18.6'
