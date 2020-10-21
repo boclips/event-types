@@ -20,4 +20,6 @@ public class VideoPlayerEvent extends AbstractEvent {
 
     private String deviceId;
 
+    private String query;
+
 }
