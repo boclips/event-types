@@ -58,4 +58,7 @@ public class Video {
 
     @NonNull
     private List<VideoTopic> topics;
+
+    @NonNull
+    private List<String> keywords;
 }
