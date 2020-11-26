@@ -110,6 +110,7 @@ class SynchronousFakeEventBusTest {
                 .releasedOn(LocalDate.now())
                 .promoted(true)
                 .topics(Collections.emptyList())
+                .keywords(Collections.emptyList())
                 .build();
 
         return VideoUpdated.of(video);
