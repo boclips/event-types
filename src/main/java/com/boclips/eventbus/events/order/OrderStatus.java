@@ -2,7 +2,7 @@ package com.boclips.eventbus.events.order;
 
 public enum OrderStatus {
     DELIVERED,
-    COMPLETED,
+    READY,
     CANCELLED,
     INCOMPLETED,
     INVALID
