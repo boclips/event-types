@@ -111,6 +111,7 @@ class SynchronousFakeEventBusTest {
                 .promoted(true)
                 .topics(Collections.emptyList())
                 .keywords(Collections.emptyList())
+                .sourceVideoReference("video-reference")
                 .build();
 
         return VideoUpdated.of(video);

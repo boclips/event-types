@@ -61,4 +61,6 @@ public class Video {
 
     @NonNull
     private List<String> keywords;
+
+    private String sourceVideoReference;
 }
