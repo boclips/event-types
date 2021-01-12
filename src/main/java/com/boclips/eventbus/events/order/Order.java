@@ -43,6 +43,8 @@ public class Order {
     @NonNull
     private Boolean isThroughPlatform;
 
+    private OrderSource orderSource;
+
     private Currency currency;
 
     private BigDecimal fxRateToGbp;
