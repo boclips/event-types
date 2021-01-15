@@ -28,6 +28,8 @@ public class Order {
     @NonNull
     private ZonedDateTime createdAt;
 
+    private ZonedDateTime deliveryDate;
+
     @NonNull
     private List<OrderItem> items;
 
