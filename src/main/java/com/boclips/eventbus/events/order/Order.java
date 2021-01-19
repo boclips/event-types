@@ -16,7 +16,6 @@ public class Order {
     @NonNull
     private String id;
 
-    @NonNull
     private String legacyOrderId;
 
     @NonNull
@@ -41,9 +40,6 @@ public class Order {
     private OrderUser requestingUser;
 
     private String isbnOrProductNumber;
-
-    @NonNull
-    private Boolean isThroughPlatform;
 
     private OrderSource orderSource;
 
