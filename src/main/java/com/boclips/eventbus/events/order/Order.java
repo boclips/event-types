@@ -27,7 +27,7 @@ public class Order {
     @NonNull
     private ZonedDateTime createdAt;
 
-    private ZonedDateTime deliveryDate;
+    private ZonedDateTime deliveredAt;
 
     @NonNull
     private List<OrderItem> items;
