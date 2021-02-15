@@ -63,4 +63,6 @@ public class Video {
     private List<String> keywords;
 
     private String sourceVideoReference;
+
+    private Boolean deactivated;
 }
