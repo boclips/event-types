@@ -2,6 +2,7 @@ package com.boclips.eventbus.domain.user;
 
 import lombok.*;
 
+import java.util.Map;
 import java.util.Set;
 
 @Data
@@ -38,4 +39,6 @@ public class Organisation {
 
     @NonNull
     private Set<String> tags;
+
+    private Map<String, Boolean> features;
 }
