@@ -25,4 +25,6 @@ public class User {
 
     @NonNull
     private UserProfile profile;
+
+    private String externalUserId;
 }
