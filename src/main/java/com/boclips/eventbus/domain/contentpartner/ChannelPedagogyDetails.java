@@ -16,10 +16,4 @@ public class ChannelPedagogyDetails {
     private AgeRange ageRange;
 
     private List<String> bestForTags;
-
-    private String curriculumAligned;
-
-    private String educationalResources;
-
-    private Boolean transcriptProvided;
 }
