@@ -65,4 +65,7 @@ public class Video {
     private String sourceVideoReference;
 
     private Boolean deactivated;
+
+    @NonNull
+    private Boolean hasTranscript;
 }
