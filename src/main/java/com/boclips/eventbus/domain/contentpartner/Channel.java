@@ -1,6 +1,13 @@
 package com.boclips.eventbus.domain.contentpartner;
 
-import lombok.*;
+import com.boclips.eventbus.domain.category.CategoryWithAncestors;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+
+import java.util.Set;
 
 @Data
 @Builder
@@ -23,4 +30,6 @@ public class Channel {
 
     @Deprecated
     private String legalRestrictions;
+
+    private Set<CategoryWithAncestors> categories;
 }
