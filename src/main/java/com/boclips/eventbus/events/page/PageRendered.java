@@ -16,4 +16,5 @@ import lombok.experimental.SuperBuilder;
 public class PageRendered extends AbstractEventWithUserId {
 
     private Viewport viewport;
+    private Boolean isResize;
 }
