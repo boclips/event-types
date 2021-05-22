@@ -19,11 +19,7 @@ public class ChannelTopLevelDetails {
 
     private Locale language;
 
-    private String hubspotId;
-
     private String contractId;
-
-    private String awards;
 
     private String notes;
 }
