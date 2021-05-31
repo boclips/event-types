@@ -18,7 +18,5 @@ public class ChannelIngestDetails {
     @Deprecated
     private List<String> urls;
 
-    private Period deliveryFrequency;
-
     private Set<DistributionMethod> distributionMethods;
 }
