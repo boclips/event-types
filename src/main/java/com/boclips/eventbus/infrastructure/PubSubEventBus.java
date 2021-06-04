@@ -85,12 +85,13 @@ public class PubSubEventBus extends AbstractEventBus {
     }
 
     @Override
-    public <T> void doSubscribe(String topicName, Class<T> eventType, EventHandler<? super T> eventHandler) {
-        subscriberByTopic.computeIfPresent(topicName, (cls, subscriber) -> {
-            throw new ConflictingSubscriberException("There already is a subscription for " + eventType.getSimpleName());
+    public <T> void doSubscribe(String methodName, String topicName, Class<T> eventType, EventHandler<? super T> eventHandler) {
+        String subscriptionLabel = topicName + "." + methodName;
+        subscriberByTopic.computeIfPresent(subscriptionLabel, (cls, subscriber) -> {
+            throw new ConflictingSubscriberException("There already is a subscription for " + eventType.getSimpleName() + " - " + subscriptionLabel);
         });
 
-        ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(projectId, topicName + "." + consumerGroup);
+        ProjectSubscriptionName subscriptionName = ProjectSubscriptionName.of(projectId, subscriptionLabel);
 
         try {
             createSubscription(subscriptionName, topicName);
@@ -119,10 +120,10 @@ public class PubSubEventBus extends AbstractEventBus {
                 .setFlowControlSettings(flowControlSettings)
                 .build();
 
-        subscriberByTopic.put(topicName, subscriber);
+        subscriberByTopic.put(subscriptionLabel, subscriber);
 
         subscriber.startAsync().awaitRunning();
-        logger.info(String.format("Subscribed to %s", topicName));
+        logger.info(String.format("Subscribed to %s", subscriptionLabel));
     }
 
     @Override
@@ -175,7 +176,10 @@ public class PubSubEventBus extends AbstractEventBus {
         try (SubscriptionAdminClient subscriptionAdmin = subscriptionAdminClient()) {
             if (subscriptionDoesNotExist(subscriptionAdmin, subscriptionName)) {
                 Subscription subscription = subscriptionAdmin.createSubscription(subscriptionName, topicName, PushConfig.getDefaultInstance(), 0);
-                logger.info(String.format("Created subscription %s", subscription.getName()));
+                logger.info(String.format("Created subscription %s for topic id %s", subscription.getName(), topicId));
+            }
+            else {
+                logger.info("SUB EXISTS!!");
             }
         }
     }

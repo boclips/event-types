@@ -1,5 +1,9 @@
 package com.boclips.eventbus;
 
+import com.boclips.eventbus.domain.contentpartner.Channel;
+import com.boclips.eventbus.domain.contentpartner.ChannelId;
+import com.boclips.eventbus.domain.video.ContentPartner;
+import com.boclips.eventbus.events.contentpartner.ContentPartnerUpdated;
 import com.boclips.eventbus.events.video.VideoAnalysisRequested;
 import com.boclips.eventbus.events.video.VideoTranscriptCreated;
 import com.boclips.eventbus.infrastructure.PubSubEventBus;
@@ -34,11 +38,15 @@ public class EventBusContractTest extends AbstractPubSubTest {
             .transcript("bla bla bla")
             .build();
 
+    private ContentPartnerUpdated contentPartnerUpdated = ContentPartnerUpdated.builder()
+            .contentPartner(Channel.builder().id(ChannelId.builder().value("test").build()).name("test").build())
+            .build();
+
     @ParameterizedTest
     @ArgumentsSource(EventBusArgumentProvider.class)
     void subscription_whenEventPublished_receivesTheEvent(EventBus eventBus) {
         TestEventHandler<VideoAnalysisRequested> handler = new TestEventHandler<>();
-        eventBus.subscribe(VideoAnalysisRequested.class, handler);
+        eventBus.subscribe(VideoAnalysisRequested.class, handler, "VideoAnalysisRequestedHandler");
 
         eventBus.publish(videoAnalysisRequested);
 
@@ -51,10 +59,31 @@ public class EventBusContractTest extends AbstractPubSubTest {
 
     @ParameterizedTest
     @ArgumentsSource(EventBusArgumentProvider.class)
-    void subscribing_whenTopicAlreadySubscribedTo_throws(EventBus eventBus) {
-        eventBus.subscribe(VideoAnalysisRequested.class, new TestEventHandler<>());
+    void subscription_whenMultipleHandlers_receivesTheEvent(EventBus eventBus) {
+        TestEventHandler<ContentPartnerUpdated> handler1 = new TestEventHandler<>();
+        TestEventHandler<ContentPartnerUpdated> handler2 = new TestEventHandler<>();
 
-        assertThatThrownBy(() -> eventBus.subscribe(VideoAnalysisRequested.class, new TestEventHandler<>()))
+        eventBus.subscribe(ContentPartnerUpdated.class, handler1, "handler1");
+        eventBus.subscribe(ContentPartnerUpdated.class, handler2, "handler2");
+
+        eventBus.publish(contentPartnerUpdated);
+
+        await().atMost(5, SECONDS).untilAsserted(() ->
+                assertThat(handler1.getEvents()).containsExactly(contentPartnerUpdated)
+        );
+        await().atMost(5, SECONDS).untilAsserted(() ->
+                assertThat(handler2.getEvents()).containsExactly(contentPartnerUpdated)
+        );
+
+        eventBus.unsubscribe(ContentPartnerUpdated.class);
+    }
+
+    @ParameterizedTest
+    @ArgumentsSource(EventBusArgumentProvider.class)
+    void subscribing_whenTopicAlreadySubscribedTo_throws(EventBus eventBus) {
+        eventBus.subscribe(VideoAnalysisRequested.class, new TestEventHandler<>(), "handler");
+
+        assertThatThrownBy(() -> eventBus.subscribe(VideoAnalysisRequested.class, new TestEventHandler<>(), "handler"))
                 .isInstanceOf(ConflictingSubscriberException.class)
                 .hasMessageContaining(VideoAnalysisRequested.class.getSimpleName());
 
