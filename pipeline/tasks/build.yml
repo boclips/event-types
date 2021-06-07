@@ -8,13 +8,13 @@ image_resource:
     tag: 11.0.2-jdk-stretch
 
 inputs:
-  - name: source
+- name: source
 
 caches:
-  - path: .gradle/
+- path: .gradle/
 
 params:
-  PUBSUB_SECRET:
+  GCE_METADATA_HOST: 169.254.169.254
 
 run:
   path: source/pipeline/scripts/build.sh

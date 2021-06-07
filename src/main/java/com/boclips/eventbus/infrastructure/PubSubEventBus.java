@@ -4,17 +4,12 @@ import com.boclips.eventbus.ConflictingSubscriberException;
 import com.boclips.eventbus.EventBus;
 import com.boclips.eventbus.EventHandler;
 import com.boclips.eventbus.config.BoclipsEventsProperties;
-import com.boclips.eventbus.config.InvalidMessagingConfiguration;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.api.gax.batching.BatchingSettings;
 import com.google.api.gax.batching.FlowControlSettings;
-import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.ExecutorProvider;
-import com.google.api.gax.core.FixedCredentialsProvider;
 import com.google.api.gax.core.InstantiatingExecutorProvider;
 import com.google.api.gax.rpc.NotFoundException;
-import com.google.auth.Credentials;
-import com.google.auth.oauth2.ServiceAccountCredentials;
 import com.google.cloud.pubsub.v1.*;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import com.google.protobuf.ByteString;
@@ -24,10 +19,7 @@ import org.springframework.stereotype.Component;
 import org.threeten.bp.Duration;
 
 import javax.annotation.PreDestroy;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ThreadFactory;
@@ -41,7 +33,6 @@ public class PubSubEventBus extends AbstractEventBus {
     private final String projectId;
     private final String consumerGroup;
     private final ObjectMapper objectMapper;
-    private final CredentialsProvider credentialsProvider;
     private final Map<String, Subscriber> subscriberByTopic = new HashMap<>();
     private final Map<String, Publisher> publisherByTopic = new HashMap<>();
 
@@ -67,14 +58,6 @@ public class PubSubEventBus extends AbstractEventBus {
         this.objectMapper = ObjectMapperProvider.get();
         this.projectId = properties.getProject();
         this.consumerGroup = properties.getConsumerGroup();
-
-        try {
-            InputStream secretStream = new ByteArrayInputStream(Base64.getDecoder().decode(properties.getSecret()));
-            Credentials credentials = ServiceAccountCredentials.fromStream(secretStream);
-            this.credentialsProvider = FixedCredentialsProvider.create(credentials);
-        } catch (IOException e) {
-            throw new IllegalArgumentException("PUBSUB_SECRET is invalid");
-        }
     }
 
     private static ThreadFactory threadFactory(String name) {
@@ -113,7 +96,6 @@ public class PubSubEventBus extends AbstractEventBus {
 
         Subscriber subscriber = Subscriber
                 .newBuilder(subscriptionName, receiver)
-                .setCredentialsProvider(credentialsProvider)
                 .setExecutorProvider(executorProvider)
                 .setParallelPullCount(1)
                 .setFlowControlSettings(flowControlSettings)
@@ -159,7 +141,6 @@ public class PubSubEventBus extends AbstractEventBus {
                 TopicName topic = createTopicIfDoesNotExist(topicName);
                 return Publisher
                         .newBuilder(topic)
-                        .setCredentialsProvider(credentialsProvider)
                         .setBatchingSettings(publisherBatchingSettings)
                         .build();
             } catch (IOException e) {
@@ -169,7 +150,6 @@ public class PubSubEventBus extends AbstractEventBus {
     }
 
     private void createSubscription(ProjectSubscriptionName subscriptionName, String topicId) throws IOException {
-
         TopicName topicName = createTopicIfDoesNotExist(topicId);
 
         try (SubscriptionAdminClient subscriptionAdmin = subscriptionAdminClient()) {
@@ -183,7 +163,6 @@ public class PubSubEventBus extends AbstractEventBus {
     public TopicAdminClient topicAdminClient() throws IOException {
         TopicAdminSettings topicAdminSettings = TopicAdminSettings
                 .newBuilder()
-                .setCredentialsProvider(credentialsProvider)
                 .build();
         return TopicAdminClient.create(topicAdminSettings);
     }
@@ -191,7 +170,6 @@ public class PubSubEventBus extends AbstractEventBus {
     public SubscriptionAdminClient subscriptionAdminClient() throws IOException {
         SubscriptionAdminSettings subscriptionAdminSettings = SubscriptionAdminSettings
                 .newBuilder()
-                .setCredentialsProvider(credentialsProvider)
                 .build();
         return SubscriptionAdminClient.create(subscriptionAdminSettings);
     }
@@ -235,17 +213,6 @@ public class PubSubEventBus extends AbstractEventBus {
         String projectId = properties.getProject();
         if (projectId == null || projectId.isEmpty()) {
             throw new IllegalArgumentException("PUBSUB_PROJECT must be defined");
-        }
-
-        String secret = properties.getSecret();
-        if (properties.getSecret() == null) {
-            throw new InvalidMessagingConfiguration("PUBSUB_SECRET must be defined");
-        }
-
-        try {
-            Base64.getDecoder().decode(secret);
-        } catch (IllegalArgumentException e) {
-            throw new InvalidMessagingConfiguration("PUBSUB_SECRET is not a base64-encoded string");
         }
     }
 

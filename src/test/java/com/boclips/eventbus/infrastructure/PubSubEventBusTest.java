@@ -36,22 +36,4 @@ class PubSubEventBusTest {
             new PubSubEventBus(properties);
         }).hasMessage("PUBSUB_CONSUMER_GROUP must be defined");
     }
-
-    @Test
-    public void throwsWhenCredentialsNotSet() {
-        assertThatThrownBy(() -> {
-            properties.setSecret(null);
-            new PubSubEventBus(properties);
-        }).hasMessage("PUBSUB_SECRET must be defined");
-    }
-
-    @Test
-    public void throwsWhenSecretIsNotBase64Encoded() {
-        assertThatThrownBy(() -> {
-            properties.setSecret("not a valid base64");
-            new PubSubEventBus(properties);
-        })
-                .isInstanceOf(InvalidMessagingConfiguration.class)
-                .hasMessage("PUBSUB_SECRET is not a base64-encoded string");
-    }
 }
