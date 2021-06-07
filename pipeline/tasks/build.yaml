@@ -11,7 +11,7 @@ inputs:
 - name: source
 
 caches:
-- path: ../.gradle/
+- path: source/.gradle/
 
 params:
   GCE_METADATA_HOST: 169.254.169.254
