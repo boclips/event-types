@@ -60,7 +60,7 @@ eventBus.getEventOfType(VideoUpdated.class)
 This will return the event of type VideoUpdated.
 
 ## Note
-All Events ([see](src/main/java/com/boclips/event-bus/events)) are defined in this library, 
+All Events ([see](https://github.com/boclips/event-bus/tree/master/src/main/java/com/boclips/eventbus/events)) are defined in this library, 
 so that they can be shared among all services.
 
 When adding a new topic, the name should:
