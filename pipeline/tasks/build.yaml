@@ -11,10 +11,14 @@ inputs:
 - name: source
 
 caches:
-- path: .gradle/
+- path: ../.gradle/
 
 params:
   GCE_METADATA_HOST: 169.254.169.254
 
 run:
-  path: source/pipeline/scripts/build.sh
+  path: bash
+  dir: source
+  args:
+  - -ec
+  - ./gradlew build --no-daemon
