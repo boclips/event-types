@@ -9,9 +9,7 @@ Latest version: [![](https://jitpack.io/v/boclips/events.svg)](https://jitpack.i
 4. Hit `Apply` and `Ok`!
 
 # Running tests
-* Make sure to issue `direnv allow` in the terminal in order for an `.env` file with PubSub secret to be created.
-* Check that the `envfile` IntelliJ plugin is installed.
-* In the `Edit configurations` modal, check `Enable env file` and add the `.env` file to the list.
+* You must have "Pub/Sub Admin" permissions for the project used by the contract tests (see [application.yml](https://github.com/boclips/event-bus/blob/master/src/test/resources/application.yml))
 
 # Usage
 
