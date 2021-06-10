@@ -2,12 +2,14 @@ package com.boclips.eventbus.domain.video;
 
 import com.boclips.eventbus.domain.AgeRange;
 import com.boclips.eventbus.domain.Subject;
+import com.boclips.eventbus.domain.category.CategoryWithAncestors;
 import com.boclips.eventbus.domain.contentpartner.ChannelId;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Map;
 
 @Data
 @Builder
@@ -68,4 +70,6 @@ public class Video {
 
     @NonNull
     private Boolean hasTranscript;
+
+    private Map<VideoCategorySource, CategoryWithAncestors> categories;
 }
