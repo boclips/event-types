@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Data
 @Builder
@@ -71,5 +72,6 @@ public class Video {
     @NonNull
     private Boolean hasTranscript;
 
-    private Map<VideoCategorySource, CategoryWithAncestors> categories;
+    @NonNull
+    private Map<VideoCategorySource, Set<CategoryWithAncestors>> categories;
 }

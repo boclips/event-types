@@ -2,9 +2,11 @@ package com.boclips.eventbus.infrastructure;
 
 import com.boclips.eventbus.BoclipsEvent;
 import com.boclips.eventbus.domain.AgeRange;
-import com.boclips.eventbus.domain.collection.Collection;
 import com.boclips.eventbus.domain.contentpartner.ChannelId;
-import com.boclips.eventbus.domain.video.*;
+import com.boclips.eventbus.domain.video.PlaybackProviderType;
+import com.boclips.eventbus.domain.video.Video;
+import com.boclips.eventbus.domain.video.VideoId;
+import com.boclips.eventbus.domain.video.VideoType;
 import com.boclips.eventbus.events.video.VideoAnalysed;
 import com.boclips.eventbus.events.video.VideoUpdated;
 import org.junit.jupiter.api.BeforeEach;
@@ -12,7 +14,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.time.ZonedDateTime;
-import java.util.Arrays;
 import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -113,6 +114,7 @@ class SynchronousFakeEventBusTest {
                 .keywords(Collections.emptyList())
                 .sourceVideoReference("video-reference")
                 .hasTranscript(true)
+                .categories(Collections.emptyMap())
                 .build();
 
         return VideoUpdated.of(video);
