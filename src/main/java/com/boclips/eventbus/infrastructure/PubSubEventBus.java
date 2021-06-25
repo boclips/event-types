@@ -83,14 +83,16 @@ public class PubSubEventBus extends AbstractEventBus {
 
         MessageReceiver receiver =
                 (message, consumer) -> {
+                    T payload = null;
                     try {
-                        T payload = objectMapper.readValue(message.getData().toStringUtf8(), eventType);
+                        payload = objectMapper.readValue(message.getData().toStringUtf8(), eventType);
                         eventHandler.handle(payload);
                     } catch (Exception e) {
                         logger.warning("Error handling message from " + subscriptionName.toString() + ": " + e.getMessage());
                         e.printStackTrace();
                     } finally {
-                        logger.info("Ack'ing message for " + subscriptionName.toString());
+                        String payloadMessage = payload != null ? payload.toString() : "";
+                        logger.info("Ack'ing message for " + subscriptionName.toString() + "with payload: " + payloadMessage);
                         consumer.ack();
                     }
                 };
