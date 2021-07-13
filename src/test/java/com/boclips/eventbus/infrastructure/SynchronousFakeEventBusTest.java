@@ -102,6 +102,7 @@ class SynchronousFakeEventBusTest {
                 .playbackProviderType(PlaybackProviderType.KALTURA)
                 .playbackId("some-playback-id")
                 .title("")
+                .description("A description")
                 .subjects(Collections.emptyList())
                 .ageRange(new AgeRange())
                 .durationSeconds(180)

@@ -24,6 +24,9 @@ public class Video {
     private String title;
 
     @NonNull
+    private String description;
+
+    @NonNull
     private ChannelId channelId;
 
     @NonNull
