@@ -32,4 +32,6 @@ public class Channel {
     private String legalRestrictions;
 
     private Set<CategoryWithAncestors> categories;
+
+    private ChannelVisibility channelVisibility;
 }
